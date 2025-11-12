@@ -72,11 +72,12 @@
             <div class="mb-4 xl:mb-0">
                 <!-- Text color changed to white for high contrast against the dark blue part of the gradient -->
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white">SPARTA MTD Sales Performance</h1>
-                <p class="text-lg text-gray-200 mt-1">Focus: Volume, Reach, and Key Distribution Priorities (Data as of Nov 11th, 2025)</p>
+                <!-- UPDATED SUBTITLE TEXT -->
+                <p class="text-lg text-gray-200 mt-1">Data as of Nov 11th, 2025</p>
             </div>
             
-            <!-- Filter Dropdowns Section - Transparent background, updated dropdown colors -->
-            <div id="filter-controls" class="flex flex-wrap gap-3 p-2 rounded-lg">
+            <!-- Filter Dropdowns Section - UPDATED TO SINGLE LINE FLEX -->
+            <div id="filter-controls" class="flex flex-row space-x-3 p-2 rounded-lg overflow-x-auto items-end">
                 <!-- Dropdowns will be dynamically inserted here by JavaScript -->
             </div>
         </header>
@@ -560,7 +561,8 @@
                 const options = filterOptions[filterName];
 
                 const wrapper = document.createElement('div');
-                wrapper.className = 'flex flex-col text-sm';
+                // Added flex-shrink-0 to ensure components don't collapse when the parent is flex-row
+                wrapper.className = 'flex flex-col text-sm flex-shrink-0'; 
 
                 const label = document.createElement('label');
                 label.textContent = filterName;
