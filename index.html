@@ -3,468 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPR Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Custom Palette */
-        .text-colgate-blue { color: #0072CE; }
-        .bg-colgate-blue-light { background-color: rgba(0, 114, 206, 0.1); }
-        .border-colgate-blue-light { border-color: rgba(0, 114, 206, 0.2); }
-        
-        .text-colgate-green { color: #5BC286; }
-        .bg-colgate-green-light { background-color: rgba(91, 194, 134, 0.15); }
-        .border-colgate-green-light { border-color: rgba(91, 194, 134, 0.2); }
-
-        .text-colgate-navy { color: #001540; }
-        .bg-colgate-navy-light { background-color: rgba(0, 21, 64, 0.08); }
-        .border-colgate-navy-light { border-color: rgba(0, 21, 64, 0.15); }
-
-        .text-colgate-beige-dark { color: #8B5E3C; } 
-        .bg-colgate-beige { background-color: #E8D5C4; } 
-        .bg-colgate-beige-light { background-color: rgba(232, 213, 196, 0.4); }
-        .border-colgate-beige { border-color: #D6C0AD; }
-
-        .text-colgate-red { color: #E31837; }
-        .bg-colgate-red-light { background-color: #FFF0F2; }
-        .border-colgate-red { border-color: #FFCDD2; }
-        /* Added Solid Colgate Red Background */
-        .bg-colgate-red { background-color: #E31837; }
-
-        /* Solid Header Backgrounds */
-        .header-bg-blue { background-color: #E1F0FA; }    
-        .header-bg-green { background-color: #E3F6EB; }   
-        .header-bg-navy { background-color: #E6E8ED; }    
-        .header-bg-beige { background-color: #F5EBE0; }   
-
-        /* Sparkle Pattern Classes */
-        .header-pattern {
-            position: absolute;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        @keyframes slow-spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: slow-spin 60s linear infinite;
-        }
-    </style>
+    <title>Colgate Palmolive - Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-slate-50 text-slate-800">
-
-    <!-- Navbar (Updated to Colgate Red) -->
-    <nav class="bg-colgate-red border-b border-red-700 sticky top-0 z-30 overflow-hidden shadow-md">
-        
-        <!-- Big Sparkle Background (Adjusted for Red BG) -->
-        <div class="absolute top-[-50%] right-[-5%] w-[500px] h-[500px] pointer-events-none z-0 opacity-10 text-white">
-            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.5" class="w-full h-full animate-spin-slow">
-                <line x1="50" y1="50" x2="50" y2="0" /><line x1="50" y1="50" x2="60" y2="0" /><line x1="50" y1="50" x2="70" y2="5" /><line x1="50" y1="50" x2="80" y2="10" /><line x1="50" y1="50" x2="90" y2="20" /><line x1="50" y1="50" x2="100" y2="30" /><line x1="50" y1="50" x2="100" y2="50" /><line x1="50" y1="50" x2="100" y2="70" /><line x1="50" y1="50" x2="90" y2="80" /><line x1="50" y1="50" x2="80" y2="90" /><line x1="50" y1="50" x2="70" y2="95" /><line x1="50" y1="50" x2="60" y2="100" /><line x1="50" y1="50" x2="50" y2="100" /><line x1="50" y1="50" x2="40" y2="100" /><line x1="50" y1="50" x2="30" y2="95" /><line x1="50" y1="50" x2="20" y2="90" /><line x1="50" y1="50" x2="10" y2="80" /><line x1="50" y1="50" x2="0" y2="70" /><line x1="50" y1="50" x2="0" y2="50" /><line x1="50" y1="50" x2="0" y2="30" /><line x1="50" y1="50" x2="10" y2="20" /><line x1="50" y1="50" x2="20" y2="10" /><line x1="50" y1="50" x2="30" y2="5" /><line x1="50" y1="50" x2="40" y2="0" />
-            </svg>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex justify-between h-16">
-                <div class="flex flex-col justify-center">
-                    <!-- Text colors updated to White -->
-                    <span class="text-xl font-semibold tracking-tight text-white">DPR Dashboard</span>
-                    <span class="text-xs text-white/80">Report Update: Till 10th Dec</span>
-                </div>
-                <div class="flex items-center space-x-6">
-                    <!-- View Toggle Switch (Container bg updated for contrast) -->
-                    <div class="bg-red-800/30 p-1 rounded-lg flex items-center shadow-inner border border-red-700/50">
-                        <button id="btnGT" onclick="toggleView('GT')" class="px-4 py-1.5 rounded-md text-sm font-medium transition-all shadow-sm bg-white text-colgate-navy border border-slate-200">
-                            GT Business
-                        </button>
-                        <button id="btnMT" onclick="toggleView('MT')" class="px-4 py-1.5 rounded-md text-sm font-medium transition-all text-white/70 hover:text-white hover:bg-white/10">
-                            MT & Others
-                        </button>
-                    </div>
-
-                    <div class="relative group">
-                        <div class="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-lg -z-10"></div>
-                        <input type="text" id="searchInput" placeholder="Search Area..." 
-                            class="w-64 pl-10 pr-4 py-2 border border-white/20 rounded-lg text-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all bg-white/10">
-                        <svg class="w-4 h-4 text-white/70 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                </div>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img src="https://via.placeholder.com/150x50?text=Colgate+Palmolive" alt="Colgate Palmolive Logo" class="logo">
+                <h1>Attendance Management System</h1>
             </div>
+            <div class="user-info">
+                <span id="userName">Welcome, User</span>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showSection('dashboard')" class="active">Dashboard</a></li>
+                <li><a href="#" onclick="showSection('mark-attendance')">Mark Attendance</a></li>
+                <li><a href="#" onclick="showSection('view-records')">View Records</a></li>
+                <li><a href="#" onclick="showSection('reports')">Reports</a></li>
+                <li><a href="#" onclick="showSection('team')">Team Attendance</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Stats Section: Time Table & Total Achievements -->
-        <div class="flex flex-col gap-6 mb-6">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
             
-            <!-- 1. Time Status (One Little Table Centered) -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 mx-auto w-full max-w-2xl relative overflow-hidden">
-                <!-- Decorative Sparkle for Month Status -->
-                <svg class="absolute -top-10 -left-10 w-40 h-40 text-slate-50 z-0 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
-                    <circle cx="50" cy="50" r="40" />
-                    <circle cx="50" cy="50" r="30" />
-                    <circle cx="50" cy="50" r="20" />
-                </svg>
-                <svg class="absolute -bottom-10 -right-10 w-40 h-40 text-slate-50 z-0 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
-                    <line x1="50" y1="0" x2="50" y2="100" />
-                    <line x1="0" y1="50" x2="100" y2="50" />
-                    <line x1="15" y1="15" x2="85" y2="85" />
-                    <line x1="85" y1="15" x2="15" y2="85" />
-                </svg>
-
-                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2 text-center relative z-10">Month Status</h3>
-                <div class="flex justify-between items-center text-sm text-left px-4 relative z-10">
-                    <div class="flex flex-col items-center group cursor-default">
-                        <span class="text-slate-500 font-medium mb-1">Total Days</span>
-                        <span class="text-xl font-bold text-colgate-navy">27</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div class="flex flex-col items-center group cursor-default">
-                        <span class="text-slate-500 font-medium mb-1">Days Passed</span>
-                        <span class="text-xl font-bold text-colgate-green">9</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div class="flex flex-col items-center group cursor-default">
-                        <span class="text-slate-500 font-medium mb-1">Remaining</span>
-                        <span class="text-xl font-bold text-colgate-red">18</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div class="flex flex-col items-center group cursor-default">
-                        <span class="text-slate-500 font-medium mb-1">Time Gone</span>
-                        <span class="text-xl font-bold text-colgate-beige-dark">33%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. Total Achievements Overview (One Line, Separate Cards) -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <!-- PRI KPI -->
-                <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center group hover:border-blue-300 transition-all relative overflow-hidden">
-                    <!-- Sparkle -->
-                    <svg class="absolute -top-2 -right-2 w-16 h-16 text-blue-100 opacity-50 group-hover:scale-110 transition-transform pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="100" y1="0" x2="0" y2="100" /><line x1="100" y1="0" x2="20" y2="80" /><line x1="100" y1="0" x2="40" y2="60" /><line x1="100" y1="0" x2="0" y2="50" /><line x1="100" y1="0" x2="0" y2="20" />
-                    </svg>
-                    
-                    <div class="bg-blue-50 p-2 rounded-full mb-3 relative z-10"><span class="text-colgate-blue text-xs font-bold">PRI</span></div>
-                    
-                    <div class="relative z-10 w-full flex flex-col gap-2">
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Target</p>
-                            <p class="text-lg font-bold text-slate-600" id="totalPriTgt">0</p>
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Today's Status</h3>
+                            <p class="stat-value" id="todayStatus">Not Marked</p>
+                            <span class="stat-date" id="currentDate"></span>
                         </div>
-                        <div class="h-px bg-slate-100 w-1/2 mx-auto"></div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Achievement</p>
-                            <p class="text-2xl font-bold text-colgate-blue" id="totalPriAch">0</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">✓</div>
+                        <div class="stat-info">
+                            <h3>This Month</h3>
+                            <p class="stat-value" id="monthPresent">18 Days</p>
+                            <span class="stat-subtitle">Present</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">✗</div>
+                        <div class="stat-info">
+                            <h3>Absences</h3>
+                            <p class="stat-value" id="monthAbsent">2 Days</p>
+                            <span class="stat-subtitle">This Month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>Attendance Rate</h3>
+                            <p class="stat-value" id="attendanceRate">90%</p>
+                            <span class="stat-subtitle">Current Month</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- STT KPI -->
-                <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center group hover:border-green-300 transition-all relative overflow-hidden">
-                    <!-- Sparkle -->
-                    <svg class="absolute -top-4 -left-4 w-20 h-20 text-emerald-100 opacity-50 group-hover:scale-110 transition-transform pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="0" cy="0" r="20" /><circle cx="0" cy="0" r="40" /><circle cx="0" cy="0" r="60" /><circle cx="0" cy="0" r="80" />
-                    </svg>
-
-                    <div class="bg-emerald-50 p-2 rounded-full mb-3 relative z-10"><span class="text-colgate-green text-xs font-bold">STT</span></div>
-                    
-                    <div class="relative z-10 w-full flex flex-col gap-2">
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Target</p>
-                            <p class="text-lg font-bold text-slate-600" id="totalSttTgt">0</p>
-                        </div>
-                        <div class="h-px bg-slate-100 w-1/2 mx-auto"></div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Achievement</p>
-                            <p class="text-2xl font-bold text-colgate-green" id="totalSttAch">0</p>
-                        </div>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn-action btn-primary" onclick="showSection('mark-attendance')">
+                            <span class="btn-icon">✓</span>
+                            Mark Today's Attendance
+                        </button>
+                        <button class="btn-action btn-secondary" onclick="showSection('view-records')">
+                            <span class="btn-icon">📋</span>
+                            View My Records
+                        </button>
+                        <button class="btn-action btn-secondary" onclick="showSection('reports')">
+                            <span class="btn-icon">📊</span>
+                            Generate Report
+                        </button>
                     </div>
                 </div>
 
-                <!-- TBR KPI -->
-                <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center group hover:border-slate-400 transition-all relative overflow-hidden">
-                    <!-- Sparkle -->
-                    <svg class="absolute -bottom-2 -right-2 w-14 h-14 text-slate-200 opacity-50 group-hover:scale-110 transition-transform pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-                    </svg>
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <table class="activity-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Status</th>
+                                <th>Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivityTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-                    <div class="bg-slate-100 p-2 rounded-full mb-3 relative z-10"><span class="text-colgate-navy text-xs font-bold">TBR</span></div>
+            <!-- Mark Attendance Section -->
+            <section id="mark-attendance" class="content-section">
+                <h2>Mark Attendance</h2>
+                <div class="attendance-form-container">
+                    <div class="current-time-display">
+                        <h3>Current Date & Time</h3>
+                        <p class="display-date" id="displayDate"></p>
+                        <p class="display-time" id="displayTime"></p>
+                    </div>
+
+                    <form id="attendanceForm" class="attendance-form">
+                        <div class="form-group">
+                            <label for="employeeId">Employee ID</label>
+                            <input type="text" id="employeeId" name="employeeId" required readonly value="EMP001">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employeeName">Employee Name</label>
+                            <input type="text" id="employeeName" name="employeeName" required readonly value="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Production">Production</option>
+                                <option value="Quality Control">Quality Control</option>
+                                <option value="HR">Human Resources</option>
+                                <option value="Finance">Finance</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="R&D">Research & Development</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Work Location</label>
+                            <select id="location" name="location" required>
+                                <option value="">Select Location</option>
+                                <option value="Head Office - Mumbai">Head Office - Mumbai</option>
+                                <option value="Plant - Baddi">Plant - Baddi</option>
+                                <option value="Plant - Goa">Plant - Goa</option>
+                                <option value="Regional Office - Delhi">Regional Office - Delhi</option>
+                                <option value="Regional Office - Bangalore">Regional Office - Bangalore</option>
+                                <option value="Work From Home">Work From Home</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="attendanceType">Attendance Type</label>
+                            <select id="attendanceType" name="attendanceType" required>
+                                <option value="check-in">Check In</option>
+                                <option value="check-out">Check Out</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remarks">Remarks (Optional)</label>
+                            <textarea id="remarks" name="remarks" rows="3" placeholder="Enter any additional notes..."></textarea>
+                        </div>
+
+                        <!-- Geolocation Display -->
+                        <div class="form-group">
+                            <label>Location Coordinates</label>
+                            <div class="location-info">
+                                <p id="geoLocation">Click 'Get Location' to capture coordinates</p>
+                                <button type="button" class="btn-secondary" onclick="getLocation()">Get Location</button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Submit Attendance</button>
+                            <button type="reset" class="btn-secondary">Reset</button>
+                        </div>
+                    </form>
+
+                    <div id="submissionMessage" class="message-box" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- View Records Section -->
+            <section id="view-records" class="content-section">
+                <h2>Attendance Records</h2>
+                
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label for="filterMonth">Month</label>
+                        <select id="filterMonth">
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
                     
-                    <div class="relative z-10 w-full flex flex-col gap-2">
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Target</p>
-                            <p class="text-lg font-bold text-slate-600" id="totalTbrTgt">0</p>
+                    <div class="filter-group">
+                        <label for="filterYear">Year</label>
+                        <select id="filterYear">
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="filterRecords()">Filter</button>
+                    <button class="btn-secondary" onclick="exportToCSV()">Export to CSV</button>
+                </div>
+
+                <div class="records-table-container">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Total Hours</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="content-section">
+                <h2>Attendance Reports</h2>
+                
+                <div class="report-filters">
+                    <div class="form-group">
+                        <label for="reportType">Report Type</label>
+                        <select id="reportType">
+                            <option value="monthly">Monthly Summary</option>
+                            <option value="weekly">Weekly Summary</option>
+                            <option value="custom">Custom Date Range</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reportStartDate">Start Date</label>
+                        <input type="date" id="reportStartDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reportEndDate">End Date</label>
+                        <input type="date" id="reportEndDate">
+                    </div>
+                    
+                    <button class="btn-primary" onclick="generateReport()">Generate Report</button>
+                </div>
+
+                <div id="reportOutput" class="report-output">
+                    <div class="report-summary">
+                        <h3>Summary Statistics</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <label>Total Working Days:</label>
+                                <span id="totalWorkingDays">20</span>
+                            </div>
+                            <div class="summary-item">
+                                <label>Days Present:</label>
+                                <span id="daysPresent">18</span>
+                            </div>
+                            <div class="summary-item">
+                                <label>Days Absent:</label>
+                                <span id="daysAbsent">2</span>
+                            </div>
+                            <div class="summary-item">
+                                <label>Late Arrivals:</label>
+                                <span id="lateArrivals">3</span>
+                            </div>
+                            <div class="summary-item">
+                                <label>Total Hours:</label>
+                                <span id="totalHours">144</span>
+                            </div>
+                            <div class="summary-item">
+                                <label>Attendance %:</label>
+                                <span id="attendancePercentage">90%</span>
+                            </div>
                         </div>
-                        <div class="h-px bg-slate-100 w-1/2 mx-auto"></div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Achievement</p>
-                            <p class="text-2xl font-bold text-colgate-navy" id="totalTbrAch">0</p>
-                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Attendance Section -->
+            <section id="team" class="content-section">
+                <h2>Team Attendance (Manager View)</h2>
+                
+                <div class="team-filters">
+                    <div class="form-group">
+                        <label for="teamDepartment">Department</label>
+                        <select id="teamDepartment">
+                            <option value="all">All Departments</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Production">Production</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teamDate">Date</label>
+                        <input type="date" id="teamDate">
+                    </div>
+                    
+                    <button class="btn-primary" onclick="loadTeamAttendance()">Load Team Data</button>
+                </div>
+
+                <div class="team-summary">
+                    <div class="summary-card">
+                        <h4>Present Today</h4>
+                        <p class="summary-number">45</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Absent Today</h4>
+                        <p class="summary-number">5</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>On Leave</h4>
+                        <p class="summary-number">3</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Work From Home</h4>
+                        <p class="summary-number">7</p>
                     </div>
                 </div>
 
-                <!-- ERC KPI -->
-                <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center group hover:border-orange-300 transition-all relative overflow-hidden">
-                    <!-- Sparkle -->
-                    <svg class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 text-orange-100 opacity-50 group-hover:scale-110 transition-transform pointer-events-none" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="50" y1="0" x2="50" y2="50" /><line x1="50" y1="0" x2="30" y2="40" /><line x1="50" y1="0" x2="70" y2="40" /><line x1="50" y1="0" x2="10" y2="20" /><line x1="50" y1="0" x2="90" y2="20" />
-                    </svg>
-
-                    <div class="bg-orange-50 p-2 rounded-full mb-3 relative z-10"><span class="text-colgate-beige-dark text-xs font-bold">ERC</span></div>
-                    
-                    <div class="relative z-10 w-full flex flex-col gap-2">
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Target</p>
-                            <p class="text-lg font-bold text-slate-600" id="totalErcTgt">0</p>
-                        </div>
-                        <div class="h-px bg-slate-100 w-1/2 mx-auto"></div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Achievement</p>
-                            <p class="text-2xl font-bold text-colgate-beige-dark" id="totalErcAch">0</p>
-                        </div>
-                    </div>
+                <div class="team-table-container">
+                    <table class="team-table">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Status</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </section>
+
         </div>
-
-        <!-- Data Table Section -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-200" id="dataTable">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th scope="col" class="sticky left-0 z-10 bg-slate-50 px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Area</th>
-                            
-                            <!-- Primary Group -->
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-blue uppercase border-l border-slate-100 header-bg-blue">
-                                <span class="relative z-10">Pri Tgt</span>
-                                <svg class="header-pattern top-[-10px] right-[-10px] w-12 h-12 text-blue-400" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="100" y1="0" x2="0" y2="100" /><line x1="100" y1="0" x2="20" y2="80" /><line x1="100" y1="0" x2="40" y2="60" /><line x1="100" y1="0" x2="0" y2="50" /><line x1="100" y1="0" x2="0" y2="20" />
-                                </svg>
-                            </th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-blue uppercase header-bg-blue"><span class="relative z-10">Pri Ach</span></th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-blue uppercase w-32 header-bg-blue"><span class="relative z-10">Pri Ach %</span></th>
-
-                            <!-- STT Group -->
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-green uppercase border-l border-slate-100 header-bg-green">
-                                <span class="relative z-10">STT Tgt</span>
-                                <svg class="header-pattern top-[-15px] left-[-15px] w-16 h-16 text-emerald-400" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="0" cy="0" r="20" /><circle cx="0" cy="0" r="40" /><circle cx="0" cy="0" r="60" /><circle cx="0" cy="0" r="80" />
-                                </svg>
-                            </th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-green uppercase header-bg-green"><span class="relative z-10">STT Ach</span></th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-green uppercase w-32 header-bg-green"><span class="relative z-10">STT Ach %</span></th>
-
-                            <!-- TBR Group -->
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-navy uppercase border-l border-slate-100 header-bg-navy">
-                                <span class="relative z-10">TBR Tgt</span>
-                                <svg class="header-pattern bottom-[-5px] right-[-5px] w-10 h-10 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-                                </svg>
-                            </th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-navy uppercase header-bg-navy"><span class="relative z-10">TBR Ach</span></th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-navy uppercase w-24 header-bg-navy"><span class="relative z-10">TBR %</span></th>
-
-                            <!-- ERC Group -->
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-beige-dark uppercase border-l border-slate-100 header-bg-beige">
-                                <span class="relative z-10">ERC Tgt</span>
-                                <svg class="header-pattern top-[-20px] left-[50%] transform translate-x-[-50%] w-20 h-20 text-orange-300" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="50" y1="0" x2="50" y2="50" /><line x1="50" y1="0" x2="30" y2="40" /><line x1="50" y1="0" x2="70" y2="40" /><line x1="50" y1="0" x2="10" y2="20" /><line x1="50" y1="0" x2="90" y2="20" />
-                                </svg>
-                            </th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-beige-dark uppercase header-bg-beige"><span class="relative z-10">ERC Ach</span></th>
-                            <th class="relative overflow-hidden px-3 py-3 text-center text-xs font-bold text-colgate-beige-dark uppercase w-32 header-bg-beige"><span class="relative z-10">ERC %</span></th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-slate-200 text-sm" id="tableBody">
-                        <!-- Rows will be populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
     </main>
 
-    <script>
-        // Data Parsing
-        const rawData = [
-            { area: "GP Dhaka North", pTgt: 58.58, pAch: 16.70, pPct: 29, sTgt: 58.58, sAch: 14.56, sPct: 25, tTgt: 1.06, tAch: 0.48, tPct: 45, eTgt: 7955, eAch: 2724, ePct: 34, type: "GT" },
-            { area: "GP Dhaka West", pTgt: 46.52, pAch: 14.40, pPct: 31, sTgt: 46.52, sAch: 9.82, sPct: 21, tTgt: 0.84, tAch: 0.14, tPct: 17, eTgt: 6101, eAch: 1347, ePct: 22, type: "GT" },
-            { area: "GP Mymensingh", pTgt: 76.92, pAch: 4.89, pPct: 6, sTgt: 76.92, sAch: 14.80, sPct: 19, tTgt: 1.39, tAch: 0.03, tPct: 2, eTgt: 12613, eAch: 2912, ePct: 23, type: "GT" },
-            { area: "GP Rangpur", pTgt: 54.21, pAch: 11.59, pPct: 21, sTgt: 54.21, sAch: 10.46, sPct: 19, tTgt: 0.98, tAch: 0.11, tPct: 11, eTgt: 8575, eAch: 2251, ePct: 26, type: "GT" },
-            { area: "GP Bogura", pTgt: 88.18, pAch: 12.70, pPct: 14, sTgt: 88.18, sAch: 18.99, sPct: 22, tTgt: 1.60, tAch: 0.11, tPct: 7, eTgt: 16239, eAch: 4543, ePct: 28, type: "GT" },
-            { area: "GP Sylhet", pTgt: 43.02, pAch: 5.32, pPct: 12, sTgt: 43.02, sAch: 10.24, sPct: 24, tTgt: 0.78, tAch: 0.24, tPct: 31, eTgt: 7176, eAch: 1948, ePct: 27, type: "GT" },
-            { area: "GP North", pTgt: 367.42, pAch: 65.59, pPct: 18, sTgt: 367.42, sAch: 78.87, sPct: 21, tTgt: 6.66, tAch: 1.11, tPct: 17, eTgt: 58659, eAch: 15725, ePct: 27, type: "GT" },
-            { area: "GP Dhaka East", pTgt: 65.81, pAch: 7.61, pPct: 12, sTgt: 65.81, sAch: 13.64, sPct: 21, tTgt: 1.19, tAch: 0.00, tPct: 0, eTgt: 8422, eAch: 2154, ePct: 26, type: "GT" },
-            { area: "GP Chattogram", pTgt: 36.07, pAch: 8.55, pPct: 24, sTgt: 36.07, sAch: 7.11, sPct: 20, tTgt: 0.65, tAch: 0.11, tPct: 17, eTgt: 6566, eAch: 1746, ePct: 27, type: "GT" },
-            { area: "GP Cumilla", pTgt: 50.41, pAch: 6.11, pPct: 12, sTgt: 50.41, sAch: 10.59, sPct: 21, tTgt: 0.91, tAch: 0.00, tPct: 0, eTgt: 9416, eAch: 2137, ePct: 23, type: "GT" },
-            { area: "GP Faridpur", pTgt: 51.35, pAch: 14.03, pPct: 27, sTgt: 51.35, sAch: 12.97, sPct: 25, tTgt: 0.93, tAch: 0.00, tPct: 0, eTgt: 7459, eAch: 1995, ePct: 27, type: "GT" },
-            { area: "GP Barishal", pTgt: 47.18, pAch: 7.02, pPct: 15, sTgt: 47.18, sAch: 6.81, sPct: 14, tTgt: 0.85, tAch: 0.00, tPct: 0, eTgt: 9400, eAch: 1683, ePct: 18, type: "GT" },
-            { area: "GP Jashore", pTgt: 51.77, pAch: 11.34, pPct: 22, sTgt: 51.77, sAch: 12.59, sPct: 24, tTgt: 0.94, tAch: 0.00, tPct: 0, eTgt: 8790, eAch: 2134, ePct: 24, type: "GT" },
-            { area: "GP South", pTgt: 302.59, pAch: 54.67, pPct: 18, sTgt: 302.59, sAch: 63.70, sPct: 21, tTgt: 5.48, tAch: 0.11, tPct: 2, eTgt: 50053, eAch: 11849, ePct: 24, type: "GT" },
-            { area: "GP Total", pTgt: 670.01, pAch: 120.26, pPct: 18, sTgt: 670.01, sAch: 142.57, sPct: 21, tTgt: 12.14, tAch: 1.22, tPct: 10, eTgt: 108712, eAch: 27574, ePct: 25, type: "GT" },
-            { area: "Dhaka East", pTgt: 57.00, pAch: 43.17, pPct: 76, sTgt: 69.00, sAch: 15.92, sPct: 23, tTgt: 4.28, tAch: 1.31, tPct: 31, eTgt: 4175, eAch: 1686, ePct: 40, type: "GT" },
-            { area: "Dhaka North", pTgt: 63.00, pAch: 15.20, pPct: 24, sTgt: 77.00, sAch: 13.48, sPct: 18, tTgt: 4.73, tAch: 0.00, tPct: 0, eTgt: 4391, eAch: 1346, ePct: 31, type: "GT" },
-            { area: "Dhaka South", pTgt: 27.00, pAch: 9.31, pPct: 34, sTgt: 27.00, sAch: 5.56, sPct: 21, tTgt: 2.03, tAch: 0.64, tPct: 31, eTgt: 2027, eAch: 594, ePct: 29, type: "GT" },
-            { area: "Dhaka West", pTgt: 83.00, pAch: 15.17, pPct: 18, sTgt: 83.00, sAch: 11.64, sPct: 14, tTgt: 6.23, tAch: 0.11, tPct: 2, eTgt: 3874, eAch: 1429, ePct: 37, type: "GT" },
-            { area: "GTM Dhaka", pTgt: 230.00, pAch: 82.85, pPct: 36, sTgt: 256.00, sAch: 46.60, sPct: 18, tTgt: 17.27, tAch: 2.06, tPct: 12, eTgt: 14467, eAch: 5055, ePct: 35, type: "GT" },
-            { area: "CTG North", pTgt: 31.50, pAch: 3.06, pPct: 10, sTgt: 31.50, sAch: 5.28, sPct: 17, tTgt: 1.90, tAch: 0.00, tPct: 0, eTgt: 2985, eAch: 936, ePct: 31, type: "GT" },
-            { area: "CTG South", pTgt: 38.50, pAch: 0.00, pPct: 0, sTgt: 38.50, sAch: 8.76, sPct: 23, tTgt: 2.40, tAch: 0.00, tPct: 0, eTgt: 3007, eAch: 990, ePct: 33, type: "GT" },
-            { area: "GTM CTG", pTgt: 70.00, pAch: 3.06, pPct: 4, sTgt: 70.00, sAch: 14.03, sPct: 20, tTgt: 4.30, tAch: 0.00, tPct: 0, eTgt: 5992, eAch: 1926, ePct: 32, type: "GT" },
-            { area: "Total GTM", pTgt: 300.00, pAch: 85.92, pPct: 29, sTgt: 326.00, sAch: 60.63, sPct: 19, tTgt: 21.57, tAch: 2.06, tPct: 10, eTgt: 20459, eAch: 6981, ePct: 34, type: "GT" },
-            { area: "Retail Total", pTgt: 970.01, pAch: 206.18, pPct: 21, sTgt: 996.01, sAch: 203.20, sPct: 20, tTgt: 33.71, tAch: 3.27, tPct: 10, eTgt: 129171, eAch: 34555, ePct: 27, type: "GT" },
-            { area: "Key Accounts", pTgt: 180.30, pAch: 21.75, pPct: 12, sTgt: 180.30, sAch: 21.75, sPct: 12, tTgt: 21.70, tAch: 2.43, tPct: 11, eTgt: 0, eAch: 0, ePct: 0, type: "MT" },
-            { area: "E-Commerce", pTgt: 17.80, pAch: 0.23, pPct: 1, sTgt: 17.80, sAch: 0.23, sPct: 1, tTgt: 2.64, tAch: 0.02, tPct: 1, eTgt: 0, eAch: 0, ePct: 0, type: "MT" },
-            { area: "Institution", pTgt: 32.00, pAch: 1.73, pPct: 5, sTgt: 32.00, sAch: 1.73, sPct: 5, tTgt: 0.00, tAch: 0.40, tPct: 0, eTgt: 0, eAch: 0, ePct: 0, type: "MT" },
-            { area: "MT+E Com+Inst", pTgt: 230.10, pAch: 23.70, pPct: 10, sTgt: 230.10, sAch: 23.70, sPct: 10, tTgt: 24.34, tAch: 2.84, tPct: 12, eTgt: 0, eAch: 0, ePct: 0, type: "MT" },
-            { area: "TOTAL", pTgt: 1200.12, pAch: 229.88, pPct: 19, sTgt: 1226.12, sAch: 226.91, sPct: 19, tTgt: 58.05, tAch: 6.12, tPct: 11, eTgt: 129171, eAch: 34555, ePct: 27, type: "ALL" }
-        ];
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Colgate Palmolive Company. All rights reserved.</p>
+            <p>Attendance Management System v1.0 | Powered by Salesforce</p>
+        </div>
+    </footer>
 
-        // --- View Filtering ---
-        let currentView = 'GT';
-
-        function toggleView(view) {
-            currentView = view;
-            
-            const btnGT = document.getElementById('btnGT');
-            const btnMT = document.getElementById('btnMT');
-
-            // Updated styling logic for Red Header
-            if (view === 'GT') {
-                btnGT.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all shadow-sm bg-white text-colgate-navy border border-slate-200";
-                btnMT.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-white/70 hover:text-white hover:bg-white/10";
-            } else {
-                btnMT.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all shadow-sm bg-white text-colgate-navy border border-slate-200";
-                btnGT.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-white/70 hover:text-white hover:bg-white/10";
-            }
-
-            filterAndRender();
-        }
-
-        function filterAndRender() {
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            const filtered = rawData.filter(row => {
-                let typeMatch = false;
-                
-                // Modified logic: Exclude GRAND TOTAL (type: 'ALL') from GT view
-                if (currentView === 'GT') {
-                    typeMatch = row.type === 'GT';
-                } else {
-                    typeMatch = row.type === currentView || row.type === 'ALL';
-                }
-
-                const searchMatch = row.area.toLowerCase().includes(searchTerm);
-                return typeMatch && searchMatch;
-            });
-
-            renderTable(filtered);
-        }
-
-        // --- Render Table ---
-        const tableBody = document.getElementById('tableBody');
-        const searchInput = document.getElementById('searchInput');
-
-        function getProgressColor(val) {
-            if (val >= 80) return 'text-emerald-600 font-bold';
-            if (val >= 50) return 'text-amber-600 font-medium';
-            return 'text-red-600 font-medium';
-        }
-
-        // Standard formatter (for ERC, TBR etc - adapts to data)
-        function formatNum(num) {
-            return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(num);
-        }
-
-        // Specific formatter for PRI & STT (Strict 2 Fractions)
-        function formatFraction(num) {
-            return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
-        }
-
-        function renderTable(data) {
-            tableBody.innerHTML = '';
-            
-            // Days passed logic variables updated for consistency (though LE columns are hidden)
-            const daysPassed = 9; 
-            const remainingDays = 18;
-            const factor = 1.5;
-
-            data.forEach(row => {
-                let rowClass = 'hover:bg-slate-50 text-slate-600';
-                let stickyClass = 'bg-white'; 
-                let isMajorTotal = false;
-                
-                if (row.area === 'Retail Total' || row.area === 'MT+E Com+Inst') {
-                    rowClass = 'bg-colgate-red-light font-bold text-colgate-red border-y border-colgate-red';
-                    stickyClass = 'bg-colgate-red-light';
-                    isMajorTotal = true;
-                } 
-                else if (row.area.includes('Total') || row.area === 'TOTAL' || row.area === 'GP North' || row.area === 'GP South' || row.area === 'GTM Dhaka' || row.area === 'GTM CTG') {
-                    rowClass = 'bg-slate-100 font-bold text-slate-800';
-                    stickyClass = 'bg-slate-100';
-                }
-
-                const tr = document.createElement('tr');
-                tr.className = `transition-colors duration-150 ${rowClass}`;
-                
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap sticky left-0 z-10 ${stickyClass} border-r border-slate-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
-                        ${row.area}
-                    </td>
-                    
-                    <!-- Primary Group (Uses formatFraction) -->
-                    <td class="px-3 py-4 text-center border-l-4 border-slate-100 bg-colgate-blue-light text-slate-700 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.pTgt)}</td>
-                    <td class="px-3 py-4 text-center bg-colgate-blue-light text-slate-900 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.pAch)}</td>
-                    <td class="px-3 py-4 bg-colgate-blue-light text-center"><span class="${getProgressColor(row.pPct)}">${row.pPct}%</span></td>
-
-                    <!-- STT Group (Uses formatFraction) -->
-                    <td class="px-3 py-4 text-center border-l-4 border-slate-100 bg-colgate-green-light text-slate-700 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.sTgt)}</td>
-                    <td class="px-3 py-4 text-center bg-colgate-green-light text-slate-900 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.sAch)}</td>
-                    <td class="px-3 py-4 bg-colgate-green-light text-center"><span class="${getProgressColor(row.sPct)}">${row.sPct}%</span></td>
-
-                    <!-- TBR Group (Now uses formatFraction) -->
-                    <td class="px-3 py-4 text-center border-l-4 border-slate-100 bg-colgate-navy-light text-slate-700 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.tTgt)}</td>
-                    <td class="px-3 py-4 text-center bg-colgate-navy-light text-slate-900 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatFraction(row.tAch)}</td>
-                    <td class="px-3 py-4 bg-colgate-navy-light text-center"><span class="${row.tPct < 20 ? 'text-red-600' : 'text-slate-600'} font-medium">${row.tPct}%</span></td>
-                    
-                    <td class="px-3 py-4 text-center border-l-4 border-slate-100 bg-colgate-beige-light text-slate-700 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatNum(row.eTgt)}</td>
-                    <td class="px-3 py-4 text-center bg-colgate-beige-light text-slate-900 ${isMajorTotal ? 'text-colgate-red' : ''}">${formatNum(row.eAch)}</td>
-                    <td class="px-3 py-4 bg-colgate-beige-light text-center"><span class="${getProgressColor(row.ePct)}">${row.ePct}%</span></td>
-                `;
-                tableBody.appendChild(tr);
-            });
-        }
-
-        // Initialize
-        toggleView('GT');
-        searchInput.addEventListener('input', filterAndRender);
-
-        // Populate Total Achievements Stats
-        const totalRow = rawData.find(row => row.area === 'TOTAL');
-        if (totalRow) {
-            document.getElementById('totalPriTgt').textContent = formatFraction(totalRow.pTgt);
-            document.getElementById('totalPriAch').textContent = formatFraction(totalRow.pAch);
-            
-            document.getElementById('totalSttTgt').textContent = formatFraction(totalRow.sTgt);
-            document.getElementById('totalSttAch').textContent = formatFraction(totalRow.sAch);
-            
-            document.getElementById('totalTbrTgt').textContent = formatFraction(totalRow.tTgt);
-            document.getElementById('totalTbrAch').textContent = formatFraction(totalRow.tAch);
-            
-            document.getElementById('totalErcTgt').textContent = formatNum(totalRow.eTgt);
-            document.getElementById('totalErcAch').textContent = formatNum(totalRow.eAch);
-        }
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
