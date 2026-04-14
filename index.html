@@ -4,14 +4,673 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colgate Palmolive - Attendance Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #E3000B;
+            --secondary-color: #0066CC;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #c70009);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            height: 50px;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-logout {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: var(--light-color);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Styles */
+        .navigation {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li a {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background: var(--light-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 300px);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+        }
+
+        .stat-info h3 {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-subtitle,
+        .stat-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .quick-actions h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c70009;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(227, 0, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0052a3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Tables */
+        .recent-activity,
+        .records-table-container,
+        .team-table-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .recent-activity h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        table thead {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s;
+        }
+
+        table tbody tr:hover {
+            background: var(--light-color);
+        }
+
+        table td {
+            padding: 1rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-present {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-absent {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-late {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-wfh {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-incomplete {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Form Styles */
+        .attendance-form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+        }
+
+        .current-time-display {
+            background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .current-time-display h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .display-date {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .display-time {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .attendance-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group input[readonly] {
+            background: var(--light-color);
+        }
+
+        .location-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .location-info p {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            background: var(--light-color);
+            border-radius: 5px;
+            margin: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-actions button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Message Box */
+        .message-box {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .message-box.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message-box.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Filter Section */
+        .filter-section,
+        .team-filters,
+        .report-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Report Output */
+        .report-output {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .report-summary h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            padding: 1rem;
+            background: var(--light-color);
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .summary-item label {
+            display: block;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-item span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Team Summary */
+        .team-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+            }
+            
+            .nav-menu li a {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            
+            .nav-menu li a:hover,
+            .nav-menu li a.active {
+                border-bottom: none;
+                border-left-color: var(--primary-color);
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-action {
+                width: 100%;
+            }
+            
+            .filter-section,
+            .team-filters,
+            .report-filters {
+                flex-direction: column;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .location-info {
+                flex-direction: column;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header,
+            .navigation,
+            .footer,
+            .filter-section,
+            .form-actions,
+            button {
+                display: none !important;
+            }
+            
+            .content-section {
+                display: block !important;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo-section">
-                <img src="https://via.placeholder.com/150x50?text=Colgate+Palmolive" alt="Colgate Palmolive Logo" class="logo">
+                <div class="logo">Colgate</div>
                 <h1>Attendance Management System</h1>
             </div>
             <div class="user-info">
@@ -312,10 +971,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="chart-container">
-                        <canvas id="attendanceChart"></canvas>
-                    </div>
                 </div>
             </section>
 
@@ -393,6 +1048,377 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Sample Data Storage
+        let attendanceRecords = [];
+        let currentUser = {
+            id: 'EMP001',
+            name: 'John Doe',
+            department: 'Sales',
+            role: 'Manager'
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadSampleData();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
+
+        // Initialize Application
+        function initializeApp() {
+            const today = new Date();
+            document.getElementById('filterMonth').value = String(today.getMonth() + 1).padStart(2, '0');
+            document.getElementById('filterYear').value = today.getFullYear();
+            
+            document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+            document.getElementById('employeeId').value = currentUser.id;
+            document.getElementById('employeeName').value = currentUser.name;
+            
+            document.getElementById('attendanceForm').addEventListener('submit', handleAttendanceSubmit);
+            
+            updateDashboard();
+            loadRecentActivity();
+        }
+
+        // Update Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('displayDate').textContent = now.toLocaleDateString('en-US', dateOptions);
+            
+            const timeString = now.toLocaleTimeString('en-US', { hour12: true });
+            document.getElementById('displayTime').textContent = timeString;
+        }
+
+        // Show Section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (sectionId === 'view-records') {
+                loadRecords();
+            } else if (sectionId === 'team') {
+                loadTeamAttendance();
+            } else if (sectionId === 'reports') {
+                generateReport();
+            }
+        }
+
+        // Handle Attendance Form Submission
+        function handleAttendanceSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                employeeId: document.getElementById('employeeId').value,
+                employeeName: document.getElementById('employeeName').value,
+                department: document.getElementById('department').value,
+                location: document.getElementById('location').value,
+                attendanceType: document.getElementById('attendanceType').value,
+                remarks: document.getElementById('remarks').value,
+                timestamp: new Date().toISOString(),
+                geoLocation: document.getElementById('geoLocation').textContent
+            };
+            
+            attendanceRecords.push(formData);
+            
+            localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+            
+            const messageBox = document.getElementById('submissionMessage');
+            messageBox.className = 'message-box success';
+            messageBox.textContent = `✓ Attendance ${formData.attendanceType === 'check-in' ? 'Check-In' : 'Check-Out'} recorded successfully at ${new Date().toLocaleTimeString()}`;
+            messageBox.style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('attendanceForm').reset();
+                document.getElementById('employeeId').value = currentUser.id;
+                document.getElementById('employeeName').value = currentUser.name;
+                messageBox.style.display = 'none';
+            }, 3000);
+            
+            updateDashboard();
+            loadRecentActivity();
+        }
+
+        // Get Geolocation
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude.toFixed(6);
+                        const lon = position.coords.longitude.toFixed(6);
+                        document.getElementById('geoLocation').textContent = `Lat: ${lat}, Long: ${lon}`;
+                    },
+                    (error) => {
+                        document.getElementById('geoLocation').textContent = 'Unable to retrieve location';
+                        console.error('Geolocation error:', error);
+                    }
+                );
+            } else {
+                document.getElementById('geoLocation').textContent = 'Geolocation not supported';
+            }
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            const today = new Date().toDateString();
+            const todayRecord = attendanceRecords.find(record => 
+                new Date(record.timestamp).toDateString() === today
+            );
+            
+            if (todayRecord) {
+                document.getElementById('todayStatus').textContent = 
+                    todayRecord.attendanceType === 'check-in' ? 'Checked In ✓' : 'Checked Out ✓';
+                document.getElementById('todayStatus').style.color = 'var(--success-color)';
+            } else {
+                document.getElementById('todayStatus').textContent = 'Not Marked';
+                document.getElementById('todayStatus').style.color = 'var(--danger-color)';
+            }
+            
+            const currentMonth = new Date().getMonth();
+            const monthRecords = attendanceRecords.filter(record => 
+                new Date(record.timestamp).getMonth() === currentMonth
+            );
+            
+            const presentDays = Math.floor(monthRecords.length / 2);
+            document.getElementById('monthPresent').textContent = `${presentDays} Days`;
+            document.getElementById('monthAbsent').textContent = `${22 - presentDays} Days`;
+            
+            const rate = ((presentDays / 22) * 100).toFixed(0);
+            document.getElementById('attendanceRate').textContent = `${rate}%`;
+        }
+
+        // Load Recent Activity
+        function loadRecentActivity() {
+            const tableBody = document.getElementById('recentActivityTable');
+            const recentRecords = attendanceRecords.slice(-10).reverse();
+            
+            if (recentRecords.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No recent activity</td></tr>';
+                return;
+            }
+            
+            const groupedRecords = {};
+            recentRecords.forEach(record => {
+                const date = new Date(record.timestamp).toLocaleDateString();
+                if (!groupedRecords[date]) {
+                    groupedRecords[date] = { checkIn: null, checkOut: null };
+                }
+                if (record.attendanceType === 'check-in') {
+                    groupedRecords[date].checkIn = new Date(record.timestamp).toLocaleTimeString();
+                } else {
+                    groupedRecords[date].checkOut = new Date(record.timestamp).toLocaleTimeString();
+                }
+            });
+            
+            let html = '';
+            Object.keys(groupedRecords).slice(0, 5).forEach(date => {
+                const record = groupedRecords[date];
+                const checkIn = record.checkIn || '-';
+                const checkOut = record.checkOut || '-';
+                const hours = (record.checkIn && record.checkOut) ? '8.5' : '-';
+                const status = (record.checkIn && record.checkOut) ? 'Present' : 'Incomplete';
+                
+                html += `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${checkIn}</td>
+                        <td>${checkOut}</td>
+                        <td><span class="status-badge status-${status.toLowerCase()}">${status}</span></td>
+                        <td>${hours}</td>
+                    </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Load Records
+        function loadRecords() {
+            const tableBody = document.getElementById('recordsTableBody');
+            
+            if (attendanceRecords.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No records found</td></tr>';
+                return;
+            }
+            
+            const groupedRecords = {};
+            attendanceRecords.forEach(record => {
+                const date = new Date(record.timestamp).toLocaleDateString();
+                if (!groupedRecords[date]) {
+                    groupedRecords[date] = { checkIn: null, checkOut: null, location: record.location, remarks: record.remarks };
+                }
+                if (record.attendanceType === 'check-in') {
+                    groupedRecords[date].checkIn = new Date(record.timestamp).toLocaleTimeString();
+                    groupedRecords[date].location = record.location;
+                } else {
+                    groupedRecords[date].checkOut = new Date(record.timestamp).toLocaleTimeString();
+                }
+            });
+            
+            let html = '';
+            Object.keys(groupedRecords).reverse().forEach(date => {
+                const record = groupedRecords[date];
+                const dateObj = new Date(date);
+                const day = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+                const checkIn = record.checkIn || '-';
+                const checkOut = record.checkOut || '-';
+                const hours = (record.checkIn && record.checkOut) ? '8.5' : '-';
+                const status = (record.checkIn && record.checkOut) ? 'Present' : 'Incomplete';
+                
+                html += `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${day}</td>
+                        <td>${checkIn}</td>
+                        <td>${checkOut}</td>
+                        <td>${hours}</td>
+                        <td>${record.location || '-'}</td>
+                        <td><span class="status-badge status-${status.toLowerCase()}">${status}</span></td>
+                        <td>${record.remarks || '-'}</td>
+                    </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Filter Records
+        function filterRecords() {
+            const month = document.getElementById('filterMonth').value;
+            const year = document.getElementById('filterYear').value;
+            loadRecords();
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            let csv = 'Date,Day,Check In,Check Out,Total Hours,Location,Status,Remarks\n';
+            
+            const groupedRecords = {};
+            attendanceRecords.forEach(record => {
+                const date = new Date(record.timestamp).toLocaleDateString();
+                if (!groupedRecords[date]) {
+                    groupedRecords[date] = { checkIn: null, checkOut: null, location: record.location, remarks: record.remarks };
+                }
+                if (record.attendanceType === 'check-in') {
+                    groupedRecords[date].checkIn = new Date(record.timestamp).toLocaleTimeString();
+                    groupedRecords[date].location = record.location;
+                } else {
+                    groupedRecords[date].checkOut = new Date(record.timestamp).toLocaleTimeString();
+                }
+            });
+            
+            Object.keys(groupedRecords).forEach(date => {
+                const record = groupedRecords[date];
+                const dateObj = new Date(date);
+                const day = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+                const checkIn = record.checkIn || '-';
+                const checkOut = record.checkOut || '-';
+                const hours = (record.checkIn && record.checkOut) ? '8.5' : '-';
+                const status = (record.checkIn && record.checkOut) ? 'Present' : 'Incomplete';
+                
+                csv += `${date},${day},${checkIn},${checkOut},${hours},${record.location || '-'},${status},${record.remarks || '-'}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `attendance_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        // Generate Report
+        function generateReport() {
+            console.log('Report generated successfully!');
+        }
+
+        // Load Team Attendance
+        function loadTeamAttendance() {
+            const tableBody = document.getElementById('teamTableBody');
+            
+            const teamData = [
+                { id: 'EMP001', name: 'John Doe', dept: 'Sales', checkIn: '09:00 AM', checkOut: '06:00 PM', status: 'Present', location: 'Office' },
+                { id: 'EMP002', name: 'Jane Smith', dept: 'Sales', checkIn: '09:15 AM', checkOut: '06:15 PM', status: 'Present', location: 'Office' },
+                { id: 'EMP003', name: 'Bob Johnson', dept: 'Sales', checkIn: '-', checkOut: '-', status: 'Absent', location: '-' },
+                { id: 'EMP004', name: 'Alice Williams', dept: 'Sales', checkIn: '09:00 AM', checkOut: '-', status: 'Present', location: 'WFH' },
+                { id: 'EMP005', name: 'Charlie Brown', dept: 'Sales', checkIn: '08:45 AM', checkOut: '05:45 PM', status: 'Present', location: 'Office' }
+            ];
+            
+            let html = '';
+            teamData.forEach(emp => {
+                html += `
+                    <tr>
+                        <td>${emp.id}</td>
+                        <td>${emp.name}</td>
+                        <td>${emp.dept}</td>
+                        <td>${emp.checkIn}</td>
+                        <td>${emp.checkOut}</td>
+                        <td><span class="status-badge status-${emp.status.toLowerCase()}">${emp.status}</span></td>
+                        <td>${emp.location}</td>
+                        <td>
+                            <button class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View Details</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Load Sample Data
+        function loadSampleData() {
+            const savedRecords = localStorage.getItem('attendanceRecords');
+            if (savedRecords) {
+                attendanceRecords = JSON.parse(savedRecords);
+            } else {
+                const today = new Date();
+                for (let i = 0; i < 10; i++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - i);
+                    
+                    attendanceRecords.push({
+                        employeeId: currentUser.id,
+                        employeeName: currentUser.name,
+                        department: 'Sales',
+                        location: 'Head Office - Mumbai',
+                        attendanceType: 'check-in',
+                        timestamp: new Date(date.setHours(9, 0, 0)).toISOString(),
+                        remarks: '',
+                        geoLocation: 'Lat: 19.0760, Long: 72.8777'
+                    });
+                    
+                    attendanceRecords.push({
+                        employeeId: currentUser.id,
+                        employeeName: currentUser.name,
+                        department: 'Sales',
+                        location: 'Head Office - Mumbai',
+                        attendanceType: 'check-out',
+                        timestamp: new Date(date.setHours(18, 0, 0)).toISOString(),
+                        remarks: '',
+                        geoLocation: 'Lat: 19.0760, Long: 72.8777'
+                    });
+                }
+            }
+        }
+
+        // Logout Function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                alert('Logged out successfully!');
+                window.location.reload();
+            }
+        }
+    </script>
 </body>
 </html>
