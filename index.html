@@ -529,18 +529,16 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
-                        <div class="flex justify-between items-center mb-2 px-1">
-                            <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wide">ফিল্টার করুন</span>
-                            <button type="button" onclick="resetMyDayFilter()" class="text-gray-400 hover:text-colgate transition-colors bg-white p-1 rounded border border-gray-200 shadow-sm hover:border-red-200">
-                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                            </button>
+                    <!-- UPDATED FILTER SECTION WITH CROSS MINI ICON -->
+                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-3 flex items-center gap-2">
+                        <div class="grid grid-cols-3 gap-2 flex-grow">
+                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
+                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
+                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
                         </div>
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
-                        </div>
+                        <button type="button" onclick="resetMyDayFilter()" class="flex-shrink-0 text-gray-400 hover:text-red-500 bg-white w-[34px] h-[34px] rounded-lg border border-gray-200 shadow-sm transition-all hover:bg-red-50 hover:border-red-200 flex items-center justify-center">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -796,7 +794,7 @@
     <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
             <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> গ্লোবাল নোটিশ</h3>
-            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে।</p>
+            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে。</p>
             <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="আপনার মেসেজ লিখুন..."></textarea>
             <div class="flex gap-3">
                 <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">নোটিশ মুছুন</button>
@@ -1181,8 +1179,8 @@
                 document.getElementById('srRouteSelect').removeAttribute('required');
                 document.getElementById('srOutletSelect').removeAttribute('required');
                 document.getElementById('territorySelect').removeAttribute('required');
-                document.getElementById('formSlab').setAttribute('required', 'true');
-                document.getElementById('formShopCode').setAttribute('required', 'true');
+                document.getElementById('formSlab')?.setAttribute('required', 'true');
+                document.getElementById('formShopCode')?.setAttribute('required', 'true');
 
             } else if (role === 'sr') {
                 document.getElementById('headerSubtitle').textContent = "Sales Team (TM / SR) Panel";
@@ -1194,8 +1192,8 @@
                 document.getElementById('srRouteSelect').setAttribute('required', 'true');
                 document.getElementById('srOutletSelect').setAttribute('required', 'true');
                 document.getElementById('territorySelect').setAttribute('required', 'true');
-                document.getElementById('formSlab').removeAttribute('required');
-                document.getElementById('formShopCode').removeAttribute('required');
+                document.getElementById('formSlab')?.removeAttribute('required');
+                document.getElementById('formShopCode')?.removeAttribute('required');
             }
 
             if (!isDataLoaded) {
@@ -1439,8 +1437,10 @@
                     srOutletSelect.disabled = true;
                 }
                 
-                document.getElementById('formShopCode').value = '';
-                document.getElementById('formSlab').value = '';
+                const fShopCode = document.getElementById('formShopCode');
+                if(fShopCode) fShopCode.value = '';
+                const fSlab = document.getElementById('formSlab');
+                if(fSlab) fSlab.value = '';
             });
         }
 
@@ -1629,8 +1629,10 @@
                     srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
                     srOutletSelect.disabled = true;
                 }
-                document.getElementById('formShopCode').value = '';
-                document.getElementById('formSlab').value = '';
+                const fShopCode = document.getElementById('formShopCode');
+                if(fShopCode) fShopCode.value = '';
+                const fSlab = document.getElementById('formSlab');
+                if(fSlab) fSlab.value = '';
             }
         });
 
@@ -1660,23 +1662,26 @@
                                         outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab || 'Regular'})</option>`).join('');
                 srOutletSelect.disabled = outlets.length === 0;
             }
-            document.getElementById('formShopCode').value = '';
-            document.getElementById('formSlab').value = '';
+            const fShopCode = document.getElementById('formShopCode');
+            if(fShopCode) fShopCode.value = '';
+            const fSlab = document.getElementById('formSlab');
+            if(fSlab) fSlab.value = '';
         });
 
         document.getElementById('srOutletSelect')?.addEventListener('change', (e) => {
             const selectedCode = e.target.value;
             const outlet = getFilteredPJP().find(i => i.code === selectedCode);
             if(outlet) {
-                document.getElementById('formShopCode').value = outlet.code || '';
-                document.getElementById('formSlab').value = outlet.slab;
+                const fShopCode = document.getElementById('formShopCode');
+                if(fShopCode) fShopCode.value = outlet.code || '';
+                const fSlab = document.getElementById('formSlab');
+                if(fSlab) fSlab.value = outlet.slab;
             }
         });
 
         // ==========================================
         // MY DAY LOGIC
         // ==========================================
-        
         window.resetMyDayFilter = () => {
             document.getElementById('myDayTownSelect').value = '';
             document.getElementById('myDayTownSelect').dispatchEvent(new Event('change'));
@@ -1758,6 +1763,8 @@
             if (container) container.classList.add('hidden');
             const list = document.getElementById('myDayPjpList');
             if (list) list.innerHTML = '';
+            
+            renderMyDayPJP();
         });
 
         document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
@@ -1785,6 +1792,8 @@
             if (container) container.classList.add('hidden');
             const list = document.getElementById('myDayPjpList');
             if (list) list.innerHTML = '';
+            
+            renderMyDayPJP();
         });
 
         document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
@@ -1795,11 +1804,13 @@
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            if (!town || !day || !route) return;
+            if (!town) return;
 
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
+            let outlets = getFilteredPJP().filter(i => i.townName === town);
+            if (day) outlets = outlets.filter(i => i.visitDay === day);
+            if (route) outlets = outlets.filter(i => i.routeName === route);
             
             if (selectedType && selectedType !== 'ALL') {
                 outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
@@ -1810,56 +1821,56 @@
             const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
 
             const pjpContainer = document.getElementById('myDayPjpContainer');
-            if (pjpContainer) pjpContainer.classList.remove('hidden');
+            if (pjpContainer && route) pjpContainer.classList.remove('hidden');
             
             const routeLabel = document.getElementById('myDaySelectedRouteLabel');
-            if (routeLabel) routeLabel.textContent = route;
+            if (routeLabel) routeLabel.textContent = route || "Not Selected";
 
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             
-            if (outlets.length === 0) {
-                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
-            } else {
-                outlets.forEach(out => {
-                    const outCode = (out.code || "").toUpperCase().trim();
-                    const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
-                    const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                    
-                    if (isCompleted) completedCount++;
-                    
-                    const statusStr = (out.status || "").toLowerCase();
-                    if (statusStr.includes('regular')) regularCount++; else displayCount++;
+            outlets.forEach(out => {
+                const outCode = (out.code || "").toUpperCase().trim();
+                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
+                
+                if (isCompleted) completedCount++;
+                
+                const statusStr = (out.status || "").toLowerCase();
+                if (statusStr.includes('regular')) regularCount++; else displayCount++;
 
-                    const statusBadge = isCompleted ? 
-                        `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
-                        `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
+                const statusBadge = isCompleted ? 
+                    `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
+                    `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
 
-                    const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-                    const safeTown = escapeStr(out.townName);
-                    const safeSlab = escapeStr(out.slab || "Regular");
-                    const safeCode = escapeStr(outCode);
-                    const safeName = escapeStr(out.name);
-                    const safeOutletType = escapeStr(out.outletType || "");
-                    const displayStatusText = statusStr.includes('regular') ? 'Regular' : 'Display';
+                const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                const safeTown = escapeStr(out.townName);
+                const safeSlab = escapeStr(out.slab || "Regular");
+                const safeCode = escapeStr(outCode);
+                const safeName = escapeStr(out.name);
+                const safeOutletType = escapeStr(out.outletType || "");
+                const displayStatusText = statusStr.includes('regular') ? 'Regular' : 'Display';
 
-                    html += `
-                        <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}', '${safeOutletType}')" 
-                             class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
-                            <div class="pointer-events-none flex-grow">
-                                <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
-                                <div class="text-[11px] text-gray-500 mt-1 flex items-center">
-                                    <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
-                                    <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab} 
-                                    <span class="mx-1">•</span> <span class="${displayStatusText === 'Regular' ? 'text-gray-500' : 'text-blue-600'} font-bold">${displayStatusText}</span>
-                                </div>
+                html += `
+                    <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}', '${safeOutletType}')" 
+                         class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
+                        <div class="pointer-events-none flex-grow">
+                            <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
+                            <div class="text-[11px] text-gray-500 mt-1 flex items-center">
+                                <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
+                                <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab} 
+                                <span class="mx-1">•</span> <span class="${displayStatusText === 'Regular' ? 'text-gray-500' : 'text-blue-600'} font-bold">${displayStatusText}</span>
                             </div>
-                            <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
-                        </div>`;
-                });
+                        </div>
+                        <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
+                    </div>`;
+            });
+            
+            if (outlets.length === 0 && route) {
+                html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
             }
 
             const pjpList = document.getElementById('myDayPjpList');
-            if (pjpList) pjpList.innerHTML = html;
+            if (pjpList && route) pjpList.innerHTML = html;
             
             const totalCountEl = document.getElementById('pjpTotalCount');
             if (totalCountEl) totalCountEl.textContent = outlets.length;
