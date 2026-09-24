@@ -924,6 +924,7 @@
             </div>
             <div class="flex justify-between items-center px-1 mt-1">
                 <span id="mapCountDisplay" class="text-[11px] font-extrabold text-colgate">0 Outlets Found</span>
+                <span id="mapDistanceDisplay" class="text-[11px] font-extrabold text-blue-600 hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">0.0 km</span>
                 <div id="mapLoader" class="hidden items-center gap-1.5 text-[10px] text-gray-500 font-bold">
                     <div class="loader !w-3 !h-3 !border-[2px]"></div> লোড হচ্ছে...
                 </div>
@@ -3368,6 +3369,7 @@
                             name: pjpMatch ? pjpMatch.name : "Unknown Outlet",
                             town: pjpMatch ? pjpMatch.townName : "Unknown",
                             route: pjpMatch ? pjpMatch.routeName : "Unknown",
+                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown"
                         });
                     }
                 }
@@ -3431,11 +3433,14 @@
                         <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
                         <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
                         <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
+                        <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
                     </div>
                 `);
                 
                 mapMarkerLayer.addLayer(marker);
             });
+
+            let totalMeters = 0;
 
             // If filtered down to a reasonable number and a route is selected, connect the dots with a polyline.
             if (filtered.length < 500 && routeFilter) {
@@ -3466,6 +3471,7 @@
                             }
                         });
                         
+                        totalMeters += minDist;
                         sortedGeo.push(remaining[nearestIdx]);
                         remaining.splice(nearestIdx, 1);
                     }
@@ -3478,6 +3484,16 @@
                         dashArray: '5, 5'
                     }).addTo(mapPolylineLayer);
                 });
+            }
+
+            const distDisplay = document.getElementById('mapDistanceDisplay');
+            if (distDisplay) {
+                if (totalMeters > 0 && routeFilter) {
+                    distDisplay.textContent = 'Route: ' + (totalMeters / 1000).toFixed(1) + ' km';
+                    distDisplay.classList.remove('hidden');
+                } else {
+                    distDisplay.classList.add('hidden');
+                }
             }
 
             try {
