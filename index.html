@@ -904,7 +904,7 @@
 
         lucide.createIcons();
 
-        // Custom Modal Logic to replace window.alert and window.confirm
+        // Custom Modal Logic
         window.showAlert = (msg) => {
             document.getElementById('customAlertMsg').textContent = msg;
             const modal = document.getElementById('customAlert');
@@ -941,10 +941,11 @@
         window.alert = window.showAlert;
 
         // ===============================================
-        // Constants (Replace SCRIPT_URL if necessary)
+        // Constants
         // ===============================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
         const NEW_OUTLET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvNoIajBiG8BQdSDpRorTzqk0AgK7vOr7o_INMJ03aJVJ-aBHN8BB3xKKqrXkNbTBm/exec';
+        const LOCATION_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwu8lVlJwbm2BpxgLFAB_AhsLQpVY4eoxdeQubPRUUQQ3B6dKf7I4ELV7jr-b18IRHc/exec';
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
@@ -963,6 +964,71 @@
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
         let locationIntervalId = null;
+
+        // ==========================================
+        // ENHANCED GPS LOCATION LOGIC
+        // ==========================================
+        function getGPSLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    globalLatitude = "No GPS Support";
+                    globalLongitude = "No GPS Support";
+                    finalLocationName = "No GPS Support";
+                    isLocationAcquired = false;
+                    resolve(false);
+                    return;
+                }
+
+                const locBadge = document.getElementById('cameraLocationBadge');
+                if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+
+                navigator.geolocation.getCurrentPosition(
+                    (p) => {
+                        globalLatitude = p.coords.latitude.toFixed(6);
+                        globalLongitude = p.coords.longitude.toFixed(6);
+                        finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                        if (locBadge) locBadge.textContent = finalLocationName;
+                        isLocationAcquired = true;
+                        resolve(true);
+                    },
+                    (error) => {
+                        console.warn("High Accuracy GPS failed, trying Network/Tower location...", error);
+                        navigator.geolocation.getCurrentPosition(
+                            (p2) => {
+                                globalLatitude = p2.coords.latitude.toFixed(6);
+                                globalLongitude = p2.coords.longitude.toFixed(6);
+                                finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                                if (locBadge) locBadge.textContent = finalLocationName;
+                                isLocationAcquired = true;
+                                resolve(true);
+                            },
+                            (err2) => {
+                                globalLatitude = "GPS Off / Denied";
+                                globalLongitude = "GPS Off / Denied";
+                                finalLocationName = "GPS Off / Denied";
+                                if (locBadge) locBadge.textContent = "GPS Off / Denied";
+                                isLocationAcquired = false;
+                                resolve(false);
+                            },
+                            { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 }
+                        );
+                    },
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                );
+            });
+        }
+
+        function initLocationFetch() {
+            getGPSLocation();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { 
+            checkRole(); 
+            getGPSLocation();
+            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
+                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
+            }
+        });
 
         // ==========================================
         // GLOBAL FILTER HELPERS
@@ -1070,11 +1136,6 @@
         // ==========================================
         // ROLE MANAGEMENT
         // ==========================================
-        window.addEventListener('DOMContentLoaded', () => { 
-            checkRole(); 
-            initLocationFetch(); // Fetch early!
-        });
-
         function checkRole() {
             const maintenance = localStorage.getItem('app_maintenance');
             if (maintenance === 'true' && localStorage.getItem('colgate_app_role') !== 'admin') {
@@ -2479,88 +2540,6 @@
         // CAMERA, GALLERY & LOCATION LOGIC
         // ==========================================
         
-        function initLocationFetch() {
-            if (isLocationAcquired && globalLatitude !== "Not Found" && globalLatitude !== "Denied") return;
-            
-            const locBadge = document.getElementById('cameraLocationBadge');
-            if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
-
-            if (locationIntervalId) {
-                clearInterval(locationIntervalId);
-                locationIntervalId = null;
-            }
-
-            const fetchLoc = () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (p) => {
-                            const lat = p.coords.latitude, lon = p.coords.longitude;
-                            globalLatitude = lat.toFixed(6);
-                            globalLongitude = lon.toFixed(6);
-                            finalLocationName = `${globalLatitude}, ${globalLongitude}`; 
-                            if (locBadge) locBadge.textContent = finalLocationName;
-                            isLocationAcquired = true; 
-                            
-                            if (locationIntervalId) {
-                                clearInterval(locationIntervalId);
-                                locationIntervalId = null;
-                            }
-                        }, 
-                        (error) => { 
-                            console.warn("High Accuracy GPS failed, trying fallback...", error);
-                            // Fallback to low accuracy (Mobile Tower)
-                            navigator.geolocation.getCurrentPosition(
-                                (p2) => {
-                                    const lat = p2.coords.latitude, lon = p2.coords.longitude;
-                                    globalLatitude = lat.toFixed(6);
-                                    globalLongitude = lon.toFixed(6);
-                                    finalLocationName = `${globalLatitude}, ${globalLongitude}`; 
-                                    if (locBadge) locBadge.textContent = finalLocationName;
-                                    isLocationAcquired = true; 
-                                    
-                                    if (locationIntervalId) {
-                                        clearInterval(locationIntervalId);
-                                        locationIntervalId = null;
-                                    }
-                                },
-                                (err2) => {
-                                    finalLocationName = "GPS Off / Denied"; 
-                                    globalLatitude = "Denied";
-                                    globalLongitude = "Denied";
-                                    if (locBadge) locBadge.textContent = "GPS Off"; 
-                                    isLocationAcquired = false; 
-                                },
-                                { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 }
-                            );
-                        }, 
-                        { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
-                    ); 
-                } else {
-                    finalLocationName = "No GPS Support";
-                    globalLatitude = "No Support";
-                    globalLongitude = "No Support";
-                    if (locBadge) locBadge.textContent = "No GPS Support";
-                    isLocationAcquired = false;
-                    if (locationIntervalId) {
-                        clearInterval(locationIntervalId);
-                        locationIntervalId = null;
-                    }
-                }
-            };
-
-            // First attempt to fetch location
-            fetchLoc();
-
-            // Set recurring check every 5 seconds until it finds it
-            locationIntervalId = setInterval(() => {
-                if (!isLocationAcquired) {
-                    fetchLoc();
-                } else {
-                    clearInterval(locationIntervalId);
-                }
-            }, 5000);
-        }
-
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -2752,7 +2731,7 @@
         });
 
         // ==========================================
-        // SUBMISSION
+        // SUBMISSION LOGIC (IMAGE THEN LOCATION)
         // ==========================================
         document.getElementById('customForm')?.addEventListener('submit', async e => {
             e.preventDefault(); 
@@ -2764,7 +2743,6 @@
                 btn.disabled = true; loader.classList.remove('hidden'); 
                 text.textContent = "আপলোড শুরু হচ্ছে...";
                 
-                // Smart Loading Texts to keep user engaged
                 let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
                 let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
                 
@@ -2778,7 +2756,6 @@
                 data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
                 data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
                 data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
-                
                 data.role = localStorage.getItem('colgate_app_role') || 'merchandiser';
 
                 if (data.role === 'sr') {
@@ -2789,24 +2766,33 @@
                     }
                 }
 
-                // Append the global location properly
-                data.latitude = globalLatitude;
-                data.longitude = globalLongitude;
-
+                // 1. Prepare Image Data for Script 1 (Main App)
                 data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
                 
+                // 2. Prepare Location Data for Script 2 (Location Updater)
+                const locationData = {
+                    shop_code: data.shop_code,
+                    latitude: globalLatitude,
+                    longitude: globalLongitude
+                };
+
                 try {
-                    // Send to Apps script
+                    // STEP 1: Send Image and basic form data to your main script
                     await fetch(SCRIPT_URL, { 
                         method: 'POST', 
                         body: JSON.stringify(data), 
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'text/plain;charset=utf-8'
-                        }
+                        mode: 'no-cors'
+                    });
+
+                    // STEP 2: Instantly send Location data to your new Location Script
+                    text.textContent = "লোকেশন সিঙ্ক হচ্ছে...";
+                    await fetch(LOCATION_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(locationData),
+                        mode: 'no-cors'
                     });
                     
-                    // Track Submission locally for UI instant feedback
+                    // Mark as submitted locally
                     const todayStr = new Date().toDateString();
                     let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
                     if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
@@ -2817,6 +2803,7 @@
                     }
                     localStorage.setItem('colgate_merch_session', JSON.stringify(s));
                     
+                    // Show success screen
                     document.getElementById('customForm').classList.add('hidden'); 
                     document.getElementById('successMessage').classList.remove('hidden');
                     
@@ -2833,10 +2820,11 @@
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
             };
 
-            // Before submitting, check if location is acquired
-            if (!isLocationAcquired || globalLatitude === "Not Found" || globalLatitude === "Denied") {
-                window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", (confirmed) => {
+            // Force GPS check before submitting
+            if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
+                window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
                     if (confirmed) {
+                        await getGPSLocation(); // Try one last time quickly
                         executeSubmit();
                     }
                 });
@@ -3051,13 +3039,7 @@
 
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
-            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
-                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
-            }
+            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে بدی না।");
         });
 
         document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
