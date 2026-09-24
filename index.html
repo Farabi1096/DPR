@@ -7,6 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Leaflet CSS & JS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
     <style>
         body {
             font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
@@ -58,6 +63,9 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Map specific fix */
+        #mapContainer { z-index: 10; }
     </style>
 </head>
 <body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
@@ -89,7 +97,7 @@
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
         
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
-            <!-- Red Pencil Art 1: Vertical Tube -->
+            <!-- Red Pencil Art -->
             <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
                 <svg viewBox="0 0 40 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-20">
                     <path d="M12 5 L28 5 L28 15 L12 15 Z" />
@@ -104,7 +112,6 @@
                     <rect x="15" y="30" width="10" height="45" rx="2" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 2: Squeezing Tube -->
             <div class="absolute top-12 -right-12 sm:-right-20 text-red-400 animate-sparkle sparkle-delay-1 opacity-60 z-0" style="transform: rotate(-30deg);">
                 <svg viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-10">
                     <rect x="85" y="10" width="6" height="30" />
@@ -116,7 +123,6 @@
                     <path d="M25 25 C 10 15, 15 40, 2 30" stroke-width="3" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 3: Tooth -->
             <div class="absolute -top-10 right-0 sm:-top-12 sm:right-4 text-red-400 animate-sparkle sparkle-delay-2 opacity-60 z-0" style="transform: rotate(15deg);">
                 <svg viewBox="0 0 50 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-12">
                     <path d="M10 25 Q 10 15 25 15 Q 40 15 40 25 C 40 40 35 55 30 55 C 25 55 25 45 25 45 C 25 45 25 55 20 55 C 15 55 10 40 10 25 Z" />
@@ -126,7 +132,6 @@
                     <line x1="30" y1="14" x2="34" y2="10" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 4: Toothbrush -->
             <div class="absolute top-24 -left-6 sm:top-28 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(10deg);">
                 <svg viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-8">
                     <rect x="30" y="25" width="85" height="6" rx="3" />
@@ -529,16 +534,17 @@
                         </div>
                     </div>
 
-                    <!-- UPDATED FILTER SECTION WITH CROSS MINI ICON -->
-                    <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-3 flex items-center gap-2">
-                        <div class="grid grid-cols-3 gap-2 flex-grow">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
+                    <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
+                        <div class="flex items-center gap-2">
+                            <div class="grid grid-cols-3 gap-2 flex-grow">
+                                <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-1 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
+                                <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
+                                <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-1 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
+                            </div>
+                            <button type="button" onclick="resetMyDayFilter()" class="flex-shrink-0 text-gray-400 hover:text-colgate transition-colors bg-white p-2 rounded-lg border border-gray-200 shadow-sm hover:border-red-200 group">
+                                <i data-lucide="x" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                            </button>
                         </div>
-                        <button type="button" onclick="resetMyDayFilter()" class="flex-shrink-0 text-gray-400 hover:text-red-500 bg-white w-[34px] h-[34px] rounded-lg border border-gray-200 shadow-sm transition-all hover:bg-red-50 hover:border-red-200 flex items-center justify-center">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
                     </div>
                 </div>
 
@@ -715,41 +721,30 @@
 
         <div class="p-5 overflow-y-auto flex-grow space-y-4 custom-scrollbar">
             
-            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-center mb-3 pb-2 border-b border-gray-100">
-                    <h3 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="activity" class="w-4 h-4 text-green-500 mr-1.5"></i> রিয়েল-টাইম স্ট্যাটাস</h3>
-                    <span id="adminDataDate" class="text-[10px] text-gray-400 font-medium">Loading...</span>
+            <!-- MONTHLY IMAGE UPLOAD STATUS -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-4">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
+                    <h3 class="text-[14px] font-bold text-gray-800 flex items-center"><i data-lucide="image" class="w-4 h-4 text-blue-500 mr-1.5"></i> Image Upload Status</h3>
+                    <select id="adminMonthFilter" class="bg-gray-50 border border-gray-200 text-[11px] font-bold py-1.5 px-2 rounded-lg outline-none focus:border-colgate text-gray-700 cursor-pointer">
+                        <option value="ALL">All Months</option>
+                    </select>
                 </div>
                 
                 <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">ডেটা সিঙ্ক হচ্ছে...</p></div>
 
-                <div id="adminStatsContent" class="hidden grid grid-cols-2 gap-2">
-                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">মোট আউটলেট</span>
-                        <span id="adminStatTotal" class="text-xl font-extrabold text-gray-800">0</span>
-                    </div>
-                    <div class="bg-green-50 p-3 rounded-xl border border-green-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-green-600 uppercase tracking-wide mb-1">মোট আপলোড</span>
-                        <span id="adminStatUploaded" class="text-xl font-extrabold text-green-700">0</span>
-                    </div>
-                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mb-1">ডিসপ্লে আউটলেট</span>
-                        <span id="adminStatDisplay" class="text-xl font-extrabold text-blue-700">0</span>
-                    </div>
-                    <div class="bg-orange-50 p-3 rounded-xl border border-orange-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mb-1">রেগুলার আউটলেট</span>
-                        <span id="adminStatRegular" class="text-xl font-extrabold text-orange-700">0</span>
-                    </div>
+                <div id="adminUploadStatsContent" class="space-y-3 hidden">
+                    <!-- Dynamic Bars will be injected here -->
                 </div>
             </div>
 
+            <!-- BUTTON GRID -->
             <div class="grid grid-cols-2 gap-3">
-                <button id="btnAdminForceSync" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-blue-50 hover:border-blue-200 transition-all group">
-                    <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
+                <button id="btnAdminMap" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-green-50 hover:border-green-200 transition-all group">
+                    <div class="bg-green-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map" class="w-5 h-5 text-green-600"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">ডেটা রিফ্রেশ</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">ম্যানুয়াল সিঙ্ক</span>
+                    <span class="text-[12px] font-bold text-gray-800">ম্যাপ ভিউ</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">লোকেশন ট্র্যাকিং</span>
                 </button>
 
                 <button id="btnAdminNewOutlet" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-colgate/10 hover:border-colgate/30 transition-all group">
@@ -759,20 +754,12 @@
                     <span class="text-[12px] font-bold text-gray-800">নতুন আউটলেট</span>
                     <span class="text-[9px] text-gray-400 mt-0.5">স্মাইল কর্ণার এন্ট্রি</span>
                 </button>
-                
-                <button id="btnAdminNotice" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-purple-50 hover:border-purple-200 transition-all group">
-                    <div class="bg-purple-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="bell-ring" class="w-5 h-5 text-purple-600"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">নোটিশ বোর্ড</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">টিম মেসেজ</span>
-                </button>
 
-                <button id="btnAdminGallery" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center transition-all group">
+                <button id="btnAdminGallery" class="col-span-2 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center transition-all group hover:bg-gray-50">
                     <div id="galleryIconBg" class="bg-gray-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="image" id="galleryIcon" class="w-5 h-5 text-gray-500"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">গ্যালারি এক্সেস</span>
+                    <span class="text-[12px] font-bold text-gray-800">গ্যালারি এক্সেস (Gallery Access)</span>
                     <span id="galleryStatusText" class="text-[9px] font-bold text-red-500 mt-0.5">Locked</span>
                 </button>
             </div>
@@ -790,17 +777,26 @@
         </div>
     </div>
 
-    <!-- Notice Input Modal for Admin -->
-    <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
-            <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> গ্লোবাল নোটিশ</h3>
-            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে。</p>
-            <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="আপনার মেসেজ লিখুন..."></textarea>
-            <div class="flex gap-3">
-                <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">নোটিশ মুছুন</button>
-                <button onclick="saveNotice()" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md text-[13px]">সেভ করুন</button>
+    <!-- Admin Map Modal -->
+    <div id="adminMapModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+        <div class="bg-white rounded-2xl w-full max-w-2xl p-5 shadow-2xl transform scale-95 transition-transform flex flex-col h-[80vh]">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3 shrink-0">
+                <h3 class="text-[16px] font-bold text-gray-800 flex items-center"><i data-lucide="map" class="w-5 h-5 text-green-500 mr-2"></i> ম্যাপ ভিউ (Map View)</h3>
+                <button onclick="closeAdminMapModal()" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <button onclick="closeNoticeModal()" class="w-full mt-3 text-[12px] text-gray-400 font-medium hover:text-gray-600">বাতিল করুন</button>
+            
+            <div class="mb-3 shrink-0">
+                <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1.5">Filter by Merchandiser</label>
+                <select id="mapMerchFilter" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-2.5 text-[13px] outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all font-bold text-gray-700">
+                    <option value="ALL">All Merchandisers (সবাই)</option>
+                </select>
+            </div>
+            
+            <!-- Map Container -->
+            <div id="mapContainer" class="flex-grow rounded-xl overflow-hidden border border-gray-200 bg-gray-100 relative shadow-inner w-full">
+                <!-- Leaflet JS injects here -->
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-[12px] font-medium z-0">Loading Map...</div>
+            </div>
         </div>
     </div>
 
@@ -873,7 +869,7 @@
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('selectstart', event => {
             const tagName = (event.target.tagName || '').toLowerCase();
-            if (tagName !== 'input' && tagName !== 'textarea') event.preventDefault();
+            if (tagName !== 'input' && tagName !== 'textarea' && tagName !== 'select') event.preventDefault();
         });
         document.onkeydown = function(e) {
             if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(String.fromCharCode(e.keyCode))) || (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))) {
@@ -943,6 +939,11 @@
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
         let locationIntervalId = null;
+        
+        // Admin Map State
+        let uploadedImagesData = [];
+        let adminMap = null;
+        let mapMarkers = [];
 
         // ==========================================
         // ENHANCED GPS LOCATION LOGIC
@@ -1026,91 +1027,202 @@
              return detailedReportData.filter(d => activeCodes.has(d.code));
         }
 
-        // ==========================================
-        // TIME FETCHING LOGIC
-        // ==========================================
-        function getMerchTimes() {
-            let startStr = '--:--';
-            let endStr = '--:--';
-            let totalStr = '0ঘ 0মি';
-            
-            const currentMerch = localStorage.getItem('colgate_app_merch_name');
-            
-            const formatSheetDate = (dateStr) => {
-                if (!dateStr || dateStr === 'null' || dateStr === 'undefined' || dateStr === '') return '--:--';
-                if (dateStr.includes('Date(')) {
-                    const match = dateStr.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)\)/);
-                    if (match && match.length === 7) {
-                        let hours = parseInt(match[4], 10);
-                        const minutes = parseInt(match[5], 10);
-                        const ampm = hours >= 12 ? 'PM' : 'AM';
-                        hours = hours % 12;
-                        hours = hours ? hours : 12; 
-                        const minStr = minutes < 10 ? '0' + minutes : minutes;
-                        return `${hours}:${minStr} ${ampm}`;
-                    }
-                }
-                return dateStr;
-            };
+        function populateMonthDropdown() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const d = new Date();
+            const currentMonth = monthNames[d.getMonth()];
+            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
 
-            const formatTotalTime = (totalStrInput) => {
-                if (!totalStrInput || totalStrInput === 'null' || totalStrInput === 'undefined' || totalStrInput === '') return '0ঘ 0মি';
-                if(totalStrInput.includes('ঘ') || totalStrInput.includes('মি')) return totalStrInput;
-                const parts = String(totalStrInput).split('.');
-                if(parts.length > 0) {
-                     const h = parseInt(parts[0], 10) || 0;
-                     let m = 0;
-                     if(parts.length > 1) {
-                         let minStr = parts[1].length === 1 ? parts[1] + '0' : parts[1].substring(0, 2);
-                         m = parseInt(minStr, 10) || 0;
-                     }
-                     return `${h}ঘ ${m}মি`;
-                }
-                return totalStrInput;
-            };
-
-            if (currentMerch && typeof dailySummaryData !== 'undefined' && dailySummaryData.length > 0) {
-                const row = dailySummaryData.find(r => r.some(cell => cell.toLowerCase() === currentMerch.toLowerCase()));
-                if (row) {
-                    const merchIdx = row.findIndex(cell => cell.toLowerCase() === currentMerch.toLowerCase());
-                    if (merchIdx >= 0 && row.length > merchIdx + 1) {
-                        startStr = formatSheetDate(row[merchIdx + 1]);
-                        endStr = formatSheetDate(row[merchIdx + 2]);
-                        totalStr = formatTotalTime(row[merchIdx + 3]);
-                        return { startStr, endStr, totalStr }; 
-                    }
-                }
+            const formMonth = document.getElementById('formMonth');
+            if (formMonth) {
+                formMonth.innerHTML = `
+                    <option value="${currentMonth}" selected>${currentMonth}</option>
+                    <option value="${prevMonth}">${prevMonth}</option>
+                `;
             }
-            
-            const currentPJP = getFilteredPJP();
-            for (let pjp of currentPJP) {
-                const r = reportData.find(d => d.code && pjp.code && d.code.toUpperCase() === pjp.code.toUpperCase());
-                if (r && r.startTime && r.startTime !== '' && r.startTime !== 'null' && r.startTime !== 'undefined') {
-                    startStr = formatSheetDate(r.startTime);
-                    if(r.endTime && r.endTime !== 'null' && r.endTime !== 'undefined') endStr = formatSheetDate(r.endTime);
-                    if(r.totalTime && r.totalTime !== 'null' && r.totalTime !== 'undefined') totalStr = formatTotalTime(r.totalTime);
-                    break;
-                }
-            }
-            
-            return { startStr, endStr, totalStr };
         }
 
-        window.updateTimeUI = () => {
-            const dateDisplay = document.getElementById('currentDateDisplay');
-            if (dateDisplay) {
-                dateDisplay.textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+        // ==========================================
+        // DATA LOADING & PARSING
+        // ==========================================
+        async function fetchSheetData(tabName) {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const data = JSON.parse(jsonString);
+                return data.table.rows;
+            } catch (error) { 
+                console.error("Error fetching " + tabName, error); 
+                return []; 
             }
+        }
+
+        function parseCSV(str) {
+            const arr = [];
+            let quote = false;
+            let col = 0, row = 0;
+            for (let c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
+
+        // Add this to load map coordinates for Admin
+        async function fetchImagesData() {
+            try {
+                const imgRows = await fetchSheetData('Images');
+                uploadedImagesData = imgRows.map(row => {
+                    const getVal = (idx) => row.c && row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    return {
+                        code: getVal(5).toUpperCase(), // F column (Shop code) is index 5
+                        lat: getVal(18), // S column (Latitude) is index 18
+                        lng: getVal(19)  // T column (Longitude) is index 19
+                    };
+                }).filter(i => i.code && i.lat && !isNaN(parseFloat(i.lat)) && !isNaN(parseFloat(i.lng)));
+            } catch(e) { console.log('Images load error', e); }
+        }
+
+        async function fetchDetailedReport() {
+            if (isDetailedReportLoaded) return;
+            const loader = document.getElementById('reportLoader');
+            const list = document.getElementById('reportList');
+            if (loader) loader.classList.remove('hidden');
+            if (list) list.classList.add('hidden');
             
-            const times = getMerchTimes();
-            const startEl = document.getElementById('statStartTime');
-            const endEl = document.getElementById('statEndTime');
-            const totalEl = document.getElementById('statTotalTime');
-            
-            if (startEl) startEl.textContent = times.startStr;
-            if (endEl) endEl.textContent = times.endStr;
-            if (totalEl) totalEl.textContent = times.totalStr;
-        };
+            try {
+                const res = await fetch(REPORT_CSV_URL);
+                const text = await res.text();
+                const rows = parseCSV(text);
+                
+                detailedReportData = [];
+                for(let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if(row.length > 4 && row[4]) {
+                        detailedReportData.push({
+                            month: row[0],
+                            zone: row[1], 
+                            dbCode: row[2],
+                            dhName: row[3],
+                            code: row[4].trim().toUpperCase(),
+                            name: row[5],
+                            route: row[6],
+                            slab: row[7],
+                            enrolled: row[8],
+                            target: row[9],
+                            totStt: row[10],
+                            ach: row[11],
+                            balance: row[12],
+                            eligible: row[13],
+                            imgUpload: row[14],
+                            imgUploadCount: row[15],
+                            payout: row[16],
+                            startTime: row[17] ? row[17].trim() : '',
+                            endTime: row[18] ? row[18].trim() : '',
+                            totalTime: row[19] ? row[19].trim() : ''
+                        });
+                    }
+                }
+                isDetailedReportLoaded = true;
+                
+                // Initialize Report Dropdowns
+                const regionSelect = document.getElementById('reportRegionSelect');
+                if(regionSelect) {
+                    const regions = [...new Set(detailedReportData.map(d => d.zone))].filter(Boolean).sort();
+                    regionSelect.innerHTML = '<option value="">Region নির্বাচন করুন</option>' + regions.map(name => `<option value="${name}">${name}</option>`).join('');
+                    regionSelect.disabled = regions.length === 0;
+                    regionSelect.classList.remove('bg-gray-100', 'text-gray-500');
+                    regionSelect.classList.add('bg-white', 'text-gray-700');
+                }
+                
+                renderDetailedReport();
+                renderOnePagerReport();
+            } catch (e) {
+                console.error('Failed to load report CSV', e);
+                if(list) list.innerHTML = `<div class="text-center text-red-500 text-sm py-4">রিপোর্ট লোড করতে সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করুন।</div>`;
+            } finally {
+                if(loader) loader.classList.add('hidden');
+                if(list) list.classList.remove('hidden');
+            }
+        }
+
+        async function loadAllData() {
+            const loader = document.getElementById('myDayLoader');
+            if (loader) loader.classList.remove('hidden');
+            try {
+                try {
+                    const summaryRows = await fetchSheetData('Daily_Summary');
+                    dailySummaryData = summaryRows.map(row => {
+                        return row.c.map(cell => cell && cell.v != null ? String(cell.v).trim() : "");
+                    });
+                } catch(e) { console.log('Daily_Summary error', e); }
+
+                const pjpRows = await fetchSheetData('PJP');
+                pjpData = pjpRows.map(row => {
+                    const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    return {
+                        region: getVal(0),        // A
+                        zone: getVal(1),          // B
+                        territory: getVal(2),     // C
+                        distCode: getVal(3),      // D
+                        townName: getVal(4),      // E (DB Name)
+                        code: getVal(5),          // F (Outlet Code)
+                        name: getVal(6),          // G (Outlet Name)
+                        slab: getVal(7),          // H (Slab)
+                        routeCode: getVal(8),     // I
+                        routeName: getVal(9),     // J
+                        visitDay: getVal(10),     // K
+                        merchandiser: getVal(11), // L
+                        status: getVal(12),       // M (Outlet Status)
+                        outletType: getVal(13),   // N (Unit)
+                        clusterName: getVal(14) || getVal(9)
+                    };
+                }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
+
+                const reportRows = await fetchSheetData('Report');
+                reportData = reportRows.map(row => {
+                    const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    return { 
+                        code: getVal(3), 
+                        imageUpload: getVal(13),
+                        startTime: getVal(17),
+                        endTime: getVal(18),
+                        totalTime: getVal(19)
+                    };
+                }).filter(i => i.code !== "Outlet Code");
+
+                isDataLoaded = true;
+                
+                const role = localStorage.getItem('colgate_app_role');
+                if (role === 'admin') {
+                    // Handled inside loadAdminDashboard
+                } else {
+                    populateDropdowns();
+                    initOnePagerFilters();
+                    
+                    const myDayView = document.getElementById('myDayView');
+                    if (myDayView && !myDayView.classList.contains('hidden')) {
+                        renderMyDayPJP();
+                    }
+                }
+                
+                if (loader) loader.classList.add('hidden');
+            } catch (error) {
+                console.error("Data loading error:", error);
+                window.showAlert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
+                if (loader) loader.classList.add('hidden');
+            }
+        }
 
         // ==========================================
         // ROLE MANAGEMENT
@@ -1121,13 +1233,6 @@
                 document.body.innerHTML = `<div class="flex flex-col items-center justify-center h-screen bg-white text-center p-6"><i data-lucide="settings" class="w-16 h-16 text-orange-500 mb-4 animate-spin"></i><h2 class="text-xl font-bold text-gray-800 mb-2">System Maintenance</h2><p class="text-gray-500 text-[13px]">অ্যাপটিতে বর্তমানে আপডেটের কাজ চলছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।</p></div>`;
                 lucide.createIcons();
                 return;
-            }
-
-            const notice = localStorage.getItem('global_notice');
-            const noticeSeen = sessionStorage.getItem('notice_seen');
-            if (notice && !noticeSeen) {
-                window.showAlert("নোটিশ:\n" + notice);
-                sessionStorage.setItem('notice_seen', 'true');
             }
 
             const role = localStorage.getItem('colgate_app_role');
@@ -1207,7 +1312,6 @@
                 if (document.getElementById('reportView') && !document.getElementById('reportView').classList.contains('hidden')) {
                     renderOnePagerReport();
                 }
-                window.updateTimeUI();
             }
         }
 
@@ -1268,129 +1372,6 @@
             });
         };
 
-        function populateMonthDropdown() {
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const d = new Date();
-            const currentMonth = monthNames[d.getMonth()];
-            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
-
-            const formMonth = document.getElementById('formMonth');
-            if (formMonth) {
-                formMonth.innerHTML = `
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
-                    <option value="${prevMonth}">${prevMonth}</option>
-                `;
-            }
-        }
-
-        // ==========================================
-        // DATA LOADING & PARSING
-        // ==========================================
-        async function fetchSheetData(tabName) {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                const data = JSON.parse(jsonString);
-                return data.table.rows;
-            } catch (error) { 
-                console.error("Error fetching " + tabName, error); 
-                return []; 
-            }
-        }
-
-        function parseCSV(str) {
-            const arr = [];
-            let quote = false;
-            let col = 0, row = 0;
-            for (let c = 0; c < str.length; c++) {
-                let cc = str[c], nc = str[c+1];
-                arr[row] = arr[row] || [];
-                arr[row][col] = arr[row][col] || '';
-                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
-                if (cc == '"') { quote = !quote; continue; }
-                if (cc == ',' && !quote) { ++col; continue; }
-                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
-                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
-                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
-                arr[row][col] += cc;
-            }
-            return arr;
-        }
-
-        async function loadAllData() {
-            const loader = document.getElementById('myDayLoader');
-            if (loader) loader.classList.remove('hidden');
-            try {
-                try {
-                    const summaryRows = await fetchSheetData('Daily_Summary');
-                    dailySummaryData = summaryRows.map(row => {
-                        return row.c.map(cell => cell && cell.v != null ? String(cell.v).trim() : "");
-                    });
-                } catch(e) {
-                    console.log('Daily_Summary not found or error parsing', e);
-                }
-
-                const pjpRows = await fetchSheetData('PJP');
-                pjpData = pjpRows.map(row => {
-                    const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
-                    return {
-                        region: getVal(0),        // A
-                        zone: getVal(1),          // B
-                        territory: getVal(2),     // C
-                        distCode: getVal(3),      // D
-                        townName: getVal(4),      // E (DB Name)
-                        code: getVal(5),          // F (Outlet Code)
-                        name: getVal(6),          // G (Outlet Name)
-                        slab: getVal(7),          // H (Slab)
-                        routeCode: getVal(8),     // I
-                        routeName: getVal(9),     // J
-                        visitDay: getVal(10),     // K
-                        merchandiser: getVal(11), // L
-                        status: getVal(12),       // M (Outlet Status - Regular/Display)
-                        outletType: getVal(13),   // N (Unit - DCC/ROB/SMT)
-                        clusterName: getVal(14) || getVal(9)
-                    };
-                }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
-
-                const reportRows = await fetchSheetData('Report');
-                reportData = reportRows.map(row => {
-                    const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
-                    return { 
-                        code: getVal(3), 
-                        imageUpload: getVal(13),
-                        startTime: getVal(17),
-                        endTime: getVal(18),
-                        totalTime: getVal(19)
-                    };
-                }).filter(i => i.code !== "Outlet Code");
-
-                isDataLoaded = true;
-                
-                const role = localStorage.getItem('colgate_app_role');
-                if (role === 'admin') {
-                    updateAdminStats();
-                } else {
-                    populateDropdowns();
-                    initOnePagerFilters();
-                    
-                    const myDayView = document.getElementById('myDayView');
-                    if (myDayView && !myDayView.classList.contains('hidden')) {
-                        renderMyDayPJP();
-                    }
-                }
-                
-                window.updateTimeUI();
-                
-                if (loader) loader.classList.add('hidden');
-            } catch (error) {
-                console.error("Data loading error:", error);
-                window.showAlert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
-                if (loader) loader.classList.add('hidden');
-            }
-        }
-
         // ==========================================
         // FORM: EVENT LISTENERS & POPULATION
         // ==========================================
@@ -1437,10 +1418,10 @@
                     srOutletSelect.disabled = true;
                 }
                 
-                const fShopCode = document.getElementById('formShopCode');
-                if(fShopCode) fShopCode.value = '';
-                const fSlab = document.getElementById('formSlab');
-                if(fSlab) fSlab.value = '';
+                const formShopCode = document.getElementById('formShopCode');
+                if (formShopCode) formShopCode.value = '';
+                const formSlab = document.getElementById('formSlab');
+                if (formSlab) formSlab.value = '';
             });
         }
 
@@ -1454,7 +1435,7 @@
             
             if (areaSelect) {
                 if (formSelectedType) {
-                    const formPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === formSelectedType.toUpperCase());
+                    const formPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase().trim() === formSelectedType.toUpperCase().trim());
                     const areas = [...new Set(formPjp.map(i => i.region))].filter(Boolean).sort();
                     areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
                                         areas.map(a => `<option value="${a}">${a}</option>`).join('');
@@ -1473,7 +1454,7 @@
                 if (myDaySelectedType) {
                     let myDayPjp = currentPJP;
                     if(myDaySelectedType !== 'ALL') {
-                        myDayPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
+                        myDayPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase().trim() === myDaySelectedType.toUpperCase().trim());
                     }
                     const towns = [...new Set(myDayPjp.map(i => i.townName))].filter(Boolean).sort();
                     myDayTownSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>' + 
@@ -1520,7 +1501,7 @@
             
             let filtered = getFilteredPJP().filter(i => i.region === selectedArea);
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             if (role === 'sr') {
@@ -1569,7 +1550,7 @@
             
             let filtered = getFilteredPJP().filter(i => i.region === selectedArea && i.territory === selectedTerritory);
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             const dists = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
@@ -1608,7 +1589,7 @@
                 filtered = filtered.filter(i => i.territory === selectedTerritory);
             }
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
             
             const match = filtered.find(item => item.townName === dbName);
@@ -1629,10 +1610,10 @@
                     srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
                     srOutletSelect.disabled = true;
                 }
-                const fShopCode = document.getElementById('formShopCode');
-                if(fShopCode) fShopCode.value = '';
-                const fSlab = document.getElementById('formSlab');
-                if(fSlab) fSlab.value = '';
+                const formShopCode = document.getElementById('formShopCode');
+                if (formShopCode) formShopCode.value = '';
+                const formSlab = document.getElementById('formSlab');
+                if (formSlab) formSlab.value = '';
             }
         });
 
@@ -1649,10 +1630,11 @@
             }
             
             if (selectedType) {
-                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
-            if (selectedType && selectedType.toUpperCase() !== 'SMT') {
+            // Remove the strict display filter for SR so they can see DCC options too
+            if (selectedType && selectedType.toUpperCase().trim() === 'ROB') {
                 outlets = outlets.filter(i => i.status && !i.status.toLowerCase().includes('regular'));
             }
             
@@ -1662,42 +1644,54 @@
                                         outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab || 'Regular'})</option>`).join('');
                 srOutletSelect.disabled = outlets.length === 0;
             }
-            const fShopCode = document.getElementById('formShopCode');
-            if(fShopCode) fShopCode.value = '';
-            const fSlab = document.getElementById('formSlab');
-            if(fSlab) fSlab.value = '';
+            const formShopCode = document.getElementById('formShopCode');
+            if (formShopCode) formShopCode.value = '';
+            const formSlab = document.getElementById('formSlab');
+            if (formSlab) formSlab.value = '';
         });
 
         document.getElementById('srOutletSelect')?.addEventListener('change', (e) => {
             const selectedCode = e.target.value;
             const outlet = getFilteredPJP().find(i => i.code === selectedCode);
             if(outlet) {
-                const fShopCode = document.getElementById('formShopCode');
-                if(fShopCode) fShopCode.value = outlet.code || '';
-                const fSlab = document.getElementById('formSlab');
-                if(fSlab) fSlab.value = outlet.slab;
+                const formShopCode = document.getElementById('formShopCode');
+                if (formShopCode) formShopCode.value = outlet.code || '';
+                const formSlab = document.getElementById('formSlab');
+                if (formSlab) formSlab.value = outlet.slab;
             }
         });
 
         // ==========================================
         // MY DAY LOGIC
         // ==========================================
+        
         window.resetMyDayFilter = () => {
-            document.getElementById('myDayTownSelect').value = '';
-            document.getElementById('myDayTownSelect').dispatchEvent(new Event('change'));
+            const myDayTownSelect = document.getElementById('myDayTownSelect');
+            if(myDayTownSelect) {
+                myDayTownSelect.value = '';
+                myDayTownSelect.dispatchEvent(new Event('change'));
+            }
             
-            document.getElementById('myDayVisitDaySelect').innerHTML = '<option value="" disabled selected>Day (বার)</option>';
-            document.getElementById('myDayVisitDaySelect').disabled = true;
-            document.getElementById('myDayVisitDaySelect').classList.add('bg-gray-100', 'text-gray-500');
-            document.getElementById('myDayVisitDaySelect').classList.remove('bg-white', 'text-gray-700');
+            const myDayVisitDaySelect = document.getElementById('myDayVisitDaySelect');
+            if(myDayVisitDaySelect) {
+                myDayVisitDaySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>';
+                myDayVisitDaySelect.disabled = true;
+                myDayVisitDaySelect.classList.add('bg-gray-100', 'text-gray-500');
+                myDayVisitDaySelect.classList.remove('bg-white', 'text-gray-700');
+            }
             
-            document.getElementById('myDayRouteSelect').innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
-            document.getElementById('myDayRouteSelect').disabled = true;
-            document.getElementById('myDayRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
-            document.getElementById('myDayRouteSelect').classList.remove('bg-white', 'text-gray-700');
+            const myDayRouteSelect = document.getElementById('myDayRouteSelect');
+            if(myDayRouteSelect) {
+                myDayRouteSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                myDayRouteSelect.disabled = true;
+                myDayRouteSelect.classList.add('bg-gray-100', 'text-gray-500');
+                myDayRouteSelect.classList.remove('bg-white', 'text-gray-700');
+            }
             
-            document.getElementById('myDayPjpContainer').classList.add('hidden');
-            document.getElementById('myDayPjpList').innerHTML = '';
+            const pjpContainer = document.getElementById('myDayPjpContainer');
+            if(pjpContainer) pjpContainer.classList.add('hidden');
+            const pjpList = document.getElementById('myDayPjpList');
+            if(pjpList) pjpList.innerHTML = '';
             
             const radios = document.getElementsByName('myday_outlet_type');
             for (let r of radios) {
@@ -1706,6 +1700,14 @@
                 }
             }
             populateDropdowns();
+            
+            // Reset Counter manually
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = '0';
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = '0';
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = '0';
         };
 
         const myDayTypeRadios = document.getElementsByName('myday_outlet_type');
@@ -1713,21 +1715,32 @@
             r.addEventListener('change', () => {
                 populateDropdowns(); 
                 
-                document.getElementById('myDayTownSelect').innerHTML = '<option value="" disabled selected>Town (টাউন)</option>';
-                document.getElementById('myDayTownSelect').disabled = true;
+                const myDayTownSelect = document.getElementById('myDayTownSelect');
+                if(myDayTownSelect) {
+                    myDayTownSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>';
+                    myDayTownSelect.disabled = true;
+                }
                 
-                document.getElementById('myDayVisitDaySelect').innerHTML = '<option value="" disabled selected>Day (বার)</option>';
-                document.getElementById('myDayVisitDaySelect').disabled = true;
-                document.getElementById('myDayVisitDaySelect').classList.add('bg-gray-100', 'text-gray-500');
-                document.getElementById('myDayVisitDaySelect').classList.remove('bg-white', 'text-gray-700');
+                const myDayVisitDaySelect = document.getElementById('myDayVisitDaySelect');
+                if(myDayVisitDaySelect) {
+                    myDayVisitDaySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>';
+                    myDayVisitDaySelect.disabled = true;
+                    myDayVisitDaySelect.classList.add('bg-gray-100', 'text-gray-500');
+                    myDayVisitDaySelect.classList.remove('bg-white', 'text-gray-700');
+                }
                 
-                document.getElementById('myDayRouteSelect').innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
-                document.getElementById('myDayRouteSelect').disabled = true;
-                document.getElementById('myDayRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
-                document.getElementById('myDayRouteSelect').classList.remove('bg-white', 'text-gray-700');
+                const myDayRouteSelect = document.getElementById('myDayRouteSelect');
+                if(myDayRouteSelect) {
+                    myDayRouteSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                    myDayRouteSelect.disabled = true;
+                    myDayRouteSelect.classList.add('bg-gray-100', 'text-gray-500');
+                    myDayRouteSelect.classList.remove('bg-white', 'text-gray-700');
+                }
                 
-                document.getElementById('myDayPjpContainer').classList.add('hidden');
-                document.getElementById('myDayPjpList').innerHTML = '';
+                const pjpContainer = document.getElementById('myDayPjpContainer');
+                if(pjpContainer) pjpContainer.classList.add('hidden');
+                const pjpList = document.getElementById('myDayPjpList');
+                if(pjpList) pjpList.innerHTML = '';
             });
         }
 
@@ -1737,7 +1750,7 @@
             
             let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
             if (selectedType && selectedType !== 'ALL') {
-                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             const days = [...new Set(filteredPjp.map(i => i.visitDay))].filter(Boolean).sort();
@@ -1764,7 +1777,8 @@
             const list = document.getElementById('myDayPjpList');
             if (list) list.innerHTML = '';
             
-            renderMyDayPJP();
+            // Dynamic count logic for Town level
+            updateMyDayStats(filteredPjp);
         });
 
         document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
@@ -1774,7 +1788,7 @@
             
             let filteredPjp = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
             if (selectedType && selectedType !== 'ALL') {
-                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             const routes = [...new Set(filteredPjp.map(i => i.routeName))].filter(Boolean).sort();
@@ -1793,27 +1807,47 @@
             const list = document.getElementById('myDayPjpList');
             if (list) list.innerHTML = '';
             
-            renderMyDayPJP();
+            // Dynamic count logic for Day level
+            updateMyDayStats(filteredPjp);
         });
 
         document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
 
-        function renderMyDayPJP() {
-            window.updateTimeUI();
+        function updateMyDayStats(outletsArray) {
+            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
+            const todayStr = new Date().toDateString();
+            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
+            let completedCount = 0;
+
+            outletsArray.forEach(out => {
+                const outCode = (out.code || "").toUpperCase().trim();
+                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
+                if (isCompleted) completedCount++;
+            });
+
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = outletsArray.length;
             
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
+            
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = outletsArray.length - completedCount;
+        }
+
+        function renderMyDayPJP() {
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            if (!town) return;
+            if (!town || !day || !route) return;
 
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            let outlets = getFilteredPJP().filter(i => i.townName === town);
-            if (day) outlets = outlets.filter(i => i.visitDay === day);
-            if (route) outlets = outlets.filter(i => i.routeName === route);
+            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
             
             if (selectedType && selectedType !== 'ALL') {
-                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
@@ -1821,65 +1855,58 @@
             const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
 
             const pjpContainer = document.getElementById('myDayPjpContainer');
-            if (pjpContainer && route) pjpContainer.classList.remove('hidden');
+            if (pjpContainer) pjpContainer.classList.remove('hidden');
             
             const routeLabel = document.getElementById('myDaySelectedRouteLabel');
-            if (routeLabel) routeLabel.textContent = route || "Not Selected";
+            if (routeLabel) routeLabel.textContent = route;
 
             let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             
-            outlets.forEach(out => {
-                const outCode = (out.code || "").toUpperCase().trim();
-                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
-                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                
-                if (isCompleted) completedCount++;
-                
-                const statusStr = (out.status || "").toLowerCase();
-                if (statusStr.includes('regular')) regularCount++; else displayCount++;
-
-                const statusBadge = isCompleted ? 
-                    `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
-                    `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
-
-                const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-                const safeTown = escapeStr(out.townName);
-                const safeSlab = escapeStr(out.slab || "Regular");
-                const safeCode = escapeStr(outCode);
-                const safeName = escapeStr(out.name);
-                const safeOutletType = escapeStr(out.outletType || "");
-                const displayStatusText = statusStr.includes('regular') ? 'Regular' : 'Display';
-
-                html += `
-                    <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}', '${safeOutletType}')" 
-                         class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
-                        <div class="pointer-events-none flex-grow">
-                            <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
-                            <div class="text-[11px] text-gray-500 mt-1 flex items-center">
-                                <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
-                                <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab} 
-                                <span class="mx-1">•</span> <span class="${displayStatusText === 'Regular' ? 'text-gray-500' : 'text-blue-600'} font-bold">${displayStatusText}</span>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
-                    </div>`;
-            });
-            
-            if (outlets.length === 0 && route) {
+            if (outlets.length === 0) {
                 html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
+            } else {
+                outlets.forEach(out => {
+                    const outCode = (out.code || "").toUpperCase().trim();
+                    const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                    const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
+                    
+                    if (isCompleted) completedCount++;
+                    
+                    const statusStr = (out.status || "").toLowerCase();
+                    if (statusStr.includes('regular')) regularCount++; else displayCount++;
+
+                    const statusBadge = isCompleted ? 
+                        `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-green-300 shadow-sm"><i data-lucide="check-circle-2" class="h-3 w-3 mr-1"></i> Uploaded</span>` :
+                        `<div class="bg-colgate text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center border border-red-700 shadow-sm"><i data-lucide="camera" class="h-3 w-3 mr-1"></i> Upload</div>`;
+
+                    const escapeStr = (str) => String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                    const safeTown = escapeStr(out.townName);
+                    const safeSlab = escapeStr(out.slab || "Regular");
+                    const safeCode = escapeStr(outCode);
+                    const safeName = escapeStr(out.name);
+                    const safeOutletType = escapeStr(out.outletType || "");
+                    const displayStatusText = statusStr.includes('regular') ? 'Regular' : 'Display';
+
+                    html += `
+                        <div onclick="window.openUploadForm('', '${safeTown}', '${safeTown}', '${safeSlab}', '${safeCode}', '${safeOutletType}')" 
+                             class="flex items-center justify-between p-3 rounded-lg border ${isCompleted ? 'border-green-400 bg-green-50/60 shadow-sm' : 'border-red-200 bg-white shadow-sm'} transition-all cursor-pointer hover:shadow-md mb-2">
+                            <div class="pointer-events-none flex-grow">
+                                <div class="font-bold text-[13px] text-gray-800">${safeName}</div>
+                                <div class="text-[11px] text-gray-500 mt-1 flex items-center">
+                                    <i data-lucide="hash" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeCode} 
+                                    <span class="mx-1">•</span> <i data-lucide="layers" class="h-3 w-3 mr-0.5 opacity-70"></i>${safeSlab} 
+                                    <span class="mx-1">•</span> <span class="${displayStatusText === 'Regular' ? 'text-gray-500' : 'text-blue-600'} font-bold">${displayStatusText}</span>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 pointer-events-none">${statusBadge}</div>
+                        </div>`;
+                });
             }
 
             const pjpList = document.getElementById('myDayPjpList');
-            if (pjpList && route) pjpList.innerHTML = html;
+            if (pjpList) pjpList.innerHTML = html;
             
-            const totalCountEl = document.getElementById('pjpTotalCount');
-            if (totalCountEl) totalCountEl.textContent = outlets.length;
-            
-            const uploadedCountEl = document.getElementById('pjpUploadedCount');
-            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
-            
-            const remainingCountEl = document.getElementById('pjpRemainingCount');
-            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
+            updateMyDayStats(outlets); // Sync counters perfectly
             
             const displayCountEl = document.getElementById('myDayDisplayCount');
             if (displayCountEl) displayCountEl.textContent = displayCount;
@@ -2089,7 +2116,7 @@
             if (cluster) targetOutlets = targetOutlets.filter(p => p.clusterName === cluster);
             
             if (selectedType && selectedType !== 'ALL') {
-                targetOutlets = targetOutlets.filter(p => p.outletType && p.outletType.toUpperCase() === selectedType.toUpperCase());
+                targetOutlets = targetOutlets.filter(p => p.outletType && p.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
             }
 
             if (targetOutlets.length === 0) {
@@ -2137,35 +2164,11 @@
             
             let dateStr = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
             
-            const times = getMerchTimes();
-            let startTimeStr = times.startStr;
-            let endTimeStr = times.endStr;
-            let totalTimeStr = times.totalStr;
-
             content.innerHTML = `
                 <div class="px-5 pt-6 pb-6 bg-white">
-                    <div class="mb-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-gray-800 font-extrabold text-[15px] flex items-center"><i data-lucide="activity" class="h-5 w-5 mr-1.5 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                            <p class="text-colgate text-[12px] font-bold">${dateStr}</p>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="play-circle" class="h-5 w-5 text-green-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শুরু</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="stop-circle" class="h-5 w-5 text-orange-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শেষ</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="hourglass" class="h-5 w-5 text-purple-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">মোট সময়</span>
-                            </div>
-                        </div>
+                    <div class="mb-4 flex justify-between items-center">
+                        <h3 class="text-gray-800 font-extrabold text-[15px] flex items-center"><i data-lucide="bar-chart" class="h-5 w-5 mr-1.5 text-colgate"></i> পারফরম্যান্স ওভারভিউ</h3>
+                        <p class="text-gray-400 text-[11px] font-bold">${dateStr}</p>
                     </div>
 
                     <div class="space-y-4">
@@ -2213,69 +2216,6 @@
             lucide.createIcons();
         }
 
-        async function fetchDetailedReport() {
-            if (isDetailedReportLoaded) return;
-            const loader = document.getElementById('reportLoader');
-            const list = document.getElementById('reportList');
-            loader.classList.remove('hidden');
-            list.classList.add('hidden');
-            
-            try {
-                const res = await fetch(REPORT_CSV_URL);
-                const text = await res.text();
-                const rows = parseCSV(text);
-                
-                detailedReportData = [];
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(row.length > 4 && row[4]) {
-                        detailedReportData.push({
-                            month: row[0],
-                            zone: row[1], // This corresponds to Region
-                            dbCode: row[2],
-                            dhName: row[3],
-                            code: row[4].trim().toUpperCase(),
-                            name: row[5],
-                            route: row[6],
-                            slab: row[7],
-                            enrolled: row[8],
-                            target: row[9],
-                            totStt: row[10],
-                            ach: row[11],
-                            balance: row[12],
-                            eligible: row[13],
-                            imgUpload: row[14],
-                            imgUploadCount: row[15],
-                            payout: row[16],
-                            startTime: row[17] ? row[17].trim() : '',
-                            endTime: row[18] ? row[18].trim() : '',
-                            totalTime: row[19] ? row[19].trim() : ''
-                        });
-                    }
-                }
-                isDetailedReportLoaded = true;
-                
-                // Initialize Report Dropdowns
-                const regionSelect = document.getElementById('reportRegionSelect');
-                if(regionSelect) {
-                    const regions = [...new Set(detailedReportData.map(d => d.zone))].filter(Boolean).sort();
-                    regionSelect.innerHTML = '<option value="">Region নির্বাচন করুন</option>' + regions.map(name => `<option value="${name}">${name}</option>`).join('');
-                    regionSelect.disabled = regions.length === 0;
-                    regionSelect.classList.remove('bg-gray-100', 'text-gray-500');
-                    regionSelect.classList.add('bg-white', 'text-gray-700');
-                }
-                
-                renderDetailedReport();
-                renderOnePagerReport();
-            } catch (e) {
-                console.error('Failed to load report CSV', e);
-                list.innerHTML = `<div class="text-center text-red-500 text-sm py-4">রিপোর্ট লোড করতে সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করুন।</div>`;
-            } finally {
-                loader.classList.add('hidden');
-                list.classList.remove('hidden');
-            }
-        }
-
         const reportTypeRadios_el = document.getElementsByName('report_outlet_type');
         for (let r of reportTypeRadios_el) {
             r.addEventListener('change', () => {
@@ -2315,7 +2255,7 @@
                 const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
                 });
             }
 
@@ -2364,7 +2304,7 @@
                 const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
                 });
             }
 
@@ -2417,7 +2357,7 @@
                 const activeData = getFilteredPJP();
                 filtered = filtered.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
+                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
                 });
             }
             
@@ -2761,17 +2701,17 @@
                 const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
                 btn.disabled = true; loader.classList.remove('hidden'); 
                 text.textContent = "আপলোড শুরু হচ্ছে...";
-                
+
                 let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
                 let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
-                
+
                 const formDbCodeEl = document.getElementById('formDbCode');
                 const distSelectEl = document.getElementById('distSelect');
                 const areaSelectEl = document.getElementById('areaSelect');
 
                 const formData = new FormData(e.target);
                 const data = Object.fromEntries(formData.entries());
-                
+
                 data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
                 data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
                 data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
@@ -2787,7 +2727,7 @@
 
                 // 1. Prepare Image Data for Script 1 (Main App)
                 data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
-                
+
                 // 2. Prepare Location Data for Script 2 (Location Updater)
                 const locationData = {
                     shop_code: data.shop_code,
@@ -2810,30 +2750,29 @@
                         body: JSON.stringify(locationData),
                         mode: 'no-cors'
                     });
-                    
+
                     // Mark as submitted locally
                     const todayStr = new Date().toDateString();
                     let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
                     if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
-                    
+
                     const currentShopCode = (data.shop_code || "").toUpperCase().trim();
                     if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
                         s.submittedCodes.push(currentShopCode);
                     }
                     localStorage.setItem('colgate_merch_session', JSON.stringify(s));
-                    
+
                     // Show success screen
                     document.getElementById('customForm').classList.add('hidden'); 
                     document.getElementById('successMessage').classList.remove('hidden');
-                    
-                    window.updateTimeUI(); 
+
                     if (document.getElementById('myDayView').classList.contains('hidden') === false) {
                         renderMyDayPJP();
                     }
                 } catch(err) { 
                     window.showAlert("Error sending data."); 
                 }
-                
+
                 clearTimeout(loadTimer1);
                 clearTimeout(loadTimer2);
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
@@ -2980,7 +2919,7 @@
         };
 
         async function loadAdminDashboard() {
-            document.getElementById('adminDataDate').textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            document.getElementById('adminDataDate')?.remove(); // Not needed based on new design
             
             const galleryStatusText = document.getElementById('galleryStatusText');
             const galleryIconBg = document.getElementById('galleryIconBg');
@@ -3002,48 +2941,175 @@
             const isMaintenance = localStorage.getItem('app_maintenance') === 'true';
             document.getElementById('maintenanceToggle').checked = isMaintenance;
 
-            if (!isDataLoaded) {
-                document.getElementById('adminStatsLoader').classList.remove('hidden');
-                document.getElementById('adminStatsContent').classList.add('hidden');
-                await loadAllData();
-            } else {
-                updateAdminStats();
-            }
+            document.getElementById('adminStatsLoader').classList.remove('hidden');
+            document.getElementById('adminUploadStatsContent').classList.add('hidden');
+
+            if (!isDataLoaded) await loadAllData();
+            if (!isDetailedReportLoaded) await fetchDetailedReport();
+            if (uploadedImagesData.length === 0) await fetchImagesData();
+            
+            updateAdminStats();
         }
 
         function updateAdminStats() {
             document.getElementById('adminStatsLoader').classList.add('hidden');
-            document.getElementById('adminStatsContent').classList.remove('hidden');
+            document.getElementById('adminUploadStatsContent').classList.remove('hidden');
             
-            const totalOutlets = pjpData.length;
-            let displayCount = 0;
-            let regularCount = 0;
+            const monthSelect = document.getElementById('adminMonthFilter');
             
-            pjpData.forEach(out => {
-                const statusStr = (out.status || "").toLowerCase();
-                if (statusStr.includes('regular')) regularCount++; 
-                else displayCount++;
-            });
-            
-            const uploadedCount = reportData.filter(r => r.imageUpload && (r.imageUpload.toUpperCase() === 'Y' || r.imageUpload.toUpperCase() === 'YES')).length;
+            // Populate Month Dropdown if empty
+            if (monthSelect.options.length <= 1 && isDetailedReportLoaded) {
+                const months = [...new Set(detailedReportData.map(d => d.month))].filter(Boolean).sort();
+                months.forEach(m => {
+                    monthSelect.add(new Option(m, m));
+                });
+                if (months.length > 0) {
+                    monthSelect.value = months[months.length - 1]; // Auto-select latest month
+                }
+            }
 
-            document.getElementById('adminStatTotal').textContent = totalOutlets;
-            document.getElementById('adminStatDisplay').textContent = displayCount;
-            document.getElementById('adminStatRegular').textContent = regularCount;
-            document.getElementById('adminStatUploaded').textContent = uploadedCount;
+            const currentMonth = monthSelect.value;
+            
+            let targetReport = detailedReportData;
+            if (currentMonth !== 'ALL') {
+                targetReport = targetReport.filter(d => d.month === currentMonth);
+            }
+
+            let totalCount = 0;
+            let totalUpload = 0;
+            let displayCount = 0;
+            let displayUpload = 0;
+            let regularCount = 0;
+            let regularUpload = 0;
+
+            if (targetReport.length === 0 && currentMonth === 'ALL') {
+                 // Fallback if detailed report isn't loaded completely
+                 pjpData.forEach(p => {
+                     totalCount++;
+                     const isReg = (p.status || "").toLowerCase().includes('regular');
+                     if(isReg) regularCount++; else displayCount++;
+
+                     const r = reportData.find(x => x.code === p.code);
+                     if(r && r.imageUpload && r.imageUpload.toUpperCase() === 'Y') {
+                         totalUpload++;
+                         if(isReg) regularUpload++; else displayUpload++;
+                     }
+                 });
+            } else {
+                 targetReport.forEach(d => {
+                     const pjpMatch = pjpData.find(p => p.code === d.code);
+                     const isReg = pjpMatch ? (pjpMatch.status || "").toLowerCase().includes('regular') : false;
+
+                     totalCount++;
+                     if(isReg) regularCount++; else displayCount++;
+
+                     const isUploaded = d.imgUpload && d.imgUpload.toUpperCase().trim() === 'Y';
+                     if(isUploaded) {
+                         totalUpload++;
+                         if(isReg) regularUpload++; else displayUpload++;
+                     }
+                 });
+            }
+
+            const createBar = (label, uploaded, total, colorClass) => {
+                const pct = total > 0 ? Math.round((uploaded/total)*100) : 0;
+                return `
+                <div class="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[12px] font-bold text-gray-700">${label}</span>
+                        <span class="text-[12px] font-extrabold text-gray-900 bg-white px-2 py-0.5 rounded shadow-sm border border-gray-100">${uploaded} / ${total}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                        <div class="${colorClass} h-2.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                    </div>
+                </div>`;
+            };
+
+            document.getElementById('adminUploadStatsContent').innerHTML = `
+                ${createBar('Total Outlet', totalUpload, totalCount, 'bg-blue-500')}
+                ${createBar('Display Outlet', displayUpload, displayCount, 'bg-colgate')}
+                ${createBar('Regular Outlet', regularUpload, regularCount, 'bg-orange-400')}
+            `;
         }
 
-        document.getElementById('btnAdminForceSync')?.addEventListener('click', async (e) => {
-            const btn = e.currentTarget;
-            btn.classList.add('opacity-50', 'pointer-events-none');
-            document.getElementById('adminStatsContent').classList.add('hidden');
-            document.getElementById('adminStatsLoader').classList.remove('hidden');
-            
-            await loadAllData();
-            
-            btn.classList.remove('opacity-50', 'pointer-events-none');
-            window.showAlert("ডেটা সফলভাবে সিঙ্ক করা হয়েছে!");
+        document.getElementById('adminMonthFilter')?.addEventListener('change', updateAdminStats);
+
+        // Map Modal Logic
+        document.getElementById('btnAdminMap')?.addEventListener('click', () => {
+            const modal = document.getElementById('adminMapModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.children[0].classList.remove('scale-95'); }, 10);
+
+            // Populate Map Merch Filter
+            const merchSelect = document.getElementById('mapMerchFilter');
+            if (merchSelect.options.length <= 1) {
+                const merchs = [...new Set(pjpData.map(i => i.merchandiser))].filter(Boolean).sort();
+                merchs.forEach(m => merchSelect.add(new Option(m, m)));
+            }
+
+            if (!adminMap) {
+                adminMap = L.map('mapContainer').setView([23.6850, 90.3563], 7);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap'
+                }).addTo(adminMap);
+            }
+
+            // Invalidate size is required for leaflet when rendered inside a hidden div
+            setTimeout(() => { 
+                adminMap.invalidateSize(); 
+                document.querySelector('#mapContainer .absolute')?.remove(); // Remove loading text
+                renderMapMarkers(); 
+            }, 300);
         });
+
+        window.closeAdminMapModal = () => {
+            const modal = document.getElementById('adminMapModal');
+            modal.classList.add('opacity-0'); modal.children[0].classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 300);
+        };
+
+        document.getElementById('mapMerchFilter')?.addEventListener('change', renderMapMarkers);
+
+        function renderMapMarkers() {
+            if (!adminMap) return;
+
+            mapMarkers.forEach(m => adminMap.removeLayer(m));
+            mapMarkers = [];
+
+            const selectedMerch = document.getElementById('mapMerchFilter').value;
+            let bounds = L.latLngBounds();
+            let hasValidPoints = false;
+
+            uploadedImagesData.forEach(img => {
+                const pjp = pjpData.find(p => p.code === img.code);
+                
+                if (selectedMerch !== 'ALL' && (!pjp || pjp.merchandiser !== selectedMerch)) {
+                    return; 
+                }
+
+                const lat = parseFloat(img.lat);
+                const lng = parseFloat(img.lng);
+                
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const shopName = pjp ? pjp.name : "Unknown Shop";
+                    const merchName = pjp ? pjp.merchandiser : "Unknown";
+
+                    const marker = L.marker([lat, lng]).addTo(adminMap);
+                    marker.bindPopup(`<div class="text-[12px]"><b class="text-[14px] text-colgate">${shopName}</b><br><span class="text-gray-500">Code:</span> <b>${img.code}</b><br><span class="text-gray-500">Merch:</span> <b>${merchName}</b></div>`);
+                    mapMarkers.push(marker);
+
+                    bounds.extend([lat, lng]);
+                    hasValidPoints = true;
+                }
+            });
+
+            if (hasValidPoints) {
+                adminMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+            } else {
+                adminMap.setView([23.6850, 90.3563], 7); // Default BD view
+            }
+        }
 
         document.getElementById('btnAdminGallery')?.addEventListener('click', () => {
             const unlocked = localStorage.getItem('colgate_gallery_unlocked') === 'true';
@@ -3060,38 +3126,6 @@
             localStorage.setItem('app_maintenance', e.target.checked);
             if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
         });
-
-        document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
-            const modal = document.getElementById('noticeInputModal');
-            document.getElementById('noticeTextInput').value = localStorage.getItem('global_notice') || '';
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => { modal.classList.remove('opacity-0'); modal.children[0].classList.remove('scale-95'); }, 10);
-        });
-
-        window.closeNoticeModal = () => {
-            const modal = document.getElementById('noticeInputModal');
-            modal.classList.add('opacity-0'); modal.children[0].classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 300);
-        };
-
-        window.saveNotice = () => {
-            const txt = document.getElementById('noticeTextInput').value.trim();
-            if (txt) {
-                localStorage.setItem('global_notice', txt);
-                window.showAlert("নোটিশ সফলভাবে সেভ করা হয়েছে।");
-            } else {
-                localStorage.removeItem('global_notice');
-            }
-            closeNoticeModal();
-        };
-
-        window.clearNotice = () => {
-            document.getElementById('noticeTextInput').value = '';
-            localStorage.removeItem('global_notice');
-            window.showAlert("নোটিশ মুছে ফেলা হয়েছে।");
-            closeNoticeModal();
-        };
 
         const btnAdminNewOutlet = document.getElementById('btnAdminNewOutlet');
         const newOutletModal = document.getElementById('newOutletModal');
