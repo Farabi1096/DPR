@@ -89,7 +89,7 @@
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
         
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
-            <!-- Red Pencil Art -->
+            <!-- Red Pencil Art 1: Vertical Tube -->
             <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
                 <svg viewBox="0 0 40 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-20">
                     <path d="M12 5 L28 5 L28 15 L12 15 Z" />
@@ -104,6 +104,7 @@
                     <rect x="15" y="30" width="10" height="45" rx="2" />
                 </svg>
             </div>
+            <!-- Red Pencil Art 2: Squeezing Tube -->
             <div class="absolute top-12 -right-12 sm:-right-20 text-red-400 animate-sparkle sparkle-delay-1 opacity-60 z-0" style="transform: rotate(-30deg);">
                 <svg viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-10">
                     <rect x="85" y="10" width="6" height="30" />
@@ -115,6 +116,7 @@
                     <path d="M25 25 C 10 15, 15 40, 2 30" stroke-width="3" />
                 </svg>
             </div>
+            <!-- Red Pencil Art 3: Tooth -->
             <div class="absolute -top-10 right-0 sm:-top-12 sm:right-4 text-red-400 animate-sparkle sparkle-delay-2 opacity-60 z-0" style="transform: rotate(15deg);">
                 <svg viewBox="0 0 50 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-12">
                     <path d="M10 25 Q 10 15 25 15 Q 40 15 40 25 C 40 40 35 55 30 55 C 25 55 25 45 25 45 C 25 45 25 55 20 55 C 15 55 10 40 10 25 Z" />
@@ -124,6 +126,7 @@
                     <line x1="30" y1="14" x2="34" y2="10" />
                 </svg>
             </div>
+            <!-- Red Pencil Art 4: Toothbrush -->
             <div class="absolute top-24 -left-6 sm:top-28 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(10deg);">
                 <svg viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-8">
                     <rect x="30" y="25" width="85" height="6" rx="3" />
@@ -138,7 +141,7 @@
                 </svg>
             </div>
 
-            <!-- Custom Branded Image -->
+            <!-- Custom Branded Image here -->
             <div class="h-24 w-24 mx-auto mb-4 relative z-10 flex items-center justify-center">
                 <img src="https://i.postimg.cc/85V7jkK5/Smile-Image.png" alt="Colgate Smile" class="w-full h-full object-contain drop-shadow-sm">
             </div>
@@ -322,7 +325,6 @@
                                 </div>
                             </div>
 
-                            <!-- SR Specific Fields -->
                             <div id="srFieldsGroup" class="space-y-4 hidden">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">রুট নাম <span class="text-colgate">*</span></label>
@@ -348,7 +350,6 @@
                                 </div>
                             </div>
 
-                            <!-- Merch Specific Fields -->
                             <div id="merchFieldsGroup" class="space-y-4">
                                 <div class="input-group relative">
                                     <label class="block text-[13px] font-bold text-gray-700 mb-1.5 transition-colors">স্ল্যাব <span class="text-colgate">*</span></label>
@@ -501,6 +502,7 @@
             <div id="myDayView" class="hidden animate-fade-in">
                 <!-- PJP Filters & Outlet Type Toggle -->
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP
@@ -530,7 +532,7 @@
                     <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
                         <div class="flex justify-between items-center mb-2 px-1">
                             <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wide">ফিল্টার করুন</span>
-                            <button type="button" onclick="resetMyDayFilter('all')" class="text-[10px] font-bold text-gray-500 hover:text-gray-800 bg-gray-200/60 hover:bg-gray-200 px-2 py-1 rounded transition-colors flex items-center border border-gray-300">
+                            <button type="button" onclick="resetMyDayFilter('all')" class="text-[10px] font-bold text-gray-500 hover:text-gray-800 bg-white border border-gray-300 hover:bg-gray-100 px-2 py-1 rounded transition-colors flex items-center shadow-sm">
                                 <i data-lucide="rotate-ccw" class="w-3 h-3 mr-1"></i> রিসেট
                             </button>
                         </div>
@@ -565,8 +567,8 @@
                         <div class="border-b border-gray-100 pb-2 mb-2.5">
                             <h4 class="font-bold text-[13px] text-gray-800 mb-2 truncate">রুট: <span id="myDaySelectedRouteLabel" class="text-colgate">...</span></h4>
                             <div class="flex gap-2">
-                                <div class="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center border border-blue-100">Display: <span id="myDayDisplayCount" class="text-[12px] font-extrabold">0</span></div>
-                                <div class="bg-gray-50 text-gray-600 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center border border-gray-200">Regular: <span id="myDayRegularCount" class="text-[12px] font-extrabold">0</span></div>
+                                <div class="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center">Display: <span id="myDayDisplayCount" class="text-[12px] font-extrabold">0</span></div>
+                                <div class="bg-gray-50 text-gray-600 px-2 py-1 rounded-md text-[10px] font-bold flex-1 text-center">Regular: <span id="myDayRegularCount" class="text-[12px] font-extrabold">0</span></div>
                             </div>
                         </div>
                         <div id="myDayPjpList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1 custom-scrollbar pb-10"></div>
@@ -577,6 +579,7 @@
             <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট
@@ -793,7 +796,7 @@
     <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
             <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> গ্লোবাল নোটিশ</h3>
-            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে.</p>
+            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে।</p>
             <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="আপনার মেসেজ লিখুন..."></textarea>
             <div class="flex gap-3">
                 <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">নোটিশ মুছুন</button>
@@ -882,7 +885,7 @@
 
         lucide.createIcons();
 
-        // Custom Modal Logic to replace window.alert and window.confirm
+        // Custom Modal Logic
         window.showAlert = (msg) => {
             document.getElementById('customAlertMsg').textContent = msg;
             const modal = document.getElementById('customAlert');
@@ -923,10 +926,7 @@
         // ===============================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
         const NEW_OUTLET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvNoIajBiG8BQdSDpRorTzqk0AgK7vOr7o_INMJ03aJVJ-aBHN8BB3xKKqrXkNbTBm/exec';
-
-        // 👉 Your New Location Script URL:
         const LOCATION_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwu8lVlJwbm2BpxgLFAB_AhsLQpVY4eoxdeQubPRUUQQ3B6dKf7I4ELV7jr-b18IRHc/exec';
-
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
@@ -945,6 +945,71 @@
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
         let locationIntervalId = null;
+
+        // ==========================================
+        // ENHANCED GPS LOCATION LOGIC
+        // ==========================================
+        function getGPSLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    globalLatitude = "No GPS Support";
+                    globalLongitude = "No GPS Support";
+                    finalLocationName = "No GPS Support";
+                    isLocationAcquired = false;
+                    resolve(false);
+                    return;
+                }
+
+                const locBadge = document.getElementById('cameraLocationBadge');
+                if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
+
+                navigator.geolocation.getCurrentPosition(
+                    (p) => {
+                        globalLatitude = p.coords.latitude.toFixed(6);
+                        globalLongitude = p.coords.longitude.toFixed(6);
+                        finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                        if (locBadge) locBadge.textContent = finalLocationName;
+                        isLocationAcquired = true;
+                        resolve(true);
+                    },
+                    (error) => {
+                        console.warn("High Accuracy GPS failed, trying Network/Tower location...", error);
+                        navigator.geolocation.getCurrentPosition(
+                            (p2) => {
+                                globalLatitude = p2.coords.latitude.toFixed(6);
+                                globalLongitude = p2.coords.longitude.toFixed(6);
+                                finalLocationName = `${globalLatitude}, ${globalLongitude}`;
+                                if (locBadge) locBadge.textContent = finalLocationName;
+                                isLocationAcquired = true;
+                                resolve(true);
+                            },
+                            (err2) => {
+                                globalLatitude = "GPS Off / Denied";
+                                globalLongitude = "GPS Off / Denied";
+                                finalLocationName = "GPS Off / Denied";
+                                if (locBadge) locBadge.textContent = "GPS Off / Denied";
+                                isLocationAcquired = false;
+                                resolve(false);
+                            },
+                            { enableHighAccuracy: false, timeout: 8000, maximumAge: 0 }
+                        );
+                    },
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                );
+            });
+        }
+
+        function initLocationFetch() {
+            getGPSLocation();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { 
+            checkRole(); 
+            getGPSLocation();
+            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
+                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
+            }
+        });
 
         // ==========================================
         // GLOBAL FILTER HELPERS
@@ -1052,11 +1117,6 @@
         // ==========================================
         // ROLE MANAGEMENT
         // ==========================================
-        window.addEventListener('DOMContentLoaded', () => { 
-            checkRole(); 
-            initLocationFetch(); // Fetch early!
-        });
-
         function checkRole() {
             const maintenance = localStorage.getItem('app_maintenance');
             if (maintenance === 'true' && localStorage.getItem('colgate_app_role') !== 'admin') {
@@ -1115,27 +1175,27 @@
                 const merchName = localStorage.getItem('colgate_app_merch_name');
                 document.getElementById('headerSubtitle').textContent = merchName ? `Merchandiser: ${merchName}` : "Merchandiser Panel";
                 if (tabsContainer) tabsContainer.classList.remove('hidden');
-                document.getElementById('srFieldsGroup')?.classList.add('hidden');
-                document.getElementById('srTerritoryGroup')?.classList.add('hidden');
-                document.getElementById('merchFieldsGroup')?.classList.remove('hidden');
-                document.getElementById('srRouteSelect')?.removeAttribute('required');
-                document.getElementById('srOutletSelect')?.removeAttribute('required');
-                document.getElementById('territorySelect')?.removeAttribute('required');
-                document.getElementById('formSlab')?.setAttribute('required', 'true');
-                document.getElementById('formShopCode')?.setAttribute('required', 'true');
+                document.getElementById('srFieldsGroup').classList.add('hidden');
+                document.getElementById('srTerritoryGroup').classList.add('hidden');
+                document.getElementById('merchFieldsGroup').classList.remove('hidden');
+                document.getElementById('srRouteSelect').removeAttribute('required');
+                document.getElementById('srOutletSelect').removeAttribute('required');
+                document.getElementById('territorySelect').removeAttribute('required');
+                document.getElementById('formSlab').setAttribute('required', 'true');
+                document.getElementById('formShopCode').setAttribute('required', 'true');
 
             } else if (role === 'sr') {
                 document.getElementById('headerSubtitle').textContent = "Sales Team (TM / SR) Panel";
                 if (tabsContainer) tabsContainer.classList.add('hidden');
-                document.getElementById('tabForm')?.click();
-                document.getElementById('srFieldsGroup')?.classList.remove('hidden');
-                document.getElementById('srTerritoryGroup')?.classList.remove('hidden');
-                document.getElementById('merchFieldsGroup')?.classList.add('hidden');
-                document.getElementById('srRouteSelect')?.setAttribute('required', 'true');
-                document.getElementById('srOutletSelect')?.setAttribute('required', 'true');
-                document.getElementById('territorySelect')?.setAttribute('required', 'true');
-                document.getElementById('formSlab')?.removeAttribute('required');
-                document.getElementById('formShopCode')?.removeAttribute('required');
+                document.getElementById('tabForm').click();
+                document.getElementById('srFieldsGroup').classList.remove('hidden');
+                document.getElementById('srTerritoryGroup').classList.remove('hidden');
+                document.getElementById('merchFieldsGroup').classList.add('hidden');
+                document.getElementById('srRouteSelect').setAttribute('required', 'true');
+                document.getElementById('srOutletSelect').setAttribute('required', 'true');
+                document.getElementById('territorySelect').setAttribute('required', 'true');
+                document.getElementById('formSlab').removeAttribute('required');
+                document.getElementById('formShopCode').removeAttribute('required');
             }
 
             if (!isDataLoaded) {
@@ -1379,10 +1439,8 @@
                     srOutletSelect.disabled = true;
                 }
                 
-                const formShopCodeEl = document.getElementById('formShopCode');
-                if(formShopCodeEl) formShopCodeEl.value = '';
-                const formSlabEl = document.getElementById('formSlab');
-                if(formSlabEl) formSlabEl.value = '';
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = '';
             });
         }
 
@@ -1396,7 +1454,7 @@
             
             if (areaSelect) {
                 if (formSelectedType) {
-                    const formPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase().trim() === formSelectedType.toUpperCase().trim());
+                    const formPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === formSelectedType.toUpperCase());
                     const areas = [...new Set(formPjp.map(i => i.region))].filter(Boolean).sort();
                     areaSelect.innerHTML = '<option value="" disabled selected>এরিয়া সিলেক্ট করুন</option>' + 
                                         areas.map(a => `<option value="${a}">${a}</option>`).join('');
@@ -1415,7 +1473,7 @@
                 if (myDaySelectedType) {
                     let myDayPjp = currentPJP;
                     if(myDaySelectedType !== 'ALL') {
-                        myDayPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase().trim() === myDaySelectedType.toUpperCase().trim());
+                        myDayPjp = currentPJP.filter(i => i.outletType && i.outletType.toUpperCase() === myDaySelectedType.toUpperCase());
                     }
                     const towns = [...new Set(myDayPjp.map(i => i.townName))].filter(Boolean).sort();
                     myDayTownSelect.innerHTML = '<option value="" disabled selected>Town (টাউন)</option>' + 
@@ -1462,7 +1520,7 @@
             
             let filtered = getFilteredPJP().filter(i => i.region === selectedArea);
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
             if (role === 'sr') {
@@ -1511,7 +1569,7 @@
             
             let filtered = getFilteredPJP().filter(i => i.region === selectedArea && i.territory === selectedTerritory);
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
             const dists = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
@@ -1550,13 +1608,12 @@
                 filtered = filtered.filter(i => i.territory === selectedTerritory);
             }
             if (selectedType) {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
             
             const match = filtered.find(item => item.townName === dbName);
             if (match && match.distCode) {
-                const formDbCodeEl = document.getElementById('formDbCode');
-                if(formDbCodeEl) formDbCodeEl.value = match.distCode;
+                document.getElementById('formDbCode').value = match.distCode;
             }
 
             if (role === 'sr') {
@@ -1572,10 +1629,8 @@
                     srOutletSelect.innerHTML = '<option value="" disabled selected>প্রথমে রুট সিলেক্ট করুন</option>';
                     srOutletSelect.disabled = true;
                 }
-                const formShopCodeEl = document.getElementById('formShopCode');
-                if(formShopCodeEl) formShopCodeEl.value = '';
-                const formSlabEl = document.getElementById('formSlab');
-                if(formSlabEl) formSlabEl.value = '';
+                document.getElementById('formShopCode').value = '';
+                document.getElementById('formSlab').value = '';
             }
         });
 
@@ -1592,10 +1647,12 @@
             }
             
             if (selectedType) {
-                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
-            
-            // REMOVED STRICT DISPLAY LOGIC FOR DCC TO SHOW ALL OUTLETS IN SR ROUTE
+
+            if (selectedType && selectedType.toUpperCase() !== 'SMT') {
+                outlets = outlets.filter(i => i.status && !i.status.toLowerCase().includes('regular'));
+            }
             
             const srOutletSelect = document.getElementById('srOutletSelect');
             if (srOutletSelect) {
@@ -1603,20 +1660,16 @@
                                         outlets.map(o => `<option value="${o.code}">${o.name} (${o.code} - ${o.slab || 'Regular'})</option>`).join('');
                 srOutletSelect.disabled = outlets.length === 0;
             }
-            const formShopCodeEl = document.getElementById('formShopCode');
-            if(formShopCodeEl) formShopCodeEl.value = '';
-            const formSlabEl = document.getElementById('formSlab');
-            if(formSlabEl) formSlabEl.value = '';
+            document.getElementById('formShopCode').value = '';
+            document.getElementById('formSlab').value = '';
         });
 
         document.getElementById('srOutletSelect')?.addEventListener('change', (e) => {
             const selectedCode = e.target.value;
             const outlet = getFilteredPJP().find(i => i.code === selectedCode);
             if(outlet) {
-                const formShopCodeEl = document.getElementById('formShopCode');
-                if(formShopCodeEl) formShopCodeEl.value = outlet.code || '';
-                const formSlabEl = document.getElementById('formSlab');
-                if(formSlabEl) formSlabEl.value = outlet.slab;
+                document.getElementById('formShopCode').value = outlet.code || '';
+                document.getElementById('formSlab').value = outlet.slab;
             }
         });
 
@@ -1627,54 +1680,33 @@
         for (let r of myDayTypeRadios) {
             r.addEventListener('change', () => {
                 populateDropdowns(); 
-                resetMyDayFilter('all');
+                
+                document.getElementById('myDayTownSelect').innerHTML = '<option value="" disabled selected>Town (টাউন)</option>';
+                document.getElementById('myDayTownSelect').disabled = true;
+                
+                document.getElementById('myDayVisitDaySelect').innerHTML = '<option value="" disabled selected>Day (বার)</option>';
+                document.getElementById('myDayVisitDaySelect').disabled = true;
+                document.getElementById('myDayVisitDaySelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('myDayVisitDaySelect').classList.remove('bg-white', 'text-gray-700');
+                
+                document.getElementById('myDayRouteSelect').innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                document.getElementById('myDayRouteSelect').disabled = true;
+                document.getElementById('myDayRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
+                document.getElementById('myDayRouteSelect').classList.remove('bg-white', 'text-gray-700');
+                
+                document.getElementById('myDayPjpContainer').classList.add('hidden');
+                document.getElementById('myDayPjpList').innerHTML = '';
             });
         }
-        
-        window.resetMyDayFilter = (level) => {
-            if (level === 'all' || level === 'town') {
-                const townSel = document.getElementById('myDayTownSelect');
-                if(townSel) { townSel.value = ''; townSel.dispatchEvent(new Event('change')); }
-            } else if (level === 'day') {
-                const daySel = document.getElementById('myDayVisitDaySelect');
-                if(daySel) { daySel.value = ''; daySel.dispatchEvent(new Event('change')); }
-            } else if (level === 'route') {
-                const routeSel = document.getElementById('myDayRouteSelect');
-                if(routeSel) { routeSel.value = ''; routeSel.dispatchEvent(new Event('change')); }
-            }
-        };
 
         document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
             const town = e.target.value;
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP();
+            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
             if (selectedType && selectedType !== 'ALL') {
-                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
-            
-            const routeSelect = document.getElementById('myDayRouteSelect');
-            if(routeSelect) {
-                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
-                routeSelect.disabled = true;
-                routeSelect.classList.add('bg-gray-100', 'text-gray-500');
-                routeSelect.classList.remove('bg-white', 'text-gray-700');
-            }
-
-            if (!town) {
-                const daySelect = document.getElementById('myDayVisitDaySelect');
-                if(daySelect) {
-                    daySelect.innerHTML = '<option value="" disabled selected>Day (বার)</option>';
-                    daySelect.disabled = true;
-                    daySelect.classList.add('bg-gray-100', 'text-gray-500');
-                    daySelect.classList.remove('bg-white', 'text-gray-700');
-                }
-                document.getElementById('myDayPjpContainer')?.classList.add('hidden');
-                document.getElementById('myDayImageStats')?.classList.add('hidden');
-                return;
-            }
-
-            filteredPjp = filteredPjp.filter(i => i.townName === town);
 
             const days = [...new Set(filteredPjp.map(i => i.visitDay))].filter(Boolean).sort();
             const daySelect = document.getElementById('myDayVisitDaySelect');
@@ -1687,34 +1719,29 @@
                 daySelect.classList.add('bg-white', 'text-gray-700');
             }
             
-            document.getElementById('myDayPjpContainer')?.classList.add('hidden');
-            updateMyDayStats(filteredPjp);
+            const routeSelect = document.getElementById('myDayRouteSelect');
+            if(routeSelect) {
+                routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
+                routeSelect.disabled = true;
+                routeSelect.classList.add('bg-gray-100', 'text-gray-500');
+                routeSelect.classList.remove('bg-white', 'text-gray-700');
+            }
+            
+            const container = document.getElementById('myDayPjpContainer');
+            if (container) container.classList.add('hidden');
+            const list = document.getElementById('myDayPjpList');
+            if (list) list.innerHTML = '';
         });
 
-        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', (e) => {
+        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
             const town = document.getElementById('myDayTownSelect').value;
-            const day = e.target.value;
+            const day = document.getElementById('myDayVisitDaySelect').value;
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
+            let filteredPjp = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
             if (selectedType && selectedType !== 'ALL') {
-                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
-
-            if (!day) {
-                const routeSelect = document.getElementById('myDayRouteSelect');
-                if(routeSelect) {
-                    routeSelect.innerHTML = '<option value="" disabled selected>Route (রুট)</option>';
-                    routeSelect.disabled = true;
-                    routeSelect.classList.add('bg-gray-100', 'text-gray-500');
-                    routeSelect.classList.remove('bg-white', 'text-gray-700');
-                }
-                document.getElementById('myDayPjpContainer')?.classList.add('hidden');
-                updateMyDayStats(filteredPjp);
-                return;
-            }
-
-            filteredPjp = filteredPjp.filter(i => i.visitDay === day);
 
             const routes = [...new Set(filteredPjp.map(i => i.routeName))].filter(Boolean).sort();
             const routeSelect = document.getElementById('myDayRouteSelect');
@@ -1727,42 +1754,13 @@
                 routeSelect.classList.add('bg-white', 'text-gray-700');
             }
             
-            document.getElementById('myDayPjpContainer')?.classList.add('hidden');
-            updateMyDayStats(filteredPjp);
+            const container = document.getElementById('myDayPjpContainer');
+            if (container) container.classList.add('hidden');
+            const list = document.getElementById('myDayPjpList');
+            if (list) list.innerHTML = '';
         });
 
         document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
-
-        function updateMyDayStats(outlets) {
-            const statsContainer = document.getElementById('myDayImageStats');
-            if (!outlets || outlets.length === 0) {
-                if (statsContainer) statsContainer.classList.add('hidden');
-                return;
-            }
-            
-            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
-            const todayStr = new Date().toDateString();
-            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
-            
-            let completedCount = 0;
-            outlets.forEach(out => {
-                const outCode = (out.code || "").toUpperCase().trim();
-                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
-                const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                if (isCompleted) completedCount++;
-            });
-
-            if (statsContainer) statsContainer.classList.remove('hidden');
-            
-            const totalCountEl = document.getElementById('pjpTotalCount');
-            if (totalCountEl) totalCountEl.textContent = outlets.length;
-            
-            const uploadedCountEl = document.getElementById('pjpUploadedCount');
-            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
-            
-            const remainingCountEl = document.getElementById('pjpRemainingCount');
-            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
-        }
 
         function renderMyDayPJP() {
             window.updateTimeUI();
@@ -1770,25 +1768,14 @@
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
-            
-            if (!town || !day) return;
+            if (!town || !day || !route) return;
 
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
-            if (route) {
-                outlets = outlets.filter(i => i.routeName === route);
-            }
+            let outlets = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day && i.routeName === route);
             
             if (selectedType && selectedType !== 'ALL') {
-                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
-            }
-            
-            updateMyDayStats(outlets);
-
-            if (!route) {
-                document.getElementById('myDayPjpContainer')?.classList.add('hidden');
-                return;
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
             const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
@@ -1801,7 +1788,7 @@
             const routeLabel = document.getElementById('myDaySelectedRouteLabel');
             if (routeLabel) routeLabel.textContent = route;
 
-            let html = '', displayCount = 0, regularCount = 0;
+            let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
             
             if (outlets.length === 0) {
                 html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
@@ -1810,6 +1797,8 @@
                     const outCode = (out.code || "").toUpperCase().trim();
                     const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
                     const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
+                    
+                    if (isCompleted) completedCount++;
                     
                     const statusStr = (out.status || "").toLowerCase();
                     if (statusStr.includes('regular')) regularCount++; else displayCount++;
@@ -1844,6 +1833,15 @@
 
             const pjpList = document.getElementById('myDayPjpList');
             if (pjpList) pjpList.innerHTML = html;
+            
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = outlets.length;
+            
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
+            
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
             
             const displayCountEl = document.getElementById('myDayDisplayCount');
             if (displayCountEl) displayCountEl.textContent = displayCount;
@@ -1943,11 +1941,6 @@
         // ==========================================
         function initOnePagerFilters() {
             let filtered = getFilteredPJP();
-            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-            
-            if (selectedType && selectedType !== 'ALL') {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
-            }
             
             const townSel = document.getElementById('onePagerTown');
             if (townSel) {
@@ -1971,11 +1964,6 @@
         document.getElementById('onePagerTown')?.addEventListener('change', (e) => {
             const town = e.target.value;
             let filtered = getFilteredPJP().filter(i => i.townName === town);
-            
-            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-            if (selectedType && selectedType !== 'ALL') {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
-            }
             
             const daySel = document.getElementById('onePagerDay');
             const days = [...new Set(filtered.map(i => i.visitDay))].filter(Boolean).sort();
@@ -2009,11 +1997,6 @@
             
             let filtered = getFilteredPJP().filter(i => i.townName === town);
             if (day) filtered = filtered.filter(i => i.visitDay === day);
-            
-            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
-            if (selectedType && selectedType !== 'ALL') {
-                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
-            }
             
             const clusterSel = document.getElementById('onePagerCluster');
             if (clusterSel) {
@@ -2068,7 +2051,7 @@
             if (cluster) targetOutlets = targetOutlets.filter(p => p.clusterName === cluster);
             
             if (selectedType && selectedType !== 'ALL') {
-                targetOutlets = targetOutlets.filter(p => p.outletType && p.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim());
+                targetOutlets = targetOutlets.filter(p => p.outletType && p.outletType.toUpperCase() === selectedType.toUpperCase());
             }
 
             if (targetOutlets.length === 0) {
@@ -2279,11 +2262,6 @@
                         <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
                         <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে Region এবং DB নির্বাচন করুন</p>
                     </div>`;
-                
-                // Important: Reset One Pager Filters when radio button changes
-                initOnePagerFilters();
-                renderOnePagerReport();
-                
                 lucide.createIcons();
             });
         }
@@ -2299,7 +2277,7 @@
                 const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
 
@@ -2348,7 +2326,7 @@
                 const activeData = getFilteredPJP();
                 filteredReport = filteredReport.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
 
@@ -2401,7 +2379,7 @@
                 const activeData = getFilteredPJP();
                 filtered = filtered.filter(d => {
                     const match = activeData.find(p => p.code.toUpperCase() === d.code);
-                    return match && match.outletType && match.outletType.toUpperCase().trim() === selectedType.toUpperCase().trim();
+                    return match && match.outletType && match.outletType.toUpperCase() === selectedType.toUpperCase();
                 });
             }
             
@@ -2543,77 +2521,6 @@
         // CAMERA, GALLERY & LOCATION LOGIC
         // ==========================================
         
-        function initLocationFetch() {
-            isLocationAcquired = false;
-            const locBadge = document.getElementById('cameraLocationBadge');
-            if (locBadge) locBadge.textContent = "লোকেশন খোঁজা হচ্ছে...";
-
-            if (locationIntervalId) {
-                clearInterval(locationIntervalId);
-                locationIntervalId = null;
-            }
-
-            const fetchLoc = () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (p) => {
-                            const lat = p.coords.latitude, lon = p.coords.longitude;
-                            globalLatitude = lat.toFixed(6); 
-                            globalLongitude = lon.toFixed(6); 
-                            finalLocationName = `${globalLatitude}, ${globalLongitude}`; 
-                            if (locBadge) locBadge.textContent = finalLocationName;
-                            isLocationAcquired = true; 
-                            
-                            if (locationIntervalId) {
-                                clearInterval(locationIntervalId);
-                                locationIntervalId = null;
-                            }
-                        }, 
-                        (error) => { 
-                            finalLocationName = "GPS Off / Denied"; 
-                            globalLatitude = "Denied";
-                            globalLongitude = "Denied";
-                            if (locBadge) locBadge.textContent = "GPS Off"; 
-                            isLocationAcquired = false; 
-                            
-                            const camContainer = document.getElementById('cameraContainer');
-                            if (camContainer && !camContainer.classList.contains('hidden')) {
-                                window.showAlert("দয়া করে ডিভাইসের Location/GPS অন করুন এবং ব্রাউজারকে লোকেশন পারমিশন (Allow) দিন!");
-                            }
-                        }, 
-                        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-                    ); 
-                } else {
-                    finalLocationName = "No GPS Support";
-                    globalLatitude = "No Support";
-                    globalLongitude = "No Support";
-                    if (locBadge) locBadge.textContent = "No GPS Support";
-                    isLocationAcquired = false;
-                    if (locationIntervalId) {
-                        clearInterval(locationIntervalId);
-                        locationIntervalId = null;
-                    }
-                }
-            };
-
-            // First attempt to fetch location
-            fetchLoc();
-
-            // Set recurring check every 5 seconds
-            locationIntervalId = setInterval(() => {
-                const camContainer = document.getElementById('cameraContainer');
-                if (camContainer && !camContainer.classList.contains('hidden')) {
-                    if (!isLocationAcquired) {
-                        fetchLoc();
-                    } else {
-                        clearInterval(locationIntervalId);
-                    }
-                } else {
-                    clearInterval(locationIntervalId);
-                }
-            }, 5000);
-        }
-
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -2816,17 +2723,17 @@
                 const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
                 btn.disabled = true; loader.classList.remove('hidden'); 
                 text.textContent = "আপলোড শুরু হচ্ছে...";
-
+                
                 let loadTimer1 = setTimeout(() => { if(btn.disabled) text.textContent = "ছবি আপলোড হচ্ছে..."; }, 3000);
                 let loadTimer2 = setTimeout(() => { if(btn.disabled) text.textContent = "ডেটাবেসে সেভ হচ্ছে..."; }, 8000);
-
+                
                 const formDbCodeEl = document.getElementById('formDbCode');
                 const distSelectEl = document.getElementById('distSelect');
                 const areaSelectEl = document.getElementById('areaSelect');
 
                 const formData = new FormData(e.target);
                 const data = Object.fromEntries(formData.entries());
-
+                
                 data.db_code = formDbCodeEl && formDbCodeEl.value ? formDbCodeEl.value : "Not Found";
                 data.distribution_name = distSelectEl && distSelectEl.value ? distSelectEl.value : "Not Found";
                 data.area_name = areaSelectEl && areaSelectEl.value ? areaSelectEl.value : "Not Found";
@@ -2842,7 +2749,7 @@
 
                 // 1. Prepare Image Data for Script 1 (Main App)
                 data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
-
+                
                 // 2. Prepare Location Data for Script 2 (Location Updater)
                 const locationData = {
                     shop_code: data.shop_code,
@@ -2865,22 +2772,22 @@
                         body: JSON.stringify(locationData),
                         mode: 'no-cors'
                     });
-
+                    
                     // Mark as submitted locally
                     const todayStr = new Date().toDateString();
                     let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
                     if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
-
+                    
                     const currentShopCode = (data.shop_code || "").toUpperCase().trim();
                     if (currentShopCode && !s.submittedCodes.includes(currentShopCode)) {
                         s.submittedCodes.push(currentShopCode);
                     }
                     localStorage.setItem('colgate_merch_session', JSON.stringify(s));
-
+                    
                     // Show success screen
                     document.getElementById('customForm').classList.add('hidden'); 
                     document.getElementById('successMessage').classList.remove('hidden');
-
+                    
                     window.updateTimeUI(); 
                     if (document.getElementById('myDayView').classList.contains('hidden') === false) {
                         renderMyDayPJP();
@@ -2888,7 +2795,7 @@
                 } catch(err) { 
                     window.showAlert("Error sending data."); 
                 }
-
+                
                 clearTimeout(loadTimer1);
                 clearTimeout(loadTimer2);
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
@@ -2898,29 +2805,15 @@
             if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
                 window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
                     if (confirmed) {
-                        // Quick fallback check if user just turned it on
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(
-                                (p) => {
-                                    globalLatitude = p.coords.latitude.toFixed(6);
-                                    globalLongitude = p.coords.longitude.toFixed(6);
-                                    executeSubmit();
-                                },
-                                (err) => {
-                                    executeSubmit();
-                                },
-                                { enableHighAccuracy: false, timeout: 2000, maximumAge: 0 }
-                            );
-                        } else {
-                            executeSubmit();
-                        }
+                        await getGPSLocation(); // Try one last time quickly
+                        executeSubmit();
                     }
                 });
             } else {
                 executeSubmit();
             }
         });
-        
+
         window.shareSnapshot = async (btn) => {
             const originalText = btn.innerHTML;
             btn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> প্রস্তুত হচ্ছে...';
@@ -3128,12 +3021,6 @@
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
             if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
-                document.getElementById('manualUploadBtn')?.classList.remove('hidden');
-            }
         });
 
         document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
