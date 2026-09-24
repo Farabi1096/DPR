@@ -63,7 +63,7 @@
 <body class="flex items-start sm:items-center justify-center min-h-screen p-0 sm:p-4" oncontextmenu="return false;">
 
     <!-- Custom Alert Box -->
-    <div id="customAlert" class="fixed inset-0 bg-black/60 z-[600] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+    <div id="customAlert" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
             <i data-lucide="info" class="w-12 h-12 text-colgate mx-auto mb-3"></i>
             <h3 class="text-lg font-bold text-gray-800 mb-2">Notice</h3>
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Custom Confirm Box -->
-    <div id="customConfirm" class="fixed inset-0 bg-black/60 z-[600] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+    <div id="customConfirm" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
             <i data-lucide="help-circle" class="w-12 h-12 text-blue-500 mx-auto mb-3"></i>
             <h3 class="text-lg font-bold text-gray-800 mb-2">নিশ্চিত করুন</h3>
@@ -141,7 +141,7 @@
                 </svg>
             </div>
 
-            <!-- Replaced local smile icon with provided Image URL -->
+            <!-- Custom Branded Image here -->
             <div class="h-24 w-24 mx-auto mb-4 relative z-10 flex items-center justify-center">
                 <img src="https://i.postimg.cc/85V7jkK5/Smile-Image.png" alt="Colgate Smile" class="w-full h-full object-contain drop-shadow-sm">
             </div>
@@ -502,11 +502,13 @@
             <div id="myDayView" class="hidden animate-fade-in">
                 <!-- PJP Filters & Outlet Type Toggle -->
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP
                         </h3>
                         
+                        <!-- MY DAY OUTLET TYPE TOGGLE -->
                         <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
                             <label class="flex-1 text-center cursor-pointer m-0">
                                 <input type="radio" name="myday_outlet_type" value="ALL" class="peer hidden" checked>
@@ -596,11 +598,13 @@
             <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট
                         </h3>
                         
+                        <!-- REPORT OUTLET TYPE TOGGLE -->
                         <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
                             <label class="flex-1 text-center cursor-pointer m-0">
                                 <input type="radio" name="report_outlet_type" value="ALL" class="peer hidden" checked>
@@ -628,6 +632,7 @@
 
                     <!-- ONE PAGER SUMMARY CONTAINER -->
                     <div id="onePagerContainer" class="animate-fade-in pb-1">
+                        <!-- Filters for One Pager (Town, Day, Cluster) -->
                         <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
                             <div class="grid grid-cols-3 gap-2">
                                 <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
@@ -673,6 +678,7 @@
                             <input type="text" id="reportSearchInput" class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] bg-white text-gray-800 placeholder-gray-400 outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all shadow-sm" placeholder="দোকানের নাম বা কোড লিখে খুঁজুন...">
                         </div>
 
+                        <!-- DB Name & Route Filters -->
                         <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
                             <div class="grid grid-cols-3 gap-2">
                                 <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
@@ -687,16 +693,19 @@
                             </div>
                         </div>
 
+                        <!-- Loader -->
                         <div id="reportLoader" class="flex flex-col items-center justify-center py-10 hidden">
                             <div class="loader mb-3"></div>
                             <p class="text-[11px] text-gray-500 font-medium">রিপোর্ট লোড হচ্ছে...</p>
                         </div>
 
+                        <!-- Outlet Count Display -->
                         <div id="reportCountDisplay" class="hidden mb-2 px-1 flex justify-between items-center">
                             <span class="text-[11px] font-bold text-gray-600">মোট আউটলেট:</span>
                             <span id="reportCountNumber" class="text-[12px] font-extrabold text-colgate bg-red-50 px-2 py-0.5 rounded border border-red-100">0</span>
                         </div>
 
+                        <!-- Report List -->
                         <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar pb-10">
                             <div class="flex flex-col items-center justify-center py-10 opacity-70">
                                 <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
@@ -937,7 +946,7 @@
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
-        // State Variables
+        // State Variables (Ensure declared only once here)
         let pjpData = [];
         let reportData = [];
         let dailySummaryData = []; 
@@ -2056,20 +2065,20 @@
                             <p class="text-colgate text-[12px] font-bold">${dateStr}</p>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="play-circle" class="h-6 w-6 text-green-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">শুরু</span>
+                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="play-circle" class="h-5 w-5 text-green-500 mb-1"></i>
+                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শুরু</span>
                             </div>
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="stop-circle" class="h-6 w-6 text-orange-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">শেষ</span>
+                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="stop-circle" class="h-5 w-5 text-orange-500 mb-1"></i>
+                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শেষ</span>
                             </div>
-                            <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="hourglass" class="h-6 w-6 text-purple-500 mb-1.5"></i>
-                                <span class="text-[15px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
-                                <span class="text-gray-400 text-[11px] font-bold mt-1">মোট সময়</span>
+                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
+                                <i data-lucide="hourglass" class="h-5 w-5 text-purple-500 mb-1"></i>
+                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
+                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">মোট সময়</span>
                             </div>
                         </div>
                     </div>
@@ -2464,6 +2473,7 @@
         // ==========================================
         // CAMERA, GALLERY & LOCATION LOGIC
         // ==========================================
+        
         function initLocationFetch() {
             isLocationAcquired = false;
             const locBadge = document.getElementById('cameraLocationBadge');
@@ -2761,8 +2771,10 @@
                 }
             }
 
+            // সরাসরি গ্লোবাল ভেরিয়েবল থেকে লোকেশন পাঠানো হচ্ছে
             data.latitude = globalLatitude;
             data.longitude = globalLongitude;
+
             data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
             
             try {
@@ -2872,6 +2884,8 @@
             capturedImageData = null; 
             isLocationAcquired = false; 
             finalLocationName = "Location Unknown";
+            globalLatitude = "Not Found";
+            globalLongitude = "Not Found";
 
             // Reset Output Type Radios
             const radios1 = document.getElementsByName('outlet_type');
@@ -2881,7 +2895,7 @@
         // ==========================================
         // FRONT PAGE SECURED PANEL (ADMIN DASHBOARD)
         // ==========================================
-        const ADMIN_PIN = "1096";
+        const ADMIN_PIN = "1234";
 
         document.getElementById('btnFrontSecured')?.addEventListener('click', () => {
             const modal = document.getElementById('adminPinModal');
@@ -2995,7 +3009,7 @@
 
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
-            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে অ্যাকাউন্টে।");
+            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -3174,9 +3188,7 @@
                 submitNewOutletBtn.disabled = false;
             }
         });
+
     </script>
 </body>
 </html>
-```
-
-একবার এই কোডটি আপডেট করে দেখুন। আশা করি এখন ঠিকমতো লোকেশন চলে আসবে!
