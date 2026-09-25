@@ -3318,8 +3318,8 @@
             
             L.control.zoom({ position: 'bottomright' }).addTo(mapInstance);
 
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap',
                 maxZoom: 19
             }).addTo(mapInstance);
 
@@ -3448,18 +3448,12 @@
                     fillOpacity: 0.9
                 });
 
-                marker.bindTooltip(`<div style="font-family: 'Inter', sans-serif; font-weight:bold;">${data.name}</div>`, { direction: 'top', offset: [0, -5] });
-
-                const mapLink = `https://www.google.com/maps/dir/?api=1&destination=${data.lat},${data.lng}`;
                 marker.bindPopup(`
                     <div style="font-family: 'Inter', sans-serif;">
                         <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
                         <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
                         <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
-                        <div style="font-size:10px; color:#6b7280; margin-bottom:5px;">Merch: ${data.merchandiser || 'Unknown'}</div>
-                        <a href="${mapLink}" target="_blank" style="display:inline-flex; align-items:center; background-color:#3b82f6; color:white; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">
-                            Get Directions
-                        </a>
+                        <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
                     </div>
                 `);
                 
