@@ -137,7 +137,6 @@
                 <img src="https://i.postimg.cc/85V7jkK5/Smile-Image.png" alt="Colgate Smile" class="w-full h-full object-contain drop-shadow-sm">
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight relative z-10">Smile Corner</h1>
-            <p class="text-gray-500 text-[13px] mt-1 relative z-10 font-medium tracking-wide">Make More Smiles</p>
         </div>
 
         <div class="w-full max-w-[280px] space-y-4 relative z-10">
@@ -755,14 +754,6 @@
                     <span class="text-[12px] font-bold text-gray-800">Data Refresh</span>
                     <span class="text-[9px] text-gray-400 mt-0.5">Manual Sync</span>
                 </button>
-
-                <button id="btnAdminNewOutlet" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-colgate/10 hover:border-colgate/30 transition-all group">
-                    <div class="bg-red-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="store" class="w-5 h-5 text-colgate"></i>
-                    </div>
-                    <span class="text-[12px] font-bold text-gray-800">New Outlet</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">Smile Corner Entry</span>
-                </button>
                 
                 <button id="btnAdminNotice" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-purple-50 hover:border-purple-200 transition-all group">
                     <div class="bg-purple-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
@@ -780,12 +771,11 @@
                     <span id="galleryStatusText" class="text-[9px] font-bold text-red-500 mt-0.5">Locked</span>
                 </button>
 
-                <button id="btnAdminMap" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all group col-span-2">
+                <button id="btnAdminMap" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all group">
                     <div class="bg-emerald-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="map" class="w-5 h-5 text-emerald-600"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">Outlet Map (Live)</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">Location Tracker</span>
+                    <span class="text-[12px] font-bold text-gray-800">Smile Corners Map</span>
                 </button>
             </div>
 
@@ -893,7 +883,10 @@
         </div>
 
         <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-3 gap-2">
+                <select id="mapFilterMerch" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
+                    <option value="">All Merchandisers</option>
+                </select>
                 <select id="mapFilterTown" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
                     <option value="">All Towns</option>
                 </select>
@@ -2062,96 +2055,93 @@
         // REPORT LOGIC
         // ==========================================
         function initOnePagerFilters() {
+            const dateInput = document.getElementById('onePagerDate');
+            if (dateInput && !dateInput.value) {
+                const d = new Date();
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                dateInput.value = `${year}-${month}-${day}`;
+            }
+            updateOnePagerFilters('init');
+        }
+
+        function updateOnePagerFilters(source) {
+            const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
             let filtered = getFilteredPJP();
-            
+            if (selectedType && selectedType !== 'ALL') {
+                filtered = filtered.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
             const townSel = document.getElementById('onePagerTown');
-            if (townSel) {
+            const dateInput = document.getElementById('onePagerDate');
+            const daySel = document.getElementById('onePagerDay');
+            const clusterSel = document.getElementById('onePagerCluster');
+
+            let targetDay = "";
+            if (dateInput && dateInput.value) {
+                const dayIndex = new Date(dateInput.value).getDay();
+                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                targetDay = daysOfWeek[dayIndex];
+            }
+
+            if (source === 'init' || source === 'type') {
                 const towns = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
+                const prevTown = townSel.value;
                 townSel.innerHTML = '<option value="">Town (টাউন)</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
                 townSel.disabled = towns.length === 0;
                 townSel.classList.toggle('bg-gray-100', towns.length === 0);
                 townSel.classList.toggle('bg-white', towns.length > 0);
                 townSel.classList.toggle('text-gray-500', towns.length === 0);
                 townSel.classList.toggle('text-gray-700', towns.length > 0);
-                
-                if (towns.length > 0) {
-                    townSel.value = towns[0]; 
-                    townSel.dispatchEvent(new Event('change'));
-                } else {
-                    renderOnePagerReport();
-                }
+                if (towns.includes(prevTown)) townSel.value = prevTown;
+                else if (towns.length > 0) townSel.value = towns[0];
             }
-        }
 
-        document.getElementById('onePagerDate')?.addEventListener('change', (e) => {
-            const dateVal = e.target.value;
-            if (dateVal) {
-                const dayIndex = new Date(dateVal).getDay();
-                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const mappedDay = daysOfWeek[dayIndex];
-                
-                const daySel = document.getElementById('onePagerDay');
-                if (daySel && Array.from(daySel.options).some(opt => opt.value === mappedDay)) {
-                    daySel.value = mappedDay;
-                    daySel.dispatchEvent(new Event('change'));
-                } else if (daySel) {
-                    daySel.value = "";
-                    daySel.dispatchEvent(new Event('change'));
-                }
-            }
-        });
+            const currentTown = townSel ? townSel.value : '';
+            let townFiltered = filtered;
+            if (currentTown) townFiltered = townFiltered.filter(i => i.townName === currentTown);
 
-        document.getElementById('onePagerTown')?.addEventListener('change', (e) => {
-            const town = e.target.value;
-            let filtered = getFilteredPJP().filter(i => i.townName === town);
-            
-            const daySel = document.getElementById('onePagerDay');
-            const days = [...new Set(filtered.map(i => i.visitDay))].filter(Boolean).sort();
-            
-            if (daySel) {
-                daySel.innerHTML = '<option value="">All Days</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
+            if (source === 'init' || source === 'type' || source === 'town' || source === 'date') {
+                const days = [...new Set(townFiltered.map(i => i.visitDay))].filter(Boolean).sort();
+                daySel.innerHTML = '<option value="">Day (বার)</option>' + days.map(d => `<option value="${d}">${d}</option>`).join('');
                 daySel.disabled = days.length === 0;
                 daySel.classList.toggle('bg-gray-100', days.length === 0);
                 daySel.classList.toggle('bg-white', days.length > 0);
                 daySel.classList.toggle('text-gray-500', days.length === 0);
                 daySel.classList.toggle('text-gray-700', days.length > 0);
+
+                if (targetDay && days.includes(targetDay)) {
+                    daySel.value = targetDay;
+                } else {
+                    daySel.value = ""; 
+                }
             }
-            
-            const clusterSel = document.getElementById('onePagerCluster');
-            const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
-            if (clusterSel) {
-                clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            const currentDay = daySel ? daySel.value : '';
+            let dayFiltered = townFiltered;
+            if (currentDay) dayFiltered = dayFiltered.filter(i => i.visitDay === currentDay);
+
+            if (source === 'init' || source === 'type' || source === 'town' || source === 'date' || source === 'day') {
+                const clusters = [...new Set(dayFiltered.map(i => i.clusterName))].filter(Boolean).sort();
+                const prevCluster = clusterSel.value;
+                clusterSel.innerHTML = '<option value="">All Clusters (ঐচ্ছিক)</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
                 clusterSel.disabled = clusters.length === 0;
                 clusterSel.classList.toggle('bg-gray-100', clusters.length === 0);
                 clusterSel.classList.toggle('bg-white', clusters.length > 0);
                 clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
                 clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
+
+                if (clusters.includes(prevCluster)) clusterSel.value = prevCluster;
+                else clusterSel.value = "";
             }
 
             renderOnePagerReport();
-        });
+        }
 
-        document.getElementById('onePagerDay')?.addEventListener('change', (e) => {
-            const town = document.getElementById('onePagerTown').value;
-            const day = e.target.value;
-            
-            let filtered = getFilteredPJP().filter(i => i.townName === town);
-            if (day) filtered = filtered.filter(i => i.visitDay === day);
-            
-            const clusterSel = document.getElementById('onePagerCluster');
-            if (clusterSel) {
-                const clusters = [...new Set(filtered.map(i => i.clusterName))].filter(Boolean).sort();
-                clusterSel.innerHTML = '<option value="">All Clusters</option>' + clusters.map(c => `<option value="${c}">${c}</option>`).join('');
-                clusterSel.disabled = clusters.length === 0;
-                clusterSel.classList.toggle('bg-gray-100', clusters.length === 0);
-                clusterSel.classList.toggle('bg-white', clusters.length > 0);
-                clusterSel.classList.toggle('text-gray-500', clusters.length === 0);
-                clusterSel.classList.toggle('text-gray-700', clusters.length > 0);
-            }
-            
-            renderOnePagerReport();
-        });
-
+        document.getElementById('onePagerDate')?.addEventListener('change', () => updateOnePagerFilters('date'));
+        document.getElementById('onePagerTown')?.addEventListener('change', () => updateOnePagerFilters('town'));
+        document.getElementById('onePagerDay')?.addEventListener('change', () => updateOnePagerFilters('day'));
         document.getElementById('onePagerCluster')?.addEventListener('change', renderOnePagerReport);
 
         function renderOnePagerReport() {
@@ -2178,6 +2168,29 @@
 
             if (headerMerch) {
                 headerMerch.textContent = savedMerch || 'Sales Team';
+            }
+
+            if (!dateVal) {
+                if (headerDetails) headerDetails.textContent = 'Awaiting Date Selection...';
+                content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="calendar" class="h-10 w-10 text-red-400 mb-2"></i>
+                        <p class="text-[13px] font-bold text-gray-600 mt-2">রিপোর্ট দেখতে একটি Date সিলেক্ট করুন</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            if (!town || !dayVal) {
+                if (headerDetails) headerDetails.textContent = 'Date: ' + new Date(dateVal).toLocaleDateString('en-GB');
+                content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                        <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                        <p class="text-[13px] font-bold text-gray-600 mt-2">এই Date অনুযায়ী কোনো Town/Day নেই</p>
+                        <p class="text-[11px] text-gray-500 mt-1">দয়া করে সঠিক Date এবং Town নির্বাচন করুন</p>
+                    </div>`;
+                lucide.createIcons();
+                return;
             }
             
             const detailsStr = [];
@@ -2368,6 +2381,7 @@
                 document.getElementById('reportRouteSelect').classList.remove('bg-white', 'text-gray-700');
                 
                 renderDetailedReport();
+                updateOnePagerFilters('type');
             });
         }
 
@@ -2875,13 +2889,11 @@
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
             };
 
-            if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
-                window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
-                    if (confirmed) {
-                        await getGPSLocation(); 
-                        executeSubmit();
-                    }
-                });
+            if (globalLatitude === "Not Found" || (!isLocationAcquired && !globalLatitude.includes("Denied") && !globalLatitude.includes("No GPS"))) {
+                window.showAlert("GPS লোকেশন সংগ্রহ করা হচ্ছে, অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করে আবার Submit করুন।\n\n(Fetching location, please wait a few seconds...)");
+            } else if (!isLocationAcquired || globalLatitude.includes("Denied") || globalLatitude.includes("No GPS")) {
+                window.showAlert("আউটলেটের লোকেশন ছাড়া ছবি আপলোড করা যাবে না। অনুগ্রহ করে আপনার ফোনের GPS/Location চালু করুন এবং আবার চেষ্টা করুন।\n\n(Location is mandatory. Please turn on GPS and try again.)");
+                getGPSLocation(); // Try to fetch it again quietly in the background
             } else {
                 executeSubmit();
             }
@@ -3327,6 +3339,7 @@
             mapPolylineLayer = L.layerGroup().addTo(mapInstance);
             
             // Safely attach map event listeners 
+            document.getElementById('mapFilterMerch')?.addEventListener('change', applyMapFilters);
             document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
             document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
         }
@@ -3407,12 +3420,15 @@
         }
 
         function populateMapFilters() {
+            const merchSelect = document.getElementById('mapFilterMerch');
             const townSelect = document.getElementById('mapFilterTown');
             const routeSelect = document.getElementById('mapFilterRoute');
             
+            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(Boolean).sort();
             const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
             const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
 
+            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
             if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
             if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
         }
@@ -3420,10 +3436,12 @@
         function applyMapFilters() {
             if (!mapInstance || !mapMarkerLayer) return;
 
+            const merchFilter = document.getElementById('mapFilterMerch')?.value;
             const townFilter = document.getElementById('mapFilterTown')?.value;
             const routeFilter = document.getElementById('mapFilterRoute')?.value;
 
             let filtered = mapDataRaw;
+            if (merchFilter) filtered = filtered.filter(d => d.merchandiser === merchFilter);
             if (townFilter) filtered = filtered.filter(d => d.town === townFilter);
             if (routeFilter) filtered = filtered.filter(d => d.route === routeFilter);
 
