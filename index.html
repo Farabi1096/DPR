@@ -157,20 +157,6 @@
         </div>
     </div>
 
-    <!-- Admin PIN Modal -->
-    <div id="adminPinModal" class="fixed inset-0 bg-black/60 z-[400] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
-            <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="shield" class="w-5 h-5 text-colgate mr-2"></i> সিকিউরিটি চেক</h3>
-                <button onclick="closeAdminPinModal()" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            <p class="text-[13px] text-gray-500 mb-4">অ্যাডমিন প্যানেলে প্রবেশ করতে পিন কোড দিন:</p>
-            <input type="password" id="frontAdminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-center text-xl tracking-[0.5em] font-bold outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3" placeholder="••••">
-            <button id="btnVerifyAdminPin" class="w-full bg-colgate text-white font-bold py-3 rounded-xl hover:bg-red-700 transition-all shadow-md">লগইন করুন</button>
-            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mt-3 hidden"><i data-lucide="alert-circle" class="inline w-3 h-3 mr-1"></i> ভুল পিন কোড দেওয়া হয়েছে!</p>
-        </div>
-    </div>
-
     <!-- Merchandiser Login Modal -->
     <div id="merchLoginModal" class="fixed inset-0 bg-black/60 z-[400] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
@@ -189,6 +175,23 @@
             <select id="modalMerchSelect" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all mb-3 font-medium text-gray-700 custom-scrollbar">
                 <option value="" disabled selected>আপনার নাম খুঁজুন...</option>
             </select>
+        </div>
+    </div>
+
+    <!-- Admin PIN Modal -->
+    <div id="adminPinModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center transform scale-95 transition-transform">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 flex justify-center items-center"><i data-lucide="shield" class="w-5 h-5 text-gray-800 mr-2"></i> Admin Login</h3>
+            <p class="text-[13px] text-gray-500 mb-4">Enter secure PIN to access dashboard</p>
+            
+            <input type="password" id="frontAdminPinInput" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-center tracking-[0.5em] text-lg font-bold outline-none focus:border-gray-800 focus:ring-1 focus:ring-gray-800 transition-all mb-2" placeholder="••••" maxlength="4">
+            
+            <p id="frontAdminErrorMsg" class="text-red-500 text-[11px] font-bold mb-4 hidden">Incorrect PIN. Try again.</p>
+            
+            <div class="flex gap-3 mt-4">
+                <button onclick="closeAdminPinModal()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">Cancel</button>
+                <button id="btnVerifyAdminPin" class="flex-1 bg-gray-900 text-white font-bold py-2.5 rounded-xl hover:bg-black transition-all shadow-md text-[13px]">Verify PIN</button>
+            </div>
         </div>
     </div>
 
@@ -699,7 +702,7 @@
 
         <!-- Footer -->
         <div class="pb-6 pt-2 flex flex-col items-center bg-white sm:rounded-b-2xl">
-            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">কোলগেট স্মাইল কর্ণার প্রোগ্রাম &copy; ২০২৫</p>
+            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">Colgate Smile Corner Program &copy; 2025</p>
         </div>
     </div>
 
@@ -710,7 +713,7 @@
             <button onclick="logoutAdmin()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
-            <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> অ্যাডমিন ড্যাশবোর্ড</h2>
+            <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> Admin Dashboard</h2>
             <div class="w-8"></div>
         </div>
 
@@ -718,27 +721,27 @@
             
             <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
                 <div class="flex justify-between items-center mb-3 pb-2 border-b border-gray-100">
-                    <h3 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="activity" class="w-4 h-4 text-green-500 mr-1.5"></i> রিয়েল-টাইম স্ট্যাটাস</h3>
+                    <h3 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="activity" class="w-4 h-4 text-green-500 mr-1.5"></i> Real-time Status</h3>
                     <span id="adminDataDate" class="text-[10px] text-gray-400 font-medium">Loading...</span>
                 </div>
                 
-                <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">ডেটা সিঙ্ক হচ্ছে...</p></div>
+                <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">Syncing data...</p></div>
 
                 <div id="adminStatsContent" class="hidden grid grid-cols-2 gap-2">
                     <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">মোট আউটলেট</span>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wide mb-1">Total Outlets</span>
                         <span id="adminStatTotal" class="text-xl font-extrabold text-gray-800">0</span>
                     </div>
                     <div class="bg-green-50 p-3 rounded-xl border border-green-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-green-600 uppercase tracking-wide mb-1">মোট আপলোড</span>
+                        <span class="text-[10px] font-bold text-green-600 uppercase tracking-wide mb-1">Total Uploads</span>
                         <span id="adminStatUploaded" class="text-xl font-extrabold text-green-700">0</span>
                     </div>
                     <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mb-1">ডিসপ্লে আউটলেট</span>
+                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mb-1">Display Outlets</span>
                         <span id="adminStatDisplay" class="text-xl font-extrabold text-blue-700">0</span>
                     </div>
                     <div class="bg-orange-50 p-3 rounded-xl border border-orange-100 flex flex-col items-center justify-center text-center">
-                        <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mb-1">রেগুলার আউটলেট</span>
+                        <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mb-1">Regular Outlets</span>
                         <span id="adminStatRegular" class="text-xl font-extrabold text-orange-700">0</span>
                     </div>
                 </div>
@@ -749,31 +752,31 @@
                     <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">ডেটা রিফ্রেশ</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">ম্যানুয়াল সিঙ্ক</span>
+                    <span class="text-[12px] font-bold text-gray-800">Data Refresh</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Manual Sync</span>
                 </button>
 
                 <button id="btnAdminNewOutlet" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-colgate/10 hover:border-colgate/30 transition-all group">
                     <div class="bg-red-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="store" class="w-5 h-5 text-colgate"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">নতুন আউটলেট</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">স্মাইল কর্ণার এন্ট্রি</span>
+                    <span class="text-[12px] font-bold text-gray-800">New Outlet</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Smile Corner Entry</span>
                 </button>
                 
                 <button id="btnAdminNotice" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-purple-50 hover:border-purple-200 transition-all group">
                     <div class="bg-purple-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="bell-ring" class="w-5 h-5 text-purple-600"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">নোটিশ বোর্ড</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">টিম মেসেজ</span>
+                    <span class="text-[12px] font-bold text-gray-800">Notice Board</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Team Message</span>
                 </button>
 
                 <button id="btnAdminGallery" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center transition-all group">
                     <div id="galleryIconBg" class="bg-gray-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="image" id="galleryIcon" class="w-5 h-5 text-gray-500"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">গ্যালারি এক্সেস</span>
+                    <span class="text-[12px] font-bold text-gray-800">Gallery Access</span>
                     <span id="galleryStatusText" class="text-[9px] font-bold text-red-500 mt-0.5">Locked</span>
                 </button>
 
@@ -781,15 +784,15 @@
                     <div class="bg-emerald-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="map" class="w-5 h-5 text-emerald-600"></i>
                     </div>
-                    <span class="text-[12px] font-bold text-gray-800">আউটলেট ম্যাপ (Live)</span>
-                    <span class="text-[9px] text-gray-400 mt-0.5">লোকেশন ট্র্যাকার</span>
+                    <span class="text-[12px] font-bold text-gray-800">Outlet Map (Live)</span>
+                    <span class="text-[9px] text-gray-400 mt-0.5">Location Tracker</span>
                 </button>
             </div>
 
             <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-between">
                 <div>
-                    <h4 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="lock" class="w-4 h-4 text-orange-500 mr-1.5"></i> মেইনটেন্যান্স মোড</h4>
-                    <p class="text-[10px] text-gray-400 mt-0.5">অ্যাপ সাময়িক বন্ধ রাখতে</p>
+                    <h4 class="text-[13px] font-bold text-gray-800 flex items-center"><i data-lucide="lock" class="w-4 h-4 text-orange-500 mr-1.5"></i> Maintenance Mode</h4>
+                    <p class="text-[10px] text-gray-400 mt-0.5">Temporarily disable app</p>
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" id="maintenanceToggle" class="sr-only peer">
@@ -802,14 +805,14 @@
     <!-- Notice Input Modal for Admin -->
     <div id="noticeInputModal" class="fixed inset-0 bg-black/60 z-[500] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform">
-            <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> গ্লোবাল নোটিশ</h3>
-            <p class="text-[12px] text-gray-500 mb-4">এখানে লেখা নোটিশটি টিমের সবাই লগইন করার সময় দেখতে পাবে।</p>
-            <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="আপনার মেসেজ লিখুন..."></textarea>
+            <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><i data-lucide="bell" class="w-5 h-5 text-blue-500 mr-2"></i> Global Notice</h3>
+            <p class="text-[12px] text-gray-500 mb-4">The message written here will be visible to everyone when they log in.</p>
+            <textarea id="noticeTextInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[13px] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all mb-4 resize-none" placeholder="Type your message here..."></textarea>
             <div class="flex gap-3">
-                <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">নোটিশ মুছুন</button>
-                <button onclick="saveNotice()" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md text-[13px]">সেভ করুন</button>
+                <button onclick="clearNotice()" class="flex-1 bg-gray-100 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-200 transition-all text-[13px]">Clear Notice</button>
+                <button onclick="saveNotice()" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md text-[13px]">Save Notice</button>
             </div>
-            <button onclick="closeNoticeModal()" class="w-full mt-3 text-[12px] text-gray-400 font-medium hover:text-gray-600">বাতিল করুন</button>
+            <button onclick="closeNoticeModal()" class="w-full mt-3 text-[12px] text-gray-400 font-medium hover:text-gray-600">Cancel</button>
         </div>
     </div>
 
@@ -817,7 +820,7 @@
     <div id="newOutletModal" class="fixed inset-0 bg-black/60 z-[300] hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="newOutletContent">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> নতুন স্মাইল কর্ণার</h3>
+                <h3 class="text-lg font-bold text-gray-800 flex items-center"><i data-lucide="store" class="w-5 h-5 text-colgate mr-2"></i> New Smile Corner</h3>
                 <button id="closeNewOutletModal" class="text-gray-400 hover:text-red-500 transition-colors bg-gray-100 p-1.5 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
             
@@ -826,51 +829,51 @@
                 <input type="hidden" id="newOutletRouteCode">
 
                 <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">ডিস্ট্রিবিউটর নাম <span class="text-colgate">*</span></label>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Distributor Name <span class="text-colgate">*</span></label>
                     <select id="newOutletDistName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                        <option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        <option value="" disabled selected>Select Distributor</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">রুট নাম <span class="text-colgate">*</span></label>
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Route Name <span class="text-colgate">*</span></label>
                     <select id="newOutletRouteName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" disabled>
-                        <option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>
+                        <option value="" disabled selected>Select Distributor First</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">দোকানের নাম <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="দোকানের নাম">
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Shop Name <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletName" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Enter Shop Name">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">মালিকের নাম <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="মালিকের নাম লিখুন">
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Owner Name <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletOwner" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Enter Owner Name">
                 </div>
 
                 <div class="flex gap-3">
                     <div class="w-1/2">
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">কন্টাক্ট নাম্বার <span class="text-colgate">*</span></label>
-                        <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="১১ ডিজিট মোবাইল নং">
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">Contact Number <span class="text-colgate">*</span></label>
+                        <input type="tel" id="newOutletPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="11 Digit Mobile No">
                     </div>
                     <div class="w-1/2">
-                        <label class="block text-[12px] font-bold text-gray-700 mb-1">স্ল্যাব (Slab) <span class="text-colgate">*</span></label>
+                        <label class="block text-[12px] font-bold text-gray-700 mb-1">Slab <span class="text-colgate">*</span></label>
                         <select id="newOutletSlab" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all">
-                            <option value="" disabled selected>লোড হচ্ছে...</option>
+                            <option value="" disabled selected>Loading...</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-bold text-gray-700 mb-1">এন্ট্রি করছেন (আপনার নাম) <span class="text-colgate">*</span></label>
-                    <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="আপনার নাম (SR / Merchandiser)">
+                    <label class="block text-[12px] font-bold text-gray-700 mb-1">Entered By (Your Name) <span class="text-colgate">*</span></label>
+                    <input type="text" id="newOutletEntryBy" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-[14px] outline-none focus:border-colgate transition-all" placeholder="Your Name (SR / Merch)">
                 </div>
             </div>
             
             <div class="pt-4 mt-2 border-t border-gray-100">
                 <button id="submitNewOutletBtn" class="w-full bg-colgate text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition-all shadow-md flex justify-center items-center">
-                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> এন্ট্রি সেভ করুন
+                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Save Entry
                 </button>
             </div>
         </div>
@@ -884,18 +887,13 @@
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
             <h2 class="text-[15px] font-bold text-white tracking-wide flex items-center">
-                <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-red-500"></i> ম্যাপ ভিউ
+                <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-red-500"></i> Map View
             </h2>
             <div class="w-8"></div>
         </div>
 
         <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
-            <!-- 4 Grid Filters for Dual Mode Map -->
             <div class="grid grid-cols-2 gap-2">
-                <select id="mapFilterMerch" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
-                    <option value="">All Merchandisers</option>
-                </select>
-                <input type="date" id="mapFilterDate" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700 text-center" title="Select date for Live Tracking">
                 <select id="mapFilterTown" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
                     <option value="">All Towns</option>
                 </select>
@@ -903,12 +901,11 @@
                     <option value="">All Routes</option>
                 </select>
             </div>
-            
             <div class="flex justify-between items-center px-1 mt-1">
                 <span id="mapCountDisplay" class="text-[11px] font-extrabold text-colgate">0 Outlets Found</span>
                 <span id="mapDistanceDisplay" class="text-[11px] font-extrabold text-blue-600 hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">0.0 km</span>
                 <div id="mapLoader" class="hidden items-center gap-1.5 text-[10px] text-gray-500 font-bold">
-                    <div class="loader !w-3 !h-3 !border-[2px]"></div> লোড হচ্ছে...
+                    <div class="loader !w-3 !h-3 !border-[2px]"></div> Loading...
                 </div>
             </div>
         </div>
@@ -1326,7 +1323,7 @@
         });
 
         window.logoutRole = () => {
-            window.showConfirm("আপনি কি নিশ্চিত যে আপনি লগআউট করতে চান?", (confirmed) => {
+            window.showConfirm("Are you sure you want to logout?", (confirmed) => {
                 if (confirmed) {
                     localStorage.removeItem('colgate_app_role');
                     localStorage.removeItem('colgate_app_merch_name');
@@ -1452,10 +1449,10 @@
                 window.updateTimeUI();
                 
                 if (loader) loader.classList.add('hidden');
-            } catch (error) {
-                console.error("Data loading error:", error);
-                window.showAlert("ডেটা লোড করতে সমস্যা হয়েছে। দয়া করে ইন্টারনেট কানেকশন চেক করুন।");
-                if (loader) loader.classList.add('hidden');
+            } catch (error) { 
+                console.error("Data loading error:", error); 
+                window.showAlert("There was a problem loading data. Please check your internet connection."); 
+                if (loader) loader.classList.add('hidden'); 
             }
         }
 
@@ -3017,7 +3014,8 @@
         };
 
         async function loadAdminDashboard() {
-            document.getElementById('adminDataDate').textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            // Using English locale for dates in the admin dashboard
+            document.getElementById('adminDataDate').textContent = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
             
             const galleryStatusText = document.getElementById('galleryStatusText');
             const galleryIconBg = document.getElementById('galleryIconBg');
@@ -3079,7 +3077,7 @@
             await loadAllData();
             
             btn.classList.remove('opacity-50', 'pointer-events-none');
-            window.showAlert("ডেটা সফলভাবে সিঙ্ক করা হয়েছে!");
+            window.showAlert("Data synced successfully!");
         });
 
         document.getElementById('btnAdminGallery')?.addEventListener('click', () => {
@@ -3095,7 +3093,7 @@
 
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
-            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
+            if (e.target.checked) window.showAlert("Maintenance mode activated. Users can no longer log in.");
         });
 
         document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
@@ -3116,7 +3114,7 @@
             const txt = document.getElementById('noticeTextInput').value.trim();
             if (txt) {
                 localStorage.setItem('global_notice', txt);
-                window.showAlert("নোটিশ সফলভাবে সেভ করা হয়েছে।");
+                window.showAlert("Notice saved successfully.");
             } else {
                 localStorage.removeItem('global_notice');
             }
@@ -3126,7 +3124,7 @@
         window.clearNotice = () => {
             document.getElementById('noticeTextInput').value = '';
             localStorage.removeItem('global_notice');
-            window.showAlert("নোটিশ মুছে ফেলা হয়েছে।");
+            window.showAlert("Notice cleared.");
             closeNoticeModal();
         };
 
@@ -3143,16 +3141,16 @@
 
         btnAdminNewOutlet?.addEventListener('click', () => {
             const dbs = [...new Set(pjpData.map(i => i.townName))].filter(Boolean).sort();
-            newOutletDistName.innerHTML = '<option value="" disabled selected>ডিস্ট্রিবিউটর নির্বাচন করুন</option>' + 
+            newOutletDistName.innerHTML = '<option value="" disabled selected>Select Distributor</option>' + 
                                           dbs.map(db => `<option value="${db}">${db}</option>`).join('');
             
-            newOutletRouteName.innerHTML = '<option value="" disabled selected>প্রথমে ডিস্ট্রিবিউটর নির্বাচন করুন</option>';
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>Select Distributor First</option>';
             newOutletRouteName.disabled = true;
 
             const uniqueSlabs = [...new Set(pjpData.map(i => i.slab))].filter(Boolean).sort();
             const slabSelect = document.getElementById('newOutletSlab');
             if (slabSelect) {
-                slabSelect.innerHTML = '<option value="" disabled selected>স্ল্যাব নির্বাচন করুন</option>' + 
+                slabSelect.innerHTML = '<option value="" disabled selected>Select Slab</option>' + 
                                        uniqueSlabs.map(s => `<option value="${s}">${s}</option>`).join('');
             }
 
@@ -3173,7 +3171,7 @@
             if (match) newOutletDistCode.value = match.distCode;
 
             const routes = [...new Set(pjpData.filter(i => i.townName === dbName).map(i => i.routeName))].filter(Boolean).sort();
-            newOutletRouteName.innerHTML = '<option value="" disabled selected>রুট নির্বাচন করুন</option>' + 
+            newOutletRouteName.innerHTML = '<option value="" disabled selected>Select Route</option>' + 
                                            routes.map(r => `<option value="${r}">${r}</option>`).join('');
             newOutletRouteName.disabled = routes.length === 0;
             newOutletRouteCode.value = '';
@@ -3214,17 +3212,17 @@
             const entryBy = document.getElementById('newOutletEntryBy').value;
 
             if(!distName || !routeName || !name || !owner || !phone || !slab || !entryBy) {
-                window.showAlert("দয়া করে * চিহ্নিত সকল তথ্য পূরণ করুন!");
+                window.showAlert("Please fill in all required (*) fields!");
                 return;
             }
 
             if(phone.length !== 11) {
-                window.showAlert("মোবাইল নাম্বার অবশ্যই ঠিক ১১ ডিজিটের হতে হবে!");
+                window.showAlert("Mobile number must be exactly 11 digits!");
                 return;
             }
             
             const originalText = submitNewOutletBtn.innerHTML;
-            submitNewOutletBtn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> সেভ হচ্ছে...';
+            submitNewOutletBtn.innerHTML = '<div class="loader !w-4 !h-4 !border-t-white mr-2"></div> Saving...';
             submitNewOutletBtn.disabled = true;
 
             const payload = {
@@ -3248,7 +3246,7 @@
                     body: JSON.stringify(payload)
                 });
 
-                window.showAlert("নতুন স্মাইল কর্ণার সফলভাবে এন্ট্রি হয়েছে!");
+                window.showAlert("New Smile Corner entered successfully!");
                 
                 newOutletDistName.value = '';
                 newOutletRouteName.value = '';
@@ -3262,7 +3260,7 @@
                 
                 hideNewOutletModal();
             } catch(e) {
-                window.showAlert("এন্ট্রি সেভ করতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ চেক করুন।");
+                window.showAlert("Error saving entry. Please check your internet connection.");
             } finally {
                 submitNewOutletBtn.innerHTML = originalText;
                 submitNewOutletBtn.disabled = false;
@@ -3270,11 +3268,12 @@
         });
 
         // ==========================================
-        // ADMIN MAP LOGIC (DUAL MODE)
+        // ADMIN MAP LOGIC
         // ==========================================
         let mapInstance = null;
         let mapMarkerLayer = null;
         let mapPolylineLayer = null;
+        let mapDataRaw = [];
 
         document.getElementById('btnAdminMap')?.addEventListener('click', async () => {
             const mapContainer = document.getElementById('adminMapContainer');
@@ -3289,8 +3288,8 @@
                 initAdminMap();
             }
             
-            // Force redraw immediately when the view opens to fix grey box bugs
-            setTimeout(() => { mapInstance.invalidateSize(); }, 150);
+            // Force map resize immediately when unhidden to fix grey box bugs
+            setTimeout(() => { if(mapInstance) mapInstance.invalidateSize(); }, 150);
             
             await loadMapDataFromSheet();
         });
@@ -3307,7 +3306,7 @@
 
         function initAdminMap() {
             if (typeof L === 'undefined') {
-                window.showAlert("ম্যাপ সার্ভিস লোড হতে সমস্যা হয়েছে।");
+                window.showAlert("There was a problem loading the map service.");
                 return;
             }
 
@@ -3319,19 +3318,17 @@
             
             L.control.zoom({ position: 'bottomright' }).addTo(mapInstance);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap',
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                 maxZoom: 19
             }).addTo(mapInstance);
 
             mapMarkerLayer = L.featureGroup().addTo(mapInstance);
             mapPolylineLayer = L.layerGroup().addTo(mapInstance);
             
-            // Map event listeners for all 4 filters
-            document.getElementById('mapFilterMerch').addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterDate').addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterTown').addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterRoute').addEventListener('change', applyMapFilters);
+            // Safely attach map event listeners 
+            document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
         }
 
         async function loadMapDataFromSheet() {
@@ -3342,28 +3339,23 @@
             try {
                 // We use the Images sheet to get strictly recorded Lat/Lons
                 const imgRows = await fetchSheetData('Images');
+                
                 const validLocations = [];
                 
-                // Read top to bottom to parse chronological submissions safely
-                for (let i = 1; i < imgRows.length; i++) {
+                // Read from bottom to top (Newest First)
+                for (let i = imgRows.length - 1; i >= 1; i--) {
                     const row = imgRows[i];
                     if (!row || !row.c) continue;
                     
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     
-                    // Forms usually stores Timestamp in the very first column (0)
-                    const timestampRaw = getVal(0);
-                    let ts = new Date(timestampRaw).getTime();
-                    // Fallback numeric timestamp if Sheets formats date bizarrely to maintain basic order
-                    if(isNaN(ts)) ts = Date.now() + i; 
-
                     const shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
                     if (!shopCode) continue;
 
                     let lat = NaN;
                     let lng = NaN;
 
-                    // Robust coordinate detector checking columns J to Z safely
+                    // Robust coordinate detector (checks columns J to Z)
                     for (let col = 9; col <= 25; col++) {
                         const cellVal = getVal(col);
                         if (cellVal) {
@@ -3388,21 +3380,26 @@
                             name: pjpMatch ? pjpMatch.name : "Unknown Outlet",
                             town: pjpMatch ? pjpMatch.townName : "Unknown",
                             route: pjpMatch ? pjpMatch.routeName : "Unknown",
-                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown",
-                            timestamp: ts,
-                            dateStrRaw: timestampRaw
+                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown"
                         });
                     }
                 }
                 
-                // Keep ALL global submissions strictly in window to allow Live Tracking by Date
-                window.allMapSubmissions = validLocations;
+                // Deduplicate (take latest location for same shop code)
+                const uniqueLocationsMap = new Map();
+                validLocations.forEach(loc => {
+                    // Since array was built from bottom to top, the FIRST occurrence of a code is the NEWEST
+                    if(!uniqueLocationsMap.has(loc.code)) {
+                        uniqueLocationsMap.set(loc.code, loc);
+                    }
+                });
+                mapDataRaw = Array.from(uniqueLocationsMap.values());
 
                 populateMapFilters();
                 applyMapFilters();
             } catch (err) {
                 console.error(err);
-                window.showAlert("ম্যাপ ডেটা লোড করতে সমস্যা হয়েছে।");
+                window.showAlert("There was a problem loading map data.");
             } finally {
                 loader.classList.add('hidden');
                 loader.classList.remove('flex');
@@ -3410,181 +3407,115 @@
         }
 
         function populateMapFilters() {
-            if(!window.allMapSubmissions) return;
-
-            const merchSelect = document.getElementById('mapFilterMerch');
             const townSelect = document.getElementById('mapFilterTown');
             const routeSelect = document.getElementById('mapFilterRoute');
             
-            const merchs = [...new Set(window.allMapSubmissions.map(d => d.merchandiser))].filter(Boolean).sort();
-            const towns = [...new Set(window.allMapSubmissions.map(d => d.town))].filter(Boolean).sort();
-            const routes = [...new Set(window.allMapSubmissions.map(d => d.route))].filter(Boolean).sort();
+            const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
+            const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
 
-            merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchs.map(m => `<option value="${m}">${m}</option>`).join('');
-            townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
-            routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
         }
 
         function applyMapFilters() {
-            if (!mapInstance || !mapMarkerLayer || !window.allMapSubmissions) return;
+            if (!mapInstance || !mapMarkerLayer) return;
 
-            const merchFilter = document.getElementById('mapFilterMerch').value;
-            const dateFilter = document.getElementById('mapFilterDate').value;
-            const townFilter = document.getElementById('mapFilterTown').value;
-            const routeFilter = document.getElementById('mapFilterRoute').value;
+            const townFilter = document.getElementById('mapFilterTown')?.value;
+            const routeFilter = document.getElementById('mapFilterRoute')?.value;
 
-            let filtered = window.allMapSubmissions;
-
-            // Apply standard filters
-            if (merchFilter) filtered = filtered.filter(d => d.merchandiser === merchFilter);
+            let filtered = mapDataRaw;
             if (townFilter) filtered = filtered.filter(d => d.town === townFilter);
             if (routeFilter) filtered = filtered.filter(d => d.route === routeFilter);
 
-            let isLiveMode = false;
-
-            // Dual Mode Switch: Live Tracking Mode vs Master Route Mode
-            if (dateFilter) {
-                isLiveMode = true;
-                filtered = filtered.filter(d => {
-                    if (!d.dateStrRaw) return false;
-                    const dObj = new Date(d.dateStrRaw);
-                    if(isNaN(dObj.getTime())) return false;
-                    // Format correctly to YYYY-MM-DD for strict comparison
-                    const yyyy = dObj.getFullYear();
-                    const mm = String(dObj.getMonth() + 1).padStart(2, '0');
-                    const dd = String(dObj.getDate()).padStart(2, '0');
-                    return `${yyyy}-${mm}-${dd}` === dateFilter;
-                });
-                
-                // Chronological Sorting
-                filtered.sort((a, b) => a.timestamp - b.timestamp);
-                
-            } else {
-                // Deduplicate logic for Master Route
-                const uniqueLocationsMap = new Map();
-                // Sort by newest first to keep latest when mapping
-                let sortedDesc = [...filtered].sort((a, b) => b.timestamp - a.timestamp);
-                sortedDesc.forEach(loc => {
-                    if(!uniqueLocationsMap.has(loc.code)) {
-                        uniqueLocationsMap.set(loc.code, loc);
-                    }
-                });
-                filtered = Array.from(uniqueLocationsMap.values());
-            }
-
-            document.getElementById('mapCountDisplay').textContent = `${filtered.length} Outlets Found`;
+            const displayElement = document.getElementById('mapCountDisplay');
+            if(displayElement) displayElement.textContent = `${filtered.length} Outlets Found`;
 
             mapMarkerLayer.clearLayers();
             mapPolylineLayer.clearLayers();
 
             if (filtered.length === 0) {
-                document.getElementById('mapDistanceDisplay').classList.add('hidden');
+                document.getElementById('mapDistanceDisplay')?.classList.add('hidden');
                 return;
             }
 
-            // Paint Markers
-            filtered.forEach((data, index) => {
-                let mColor = "#da291c"; // Default Red
-                let mRadius = 5;
-
-                // Color Start/End Points if tracing live mode
-                if (isLiveMode && filtered.length > 1) {
-                    if (index === 0) { mColor = "#22c55e"; mRadius = 7; } // Start: Green
-                    else if (index === filtered.length - 1) { mColor = "#3b82f6"; mRadius = 7; } // End: Blue
-                }
-
+            filtered.forEach(data => {
                 const marker = L.circleMarker([data.lat, data.lng], {
-                    radius: mRadius,
-                    fillColor: mColor, 
+                    radius: 5,
+                    fillColor: "#da291c", 
                     color: "#FFFFFF",
-                    weight: 2,
+                    weight: 1.5,
                     opacity: 1,
                     fillOpacity: 0.9
                 });
 
-                let popupHTML = `
+                marker.bindTooltip(`<div style="font-family: 'Inter', sans-serif; font-weight:bold;">${data.name}</div>`, { direction: 'top', offset: [0, -5] });
+
+                const mapLink = `https://www.google.com/maps/dir/?api=1&destination=${data.lat},${data.lng}`;
+                marker.bindPopup(`
                     <div style="font-family: 'Inter', sans-serif;">
-                        <div style="color:${mColor}; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
+                        <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
                         <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
                         <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
-                        <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
-                `;
+                        <div style="font-size:10px; color:#6b7280; margin-bottom:5px;">Merch: ${data.merchandiser || 'Unknown'}</div>
+                        <a href="${mapLink}" target="_blank" style="display:inline-flex; align-items:center; background-color:#3b82f6; color:white; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">
+                            Get Directions
+                        </a>
+                    </div>
+                `);
                 
-                if (isLiveMode) {
-                    const timeString = new Date(data.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                    popupHTML += `<div style="font-size:10px; color:#000; font-weight:bold; margin-top:3px;">Visited: ${timeString}</div>`;
-                }
-                
-                popupHTML += `</div>`;
-                marker.bindPopup(popupHTML);
                 mapMarkerLayer.addLayer(marker);
             });
 
             let totalMeters = 0;
 
-            if (filtered.length > 1) {
-                if (isLiveMode) {
-                    // Chronological connect-the-dots for live tracing
-                    const latlngs = filtered.map(d => [d.lat, d.lng]);
-                    for(let i=0; i<latlngs.length-1; i++) {
-                        totalMeters += L.latLng(latlngs[i]).distanceTo(L.latLng(latlngs[i+1]));
+            // If filtered down to a reasonable number, connect the dots with a polyline.
+            if (filtered.length > 1 && filtered.length < 500) {
+                const routeGroups = {};
+                filtered.forEach(item => {
+                    const rName = item.route || 'Unassigned';
+                    if (!routeGroups[rName]) routeGroups[rName] = [];
+                    routeGroups[rName].push(item);
+                });
+
+                Object.entries(routeGroups).forEach(([route, items]) => {
+                    if (items.length < 2) return;
+
+                    // Simple nearest neighbor sorting to create a logical path outline
+                    let remaining = [...items];
+                    const sortedGeo = [remaining.shift()];
+                    
+                    while (remaining.length > 0) {
+                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                        let nearestIdx = 0;
+                        let minDist = Infinity;
+                        
+                        remaining.forEach((item, idx) => {
+                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                nearestIdx = idx;
+                            }
+                        });
+                        
+                        totalMeters += minDist;
+                        sortedGeo.push(remaining[nearestIdx]);
+                        remaining.splice(nearestIdx, 1);
                     }
 
+                    const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
                     L.polyline(latlngs, {
-                        color: '#3b82f6', // Live track lines in bold blue
-                        weight: 3,
-                        opacity: 0.8,
-                        dashArray: '8, 8'
+                        color: '#002169', 
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: '5, 5'
                     }).addTo(mapPolylineLayer);
-
-                } else if (routeFilter && filtered.length < 500) {
-                    // Nearest Neighbor connect-the-dots for ideal master route mapping
-                    const routeGroups = {};
-                    filtered.forEach(item => {
-                        const rName = item.route || 'Unassigned';
-                        if (!routeGroups[rName]) routeGroups[rName] = [];
-                        routeGroups[rName].push(item);
-                    });
-
-                    Object.entries(routeGroups).forEach(([route, items]) => {
-                        if (items.length < 2) return;
-
-                        let remaining = [...items];
-                        const sortedGeo = [remaining.shift()];
-                        
-                        while (remaining.length > 0) {
-                            const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
-                            let nearestIdx = 0;
-                            let minDist = Infinity;
-                            
-                            remaining.forEach((item, idx) => {
-                                const dist = last.distanceTo(L.latLng(item.lat, item.lng));
-                                if (dist < minDist) {
-                                    minDist = dist;
-                                    nearestIdx = idx;
-                                }
-                            });
-                            
-                            totalMeters += minDist;
-                            sortedGeo.push(remaining[nearestIdx]);
-                            remaining.splice(nearestIdx, 1);
-                        }
-
-                        const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
-                        L.polyline(latlngs, {
-                            color: '#002169', 
-                            weight: 2,
-                            opacity: 0.6,
-                            dashArray: '5, 5'
-                        }).addTo(mapPolylineLayer);
-                    });
-                }
+                });
             }
 
             const distDisplay = document.getElementById('mapDistanceDisplay');
             if (distDisplay) {
-                if (totalMeters > 0 && (routeFilter || isLiveMode)) {
-                    distDisplay.textContent = (isLiveMode ? 'Distance: ' : 'Route: ') + (totalMeters / 1000).toFixed(1) + ' km';
+                if (totalMeters > 0) {
+                    distDisplay.textContent = 'Distance: ' + (totalMeters / 1000).toFixed(1) + ' km';
                     distDisplay.classList.remove('hidden');
                 } else {
                     distDisplay.classList.add('hidden');
@@ -3592,7 +3523,7 @@
             }
 
             try {
-                // Auto zoom map to tightly fit all currently shown points smoothly
+                // Auto zoom map to tightly fit all currently shown points
                 const bounds = mapMarkerLayer.getBounds();
                 if (bounds.isValid()) {
                     mapInstance.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
