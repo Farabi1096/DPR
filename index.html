@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <!-- ROLE SELECTION SCREEN -->
+    <!-- ================= ROLE SELECTION SCREEN ================= -->
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
             <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
@@ -228,8 +228,10 @@
             <!-- ================= VIEW 1: FORM ================= -->
             <div id="formView" class="animate-fade-in">
                 <form id="customForm" class="space-y-6">
+                    <!-- Section 1 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
                         
+                        <!-- Header & Outlet Type Toggle -->
                         <div class="border-b border-gray-200 pb-3 mb-4 flex justify-between items-center gap-2">
                             <h3 class="text-[15px] sm:text-[17px] font-bold text-gray-800 flex items-center leading-tight">
                                 <span class="bg-white shadow-sm text-colgate rounded-full w-7 h-7 flex items-center justify-center text-sm mr-2 font-bold shrink-0">১</span>
@@ -237,7 +239,7 @@
                             </h3>
                             
                             <!-- OUTLET TYPE TOGGLE -->
-                            <div id="formOutletTypeToggleContainer" class="flex bg-gray-100 p-1 rounded-xl w-[170px] sm:w-[210px] shrink-0 shadow-inner border border-gray-200 mr-1">
+                            <div class="flex bg-gray-100 p-1 rounded-xl w-[170px] sm:w-[210px] shrink-0 shadow-inner border border-gray-200 mr-1">
                                 <label class="flex-1 text-center cursor-pointer m-0">
                                     <input type="radio" name="outlet_type" value="DCC" class="peer hidden" required>
                                     <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">DCC</div>
@@ -366,6 +368,7 @@
                         </div>
                     </div>
 
+                    <!-- Section 2 -->
                     <div class="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-2xl shadow-sm">
                         <div class="border-b border-gray-200 pb-3 mb-4">
                             <h3 class="text-[17px] font-bold text-gray-800 flex items-center">
@@ -490,13 +493,14 @@
             <div id="myDayView" class="hidden animate-fade-in">
                 <!-- PJP Filters & Outlet Type Toggle -->
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="map" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আজকের PJP
                         </h3>
                         
                         <!-- MY DAY OUTLET TYPE TOGGLE -->
-                        <div id="myDayOutletTypeToggleContainer" class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
+                        <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
                             <label class="flex-1 text-center cursor-pointer m-0">
                                 <input type="radio" name="myday_outlet_type" value="ALL" class="peer hidden" checked>
                                 <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">All</div>
@@ -520,11 +524,11 @@
                         <div class="grid grid-cols-3 gap-2 relative">
                             <div class="relative w-full">
                                 <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 pl-2 pr-6 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                                <i data-lucide="x" onclick="clearMyDaySelect('myDayTownSelect')" class="w-3 h-3 absolute right-6 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayTown"></i>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayTownSelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayTown"></i>
                             </div>
                             <div class="relative w-full">
                                 <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                                <i data-lucide="x" onclick="clearMyDaySelect('myDayVisitDaySelect')" class="w-3 h-3 absolute right-6 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayDay"></i>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayVisitDaySelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayDay"></i>
                             </div>
                             <div class="relative w-full">
                                 <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
@@ -569,13 +573,14 @@
             <!-- ================= VIEW 3: REPORT ================= -->
             <div id="reportView" class="hidden animate-fade-in">
                 <div class="mb-3 text-left">
+                    
                     <div class="flex justify-between items-center mb-2.5 gap-2">
                         <h3 class="font-bold text-gray-800 text-[13px] sm:text-[14px] flex items-center whitespace-nowrap">
                             <i data-lucide="bar-chart-2" class="h-[16px] w-[16px] mr-1.5 text-colgate"></i> আউটলেট রিপোর্ট
                         </h3>
                         
                         <!-- REPORT OUTLET TYPE TOGGLE -->
-                        <div id="reportOutletTypeToggleContainer" class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
+                        <div class="flex bg-gray-100 p-1 rounded-xl w-[200px] sm:w-[240px] shrink-0 shadow-inner border border-gray-200">
                             <label class="flex-1 text-center cursor-pointer m-0">
                                 <input type="radio" name="report_outlet_type" value="ALL" class="peer hidden" checked>
                                 <div class="py-1.5 text-[12px] sm:text-[13px] font-bold text-gray-500 rounded-lg peer-checked:bg-white peer-checked:text-colgate peer-checked:shadow-sm transition-all">All</div>
@@ -602,19 +607,19 @@
 
                     <!-- ONE PAGER SUMMARY CONTAINER -->
                     <div id="onePagerContainer" class="animate-fade-in pb-1">
-                        <!-- Filters for One Pager -->
+                        <!-- Filters for One Pager (Town, Date, Day, Cluster) -->
                         <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
                             <div class="grid grid-cols-2 gap-2 mb-2">
+                                <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">Town (টাউন)</option>
+                                </select>
                                 <div class="relative w-full">
                                     <input type="date" id="onePagerDate" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors" title="Select Date to Auto-fill Day">
                                 </div>
-                                <select id="onePagerDay" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                    <option value="">Day (বার)</option>
-                                </select>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                    <option value="">Town (টাউন)</option>
+                                <select id="onePagerDay" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
+                                    <option value="">Day (বার)</option>
                                 </select>
                                 <select id="onePagerCluster" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                     <option value="">Cluster</option>
@@ -653,17 +658,17 @@
                             <input type="text" id="reportSearchInput" class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] bg-white text-gray-800 placeholder-gray-400 outline-none focus:border-colgate focus:ring-1 focus:ring-colgate transition-all shadow-sm" placeholder="দোকানের নাম বা কোড লিখে খুঁজুন...">
                         </div>
 
-                        <!-- Filters -->
+                        <!-- DB Name & Route Filters -->
                         <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-4">
                             <div class="grid grid-cols-3 gap-2">
                                 <select id="reportRegionSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                    <option value="">Region</option>
+                                    <option value="">Region নির্বাচন করুন</option>
                                 </select>
                                 <select id="reportDbNameSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                    <option value="">DB Name</option>
+                                    <option value="">DB নির্বাচন করুন</option>
                                 </select>
                                 <select id="reportRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] sm:text-[12px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
-                                    <option value="">Route</option>
+                                    <option value="">রুট নির্বাচন করুন</option>
                                 </select>
                             </div>
                         </div>
@@ -681,7 +686,12 @@
                         </div>
 
                         <!-- Report List -->
-                        <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar pb-10"></div>
+                        <div id="reportList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar pb-10">
+                            <div class="flex flex-col items-center justify-center py-10 opacity-70">
+                                <i data-lucide="filter" class="h-10 w-10 text-gray-400 mb-2"></i>
+                                <p class="text-[12px] text-gray-500 mt-2">তথ্য দেখতে প্রথমে টাইপ এবং DB নির্বাচন করুন</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -689,7 +699,7 @@
 
         <!-- Footer -->
         <div class="pb-6 pt-2 flex flex-col items-center bg-white sm:rounded-b-2xl">
-            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">কোলগেট স্মাইল কর্ণার প্রোগ্রাম &copy; ২০২৬</p>
+            <p class="text-[11px] text-center text-gray-400 font-medium tracking-wide">কোলগেট স্মাইল কর্ণার প্রোগ্রাম &copy; ২০২৫</p>
         </div>
     </div>
 
@@ -712,18 +722,6 @@
                     <span id="adminDataDate" class="text-[10px] text-gray-400 font-medium">Loading...</span>
                 </div>
                 
-                <div class="grid grid-cols-3 gap-2 mb-3">
-                    <select id="adminFilterMonth" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] font-bold text-gray-700 outline-none focus:border-colgate">
-                        <option value="ALL">All Months</option>
-                    </select>
-                    <select id="adminFilterMerch" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] font-bold text-gray-700 outline-none focus:border-colgate">
-                        <option value="">All Merchandisers</option>
-                    </select>
-                    <select id="adminFilterTown" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] font-bold text-gray-700 outline-none focus:border-colgate">
-                        <option value="">All Towns</option>
-                    </select>
-                </div>
-
                 <div id="adminStatsLoader" class="flex flex-col items-center justify-center py-6"><div class="loader mb-2"></div><p class="text-[10px] text-gray-400">ডেটা সিঙ্ক হচ্ছে...</p></div>
 
                 <div id="adminStatsContent" class="hidden grid grid-cols-2 gap-2">
@@ -892,10 +890,12 @@
         </div>
 
         <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
-            <div class="grid grid-cols-3 gap-2">
+            <!-- 4 Grid Filters for Dual Mode Map -->
+            <div class="grid grid-cols-2 gap-2">
                 <select id="mapFilterMerch" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
                     <option value="">All Merchandisers</option>
                 </select>
+                <input type="date" id="mapFilterDate" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700 text-center" title="Select date for Live Tracking">
                 <select id="mapFilterTown" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] outline-none font-bold text-gray-700">
                     <option value="">All Towns</option>
                 </select>
@@ -903,6 +903,7 @@
                     <option value="">All Routes</option>
                 </select>
             </div>
+            
             <div class="flex justify-between items-center px-1 mt-1">
                 <span id="mapCountDisplay" class="text-[11px] font-extrabold text-colgate">0 Outlets Found</span>
                 <span id="mapDistanceDisplay" class="text-[11px] font-extrabold text-blue-600 hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">0.0 km</span>
@@ -919,7 +920,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
+        // Security logic
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('selectstart', event => {
             const tagName = (event.target.tagName || '').toLowerCase();
@@ -933,6 +936,7 @@
 
         lucide.createIcons();
 
+        // Custom Modal Logic
         window.showAlert = (msg) => {
             document.getElementById('customAlertMsg').textContent = msg;
             const modal = document.getElementById('customAlert');
@@ -968,12 +972,16 @@
 
         window.alert = window.showAlert;
 
+        // ===============================================
+        // Constants
+        // ===============================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLhnjgv9VdgHoO1BscC5hKQJJk-0uEFsL4YSQo7GAgdGvK4eZt6OkNvbFEYaLv1Ih/exec';
         const NEW_OUTLET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvNoIajBiG8BQdSDpRorTzqk0AgK7vOr7o_INMJ03aJVJ-aBHN8BB3xKKqrXkNbTBm/exec';
         const LOCATION_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwu8lVlJwbm2BpxgLFAB_AhsLQpVY4eoxdeQubPRUUQQ3B6dKf7I4ELV7jr-b18IRHc/exec';
         const SHEET_ID = '1LE52K4tA60_-Ekd0TEF9gc2zMyq1tP5SOAC1zru8A6k'; 
         const REPORT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYcd2eba30rLXPA3OHxVcHYKVpUK9RweS5WD7g-IFM46AUsI6zSu6YESkPxmbg9xyj4gs7UUgL13a/pub?gid=857310602&single=true&output=csv';
 
+        // State Variables
         let pjpData = [];
         let reportData = [];
         let dailySummaryData = []; 
@@ -988,6 +996,9 @@
         let detailedReportData = [];
         let isDetailedReportLoaded = false;
 
+        // ==========================================
+        // ENHANCED GPS LOCATION LOGIC
+        // ==========================================
         function getGPSLocation() {
             return new Promise((resolve) => {
                 if (!navigator.geolocation) {
@@ -1050,6 +1061,9 @@
             }
         });
 
+        // ==========================================
+        // GLOBAL FILTER HELPERS
+        // ==========================================
         function getFilteredPJP() {
             const role = localStorage.getItem('colgate_app_role');
             const merchName = localStorage.getItem('colgate_app_merch_name');
@@ -1064,6 +1078,9 @@
              return detailedReportData.filter(d => activeCodes.has(d.code));
         }
 
+        // ==========================================
+        // TIME FETCHING LOGIC
+        // ==========================================
         function getMerchTimes() {
             let startStr = '--:--';
             let endStr = '--:--';
@@ -1136,17 +1153,12 @@
             if (dateDisplay) {
                 dateDisplay.textContent = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
             }
-            
-            const times = getMerchTimes();
-            const startEl = document.getElementById('statStartTime');
-            const endEl = document.getElementById('statEndTime');
-            const totalEl = document.getElementById('statTotalTime');
-            
-            if (startEl) startEl.textContent = times.startStr;
-            if (endEl) endEl.textContent = times.endStr;
-            if (totalEl) totalEl.textContent = times.totalStr;
+            // Performance stats were removed from My Day UI, but keeping this function intact to not break reports/others.
         };
 
+        // ==========================================
+        // ROLE MANAGEMENT
+        // ==========================================
         function checkRole() {
             const maintenance = localStorage.getItem('app_maintenance');
             if (maintenance === 'true' && localStorage.getItem('colgate_app_role') !== 'admin') {
@@ -1270,7 +1282,7 @@
                 select.classList.remove('hidden');
             }
 
-            // Beautiful A-Z Grouped Merchandiser Mapping
+            // Enhanced Merchandiser Grouping by Type & Territory (A-Z sorted)
             const merchMap = new Map();
             pjpData.forEach(p => {
                 if (p.merchandiser) {
@@ -1327,7 +1339,7 @@
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const d = new Date();
             const currentMonth = monthNames[d.getMonth()];
-            const prevMonth = monthNames[(d.getMonth() + 11) % 12];
+            const prevMonth = monthNames[d.getMonth() === 0 ? 11 : d.getMonth() - 1];
 
             const formMonth = document.getElementById('formMonth');
             if (formMonth) {
@@ -1338,6 +1350,9 @@
             }
         }
 
+        // ==========================================
+        // DATA LOADING & PARSING
+        // ==========================================
         async function fetchSheetData(tabName) {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${tabName}&t=${new Date().getTime()}`;
             try {
@@ -1411,7 +1426,6 @@
                 reportData = reportRows.map(row => {
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     return { 
-                        month: getVal(0),
                         code: getVal(3), 
                         imageUpload: getVal(13),
                         startTime: getVal(17),
@@ -1424,7 +1438,6 @@
                 
                 const role = localStorage.getItem('colgate_app_role');
                 if (role === 'admin') {
-                    populateAdminFilters();
                     updateAdminStats();
                 } else {
                     populateDropdowns();
@@ -1446,6 +1459,10 @@
             }
         }
 
+        // ==========================================
+        // FORM: EVENT LISTENERS & POPULATION
+        // ==========================================
+        
         const formOutletTypeRadios = document.getElementsByName('outlet_type');
         for (let r of formOutletTypeRadios) {
             r.addEventListener('change', (e) => {
@@ -1722,6 +1739,9 @@
             }
         });
 
+        // ==========================================
+        // MY DAY LOGIC
+        // ==========================================
         window.clearMyDaySelect = (selectId) => {
             const selectEl = document.getElementById(selectId);
             if(selectEl) {
@@ -1752,6 +1772,7 @@
                 document.getElementById('clearMyDayDay').classList.add('hidden');
                 document.getElementById('clearMyDayRoute').classList.add('hidden');
 
+                calculateMyDayStats();
                 renderMyDayPJP();
             });
         }
@@ -1791,6 +1812,7 @@
                 document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
+            calculateMyDayStats();
             renderMyDayPJP();
         });
 
@@ -1822,11 +1844,13 @@
                 document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
+            calculateMyDayStats();
             renderMyDayPJP();
         });
 
         document.getElementById('myDayRouteSelect')?.addEventListener('change', (e) => {
             document.getElementById('clearMyDayRoute').classList.toggle('hidden', !e.target.value);
+            calculateMyDayStats();
             renderMyDayPJP();
         });
 
@@ -1871,14 +1895,11 @@
         }
 
         function renderMyDayPJP() {
-            calculateMyDayStats();
-            
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
             const route = document.getElementById('myDayRouteSelect')?.value;
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
 
-            // Progressive filter! We do not wait for all fields.
             let outlets = getFilteredPJP();
             if (town) outlets = outlets.filter(i => i.townName === town);
             if (day) outlets = outlets.filter(i => i.visitDay === day);
@@ -2040,6 +2061,9 @@
             }
         };
 
+        // ==========================================
+        // REPORT LOGIC
+        // ==========================================
         function initOnePagerFilters() {
             let filtered = getFilteredPJP();
             
@@ -2218,39 +2242,8 @@
             const displayPct = calcPct(displayVisited, displayCount);
             const regularPct = calcPct(regularVisited, regularCount);
             
-            let dateStr = dateVal ? new Date(dateVal).toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' }) : new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
-            
-            const times = getMerchTimes();
-            let startTimeStr = times.startStr;
-            let endTimeStr = times.endStr;
-            let totalTimeStr = times.totalStr;
-
             content.innerHTML = `
                 <div class="px-5 pt-6 pb-6 bg-white">
-                    <div class="mb-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-gray-800 font-extrabold text-[15px] flex items-center"><i data-lucide="activity" class="h-5 w-5 mr-1.5 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                            <p class="text-colgate text-[12px] font-bold">${dateStr}</p>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3 text-center">
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="play-circle" class="h-5 w-5 text-green-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${startTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শুরু</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="stop-circle" class="h-5 w-5 text-orange-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${endTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">শেষ</span>
-                            </div>
-                            <div class="bg-gray-50 py-2.5 px-1 rounded-2xl border border-gray-100 flex flex-col items-center">
-                                <i data-lucide="hourglass" class="h-5 w-5 text-purple-500 mb-1"></i>
-                                <span class="text-[13px] sm:text-[14px] font-black text-gray-800 tracking-tight">${totalTimeStr}</span>
-                                <span class="text-gray-400 text-[10px] font-bold mt-0.5">মোট সময়</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="space-y-4">
                         <div class="bg-gray-50 rounded-2xl p-4 flex items-center justify-between relative overflow-hidden border border-gray-100">
                             <div class="w-[28%] border-r border-gray-200 pr-2 flex flex-col justify-center">
@@ -2342,7 +2335,7 @@
                 const regionSelect = document.getElementById('reportRegionSelect');
                 if(regionSelect) {
                     const regions = [...new Set(detailedReportData.map(d => d.zone))].filter(Boolean).sort();
-                    regionSelect.innerHTML = '<option value="">Region</option>' + regions.map(name => `<option value="${name}">${name}</option>`).join('');
+                    regionSelect.innerHTML = '<option value="">Region নির্বাচন করুন</option>' + regions.map(name => `<option value="${name}">${name}</option>`).join('');
                     regionSelect.disabled = regions.length === 0;
                     regionSelect.classList.remove('bg-gray-100', 'text-gray-500');
                     regionSelect.classList.add('bg-white', 'text-gray-700');
@@ -2367,12 +2360,12 @@
                     regionSelect.value = '';
                 }
                 
-                document.getElementById('reportDbNameSelect').innerHTML = '<option value="">DB Name</option>';
+                document.getElementById('reportDbNameSelect').innerHTML = '<option value="">DB নির্বাচন করুন</option>';
                 document.getElementById('reportDbNameSelect').disabled = true;
                 document.getElementById('reportDbNameSelect').classList.add('bg-gray-100', 'text-gray-500');
                 document.getElementById('reportDbNameSelect').classList.remove('bg-white', 'text-gray-700');
 
-                document.getElementById('reportRouteSelect').innerHTML = '<option value="">Route</option>';
+                document.getElementById('reportRouteSelect').innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
                 document.getElementById('reportRouteSelect').disabled = true;
                 document.getElementById('reportRouteSelect').classList.add('bg-gray-100', 'text-gray-500');
                 document.getElementById('reportRouteSelect').classList.remove('bg-white', 'text-gray-700');
@@ -2399,7 +2392,7 @@
 
             const dbNames = [...new Set(filteredReport.map(d => d.dhName))].filter(Boolean).sort();
             if(dbSelect) {
-                dbSelect.innerHTML = '<option value="">DB Name</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
+                dbSelect.innerHTML = '<option value="">DB নির্বাচন করুন</option>' + dbNames.map(name => `<option value="${name}">${name}</option>`).join('');
                 dbSelect.disabled = dbNames.length === 0;
                 dbSelect.classList.remove('bg-gray-100', 'text-gray-500');
                 dbSelect.classList.add('bg-white', 'text-gray-700');
@@ -2407,7 +2400,7 @@
 
             const routeSelect = document.getElementById('reportRouteSelect');
             if(routeSelect) {
-                routeSelect.innerHTML = '<option value="">Route</option>';
+                routeSelect.innerHTML = '<option value="">রুট নির্বাচন করুন</option>';
                 routeSelect.disabled = true;
                 routeSelect.classList.add('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.remove('bg-white', 'text-gray-700');
@@ -2436,7 +2429,7 @@
 
             const routes = [...new Set(filteredReport.map(d => d.route))].filter(Boolean).sort();
             if(routeSelect) {
-                routeSelect.innerHTML = '<option value="">Route</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                routeSelect.innerHTML = '<option value="">সকল রুট</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
                 routeSelect.disabled = routes.length === 0;
                 routeSelect.classList.remove('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.add('bg-white', 'text-gray-700');
@@ -2462,7 +2455,7 @@
             const dbName = dbNameSelect ? dbNameSelect.value : '';
             const route = routeSelect ? routeSelect.value : '';
 
-            // Progressive filter! Do NOT enforce required DB or Region. Show everything matching filters.
+            // Progressive filter
             let filtered = detailedReportData;
             if (region) filtered = filtered.filter(d => d.zone === region);
             if (dbName) filtered = filtered.filter(d => d.dhName === dbName);
@@ -2617,6 +2610,10 @@
             }
         });
 
+        // ==========================================
+        // CAMERA, GALLERY & LOCATION LOGIC
+        // ==========================================
+        
         async function startCamera(facingMode) {
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
@@ -2798,6 +2795,9 @@
             if(manualFileInput) manualFileInput.value = '';
         });
 
+        // ==========================================
+        // SUBMISSION LOGIC (IMAGE THEN LOCATION)
+        // ==========================================
         document.getElementById('customForm')?.addEventListener('submit', async e => {
             e.preventDefault(); 
             if(!capturedImageData) return window.showAlert("দয়া করে আউটলেটের ছবি তুলুন!");
@@ -2978,6 +2978,9 @@
             for (let r of radios1) r.checked = false;
         };
 
+        // ==========================================
+        // FRONT PAGE SECURED PANEL (ADMIN DASHBOARD)
+        // ==========================================
         const ADMIN_PIN = "1234";
 
         document.getElementById('btnFrontSecured')?.addEventListener('click', () => {
@@ -3041,102 +3044,25 @@
                 document.getElementById('adminStatsContent').classList.add('hidden');
                 await loadAllData();
             } else {
-                populateAdminFilters();
                 updateAdminStats();
             }
         }
-
-        function populateAdminFilters() {
-            const monthSelect = document.getElementById('adminFilterMonth');
-            const merchSelect = document.getElementById('adminFilterMerch');
-            if (!monthSelect || !merchSelect) return;
-
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const d = new Date();
-            const currentMonth = monthNames[d.getMonth()];
-            const prevMonth1 = monthNames[(d.getMonth() + 11) % 12];
-            const prevMonth2 = monthNames[(d.getMonth() + 10) % 12];
-
-            if (monthSelect.options.length <= 1) { 
-                monthSelect.innerHTML = `
-                    <option value="ALL">All Months</option>
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
-                    <option value="${prevMonth1}">${prevMonth1}</option>
-                    <option value="${prevMonth2}">${prevMonth2}</option>
-                `;
-            }
-
-            const currentMerch = merchSelect.value;
-            const merchs = [...new Set(pjpData.map(i => i.merchandiser))].filter(Boolean).sort();
-            merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + 
-                                    merchs.map(m => `<option value="${m}">${m}</option>`).join('');
-            if(merchs.includes(currentMerch)) merchSelect.value = currentMerch;
-
-            updateAdminTownDropdown();
-        }
-
-        function updateAdminTownDropdown() {
-            const merchSelect = document.getElementById('adminFilterMerch');
-            const townSelect = document.getElementById('adminFilterTown');
-            if (!merchSelect || !townSelect) return;
-
-            const selectedMerch = merchSelect.value;
-            let filtered = pjpData;
-            
-            if (selectedMerch) {
-                filtered = filtered.filter(p => p.merchandiser === selectedMerch);
-            }
-
-            const currentTown = townSelect.value;
-            const towns = [...new Set(filtered.map(i => i.townName))].filter(Boolean).sort();
-            
-            townSelect.innerHTML = '<option value="">All Towns</option>' + 
-                                   towns.map(t => `<option value="${t}">${t}</option>`).join('');
-                                   
-            if (towns.includes(currentTown)) {
-                townSelect.value = currentTown;
-            } else {
-                townSelect.value = '';
-            }
-        }
-
-        document.getElementById('adminFilterMonth')?.addEventListener('change', updateAdminStats);
-        document.getElementById('adminFilterMerch')?.addEventListener('change', () => {
-            updateAdminTownDropdown();
-            updateAdminStats();
-        });
-        document.getElementById('adminFilterTown')?.addEventListener('change', updateAdminStats);
 
         function updateAdminStats() {
             document.getElementById('adminStatsLoader').classList.add('hidden');
             document.getElementById('adminStatsContent').classList.remove('hidden');
             
-            const monthFilter = document.getElementById('adminFilterMonth')?.value;
-            const merchFilter = document.getElementById('adminFilterMerch')?.value;
-            const townFilter = document.getElementById('adminFilterTown')?.value;
-
-            let filteredPjp = pjpData;
-            if (merchFilter) filteredPjp = filteredPjp.filter(p => p.merchandiser === merchFilter);
-            if (townFilter) filteredPjp = filteredPjp.filter(p => p.townName === townFilter);
-            
-            const totalOutlets = filteredPjp.length;
+            const totalOutlets = pjpData.length;
             let displayCount = 0;
             let regularCount = 0;
             
-            filteredPjp.forEach(out => {
+            pjpData.forEach(out => {
                 const statusStr = (out.status || "").toLowerCase();
                 if (statusStr.includes('regular')) regularCount++; 
                 else displayCount++;
             });
             
-            const activeCodes = new Set(filteredPjp.map(p => p.code.toUpperCase()));
-            
-            const uploadedCount = reportData.filter(r => {
-                const isTargetCode = activeCodes.has(r.code && r.code.toUpperCase());
-                const isUploaded = r.imageUpload && (r.imageUpload.toUpperCase() === 'Y' || r.imageUpload.toUpperCase() === 'YES');
-                const isTargetMonth = (!monthFilter || monthFilter === 'ALL') ? true : (r.month === monthFilter);
-                return isTargetCode && isUploaded && isTargetMonth;
-            }).length;
+            const uploadedCount = reportData.filter(r => r.imageUpload && (r.imageUpload.toUpperCase() === 'Y' || r.imageUpload.toUpperCase() === 'YES')).length;
 
             document.getElementById('adminStatTotal').textContent = totalOutlets;
             document.getElementById('adminStatDisplay').textContent = displayCount;
@@ -3343,10 +3269,12 @@
             }
         });
 
+        // ==========================================
+        // ADMIN MAP LOGIC (DUAL MODE)
+        // ==========================================
         let mapInstance = null;
         let mapMarkerLayer = null;
         let mapPolylineLayer = null;
-        let mapDataRaw = [];
 
         document.getElementById('btnAdminMap')?.addEventListener('click', async () => {
             const mapContainer = document.getElementById('adminMapContainer');
@@ -3360,6 +3288,9 @@
             if (!mapInstance) {
                 initAdminMap();
             }
+            
+            // Force redraw immediately when the view opens to fix grey box bugs
+            setTimeout(() => { mapInstance.invalidateSize(); }, 150);
             
             await loadMapDataFromSheet();
         });
@@ -3396,35 +3327,43 @@
             mapMarkerLayer = L.featureGroup().addTo(mapInstance);
             mapPolylineLayer = L.layerGroup().addTo(mapInstance);
             
-            document.getElementById('mapFilterMerch')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
+            // Map event listeners for all 4 filters
+            document.getElementById('mapFilterMerch').addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterDate').addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterTown').addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterRoute').addEventListener('change', applyMapFilters);
         }
 
         async function loadMapDataFromSheet() {
             const loader = document.getElementById('mapLoader');
-            if (loader) {
-                loader.classList.remove('hidden');
-                loader.classList.add('flex');
-            }
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
 
             try {
+                // We use the Images sheet to get strictly recorded Lat/Lons
                 const imgRows = await fetchSheetData('Images');
                 const validLocations = [];
                 
-                // Read from bottom to top (Newest First) to ensure we always get the LATEST coordinate
-                for (let i = imgRows.length - 1; i >= 1; i--) {
+                // Read top to bottom to parse chronological submissions safely
+                for (let i = 1; i < imgRows.length; i++) {
                     const row = imgRows[i];
                     if (!row || !row.c) continue;
                     
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
+                    
+                    // Forms usually stores Timestamp in the very first column (0)
+                    const timestampRaw = getVal(0);
+                    let ts = new Date(timestampRaw).getTime();
+                    // Fallback numeric timestamp if Sheets formats date bizarrely to maintain basic order
+                    if(isNaN(ts)) ts = Date.now() + i; 
+
                     const shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
                     if (!shopCode) continue;
 
                     let lat = NaN;
                     let lng = NaN;
 
-                    // Robust coordinate detector (checks columns J to Z)
+                    // Robust coordinate detector checking columns J to Z safely
                     for (let col = 9; col <= 25; col++) {
                         const cellVal = getVal(col);
                         if (cellVal) {
@@ -3436,9 +3375,11 @@
                         }
                     }
 
+                    // Validate coordinates ensuring they fall mostly within Bangladesh boundaries
                     if (shopCode && !isNaN(lat) && !isNaN(lng)) {
-                        // Match with PJP accurately
-                        const pjpMatch = pjpData.find(p => (p.code || "").toUpperCase().replace(/\s+/g, '') === shopCode);
+                        
+                        // Link with detailed info from PJP memory
+                        const pjpMatch = pjpData.find(p => p.code.toUpperCase() === shopCode);
                         
                         validLocations.push({
                             code: shopCode,
@@ -3447,19 +3388,15 @@
                             name: pjpMatch ? pjpMatch.name : "Unknown Outlet",
                             town: pjpMatch ? pjpMatch.townName : "Unknown",
                             route: pjpMatch ? pjpMatch.routeName : "Unknown",
-                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown"
+                            merchandiser: pjpMatch ? pjpMatch.merchandiser : "Unknown",
+                            timestamp: ts,
+                            dateStrRaw: timestampRaw
                         });
                     }
                 }
                 
-                // Keep only the first (newest) location per shop
-                const uniqueLocationsMap = new Map();
-                validLocations.forEach(loc => {
-                    if(!uniqueLocationsMap.has(loc.code)) {
-                        uniqueLocationsMap.set(loc.code, loc);
-                    }
-                });
-                mapDataRaw = Array.from(uniqueLocationsMap.values());
+                // Keep ALL global submissions strictly in window to allow Live Tracking by Date
+                window.allMapSubmissions = validLocations;
 
                 populateMapFilters();
                 applyMapFilters();
@@ -3467,38 +3404,73 @@
                 console.error(err);
                 window.showAlert("ম্যাপ ডেটা লোড করতে সমস্যা হয়েছে।");
             } finally {
-                if (loader) {
-                    loader.classList.add('hidden');
-                    loader.classList.remove('flex');
-                }
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
             }
         }
 
         function populateMapFilters() {
+            if(!window.allMapSubmissions) return;
+
             const merchSelect = document.getElementById('mapFilterMerch');
             const townSelect = document.getElementById('mapFilterTown');
             const routeSelect = document.getElementById('mapFilterRoute');
             
-            const merchs = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(Boolean).sort();
-            const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
-            const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
+            const merchs = [...new Set(window.allMapSubmissions.map(d => d.merchandiser))].filter(Boolean).sort();
+            const towns = [...new Set(window.allMapSubmissions.map(d => d.town))].filter(Boolean).sort();
+            const routes = [...new Set(window.allMapSubmissions.map(d => d.route))].filter(Boolean).sort();
 
-            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchs.map(m => `<option value="${m}">${m}</option>`).join('');
-            if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
-            if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchs.map(m => `<option value="${m}">${m}</option>`).join('');
+            townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+            routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
         }
 
         function applyMapFilters() {
-            if (!mapInstance || !mapMarkerLayer) return;
+            if (!mapInstance || !mapMarkerLayer || !window.allMapSubmissions) return;
 
-            const merchFilter = document.getElementById('mapFilterMerch')?.value;
-            const townFilter = document.getElementById('mapFilterTown')?.value;
-            const routeFilter = document.getElementById('mapFilterRoute')?.value;
+            const merchFilter = document.getElementById('mapFilterMerch').value;
+            const dateFilter = document.getElementById('mapFilterDate').value;
+            const townFilter = document.getElementById('mapFilterTown').value;
+            const routeFilter = document.getElementById('mapFilterRoute').value;
 
-            let filtered = mapDataRaw;
+            let filtered = window.allMapSubmissions;
+
+            // Apply standard filters
             if (merchFilter) filtered = filtered.filter(d => d.merchandiser === merchFilter);
             if (townFilter) filtered = filtered.filter(d => d.town === townFilter);
             if (routeFilter) filtered = filtered.filter(d => d.route === routeFilter);
+
+            let isLiveMode = false;
+
+            // Dual Mode Switch: Live Tracking Mode vs Master Route Mode
+            if (dateFilter) {
+                isLiveMode = true;
+                filtered = filtered.filter(d => {
+                    if (!d.dateStrRaw) return false;
+                    const dObj = new Date(d.dateStrRaw);
+                    if(isNaN(dObj.getTime())) return false;
+                    // Format correctly to YYYY-MM-DD for strict comparison
+                    const yyyy = dObj.getFullYear();
+                    const mm = String(dObj.getMonth() + 1).padStart(2, '0');
+                    const dd = String(dObj.getDate()).padStart(2, '0');
+                    return `${yyyy}-${mm}-${dd}` === dateFilter;
+                });
+                
+                // Chronological Sorting
+                filtered.sort((a, b) => a.timestamp - b.timestamp);
+                
+            } else {
+                // Deduplicate logic for Master Route
+                const uniqueLocationsMap = new Map();
+                // Sort by newest first to keep latest when mapping
+                let sortedDesc = [...filtered].sort((a, b) => b.timestamp - a.timestamp);
+                sortedDesc.forEach(loc => {
+                    if(!uniqueLocationsMap.has(loc.code)) {
+                        uniqueLocationsMap.set(loc.code, loc);
+                    }
+                });
+                filtered = Array.from(uniqueLocationsMap.values());
+            }
 
             document.getElementById('mapCountDisplay').textContent = `${filtered.length} Outlets Found`;
 
@@ -3510,78 +3482,109 @@
                 return;
             }
 
-            filtered.forEach(data => {
+            // Paint Markers
+            filtered.forEach((data, index) => {
+                let mColor = "#da291c"; // Default Red
+                let mRadius = 5;
+
+                // Color Start/End Points if tracing live mode
+                if (isLiveMode && filtered.length > 1) {
+                    if (index === 0) { mColor = "#22c55e"; mRadius = 7; } // Start: Green
+                    else if (index === filtered.length - 1) { mColor = "#3b82f6"; mRadius = 7; } // End: Blue
+                }
+
                 const marker = L.circleMarker([data.lat, data.lng], {
-                    radius: 5,
-                    fillColor: "#da291c", 
+                    radius: mRadius,
+                    fillColor: mColor, 
                     color: "#FFFFFF",
-                    weight: 1.5,
+                    weight: 2,
                     opacity: 1,
                     fillOpacity: 0.9
                 });
 
-                marker.bindPopup(`
+                let popupHTML = `
                     <div style="font-family: 'Inter', sans-serif;">
-                        <div style="color:#da291c; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
+                        <div style="color:${mColor}; font-weight:bold; font-size:12px; margin-bottom:2px;">${data.name}</div>
                         <div style="font-size:10px; color:#4b5563; font-weight:600;">Code: #${data.code}</div>
                         <div style="font-size:10px; color:#6b7280;">Route: ${data.route}</div>
                         <div style="font-size:10px; color:#6b7280;">Merch: ${data.merchandiser || 'Unknown'}</div>
-                    </div>
-                `);
+                `;
                 
+                if (isLiveMode) {
+                    const timeString = new Date(data.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    popupHTML += `<div style="font-size:10px; color:#000; font-weight:bold; margin-top:3px;">Visited: ${timeString}</div>`;
+                }
+                
+                popupHTML += `</div>`;
+                marker.bindPopup(popupHTML);
                 mapMarkerLayer.addLayer(marker);
             });
 
             let totalMeters = 0;
 
-            // Connect dots and calculate distance ONLY if a specific route is selected.
-            if (filtered.length < 500 && routeFilter) {
-                const routeGroups = {};
-                filtered.forEach(item => {
-                    const rName = item.route || 'Unassigned';
-                    if (!routeGroups[rName]) routeGroups[rName] = [];
-                    routeGroups[rName].push(item);
-                });
-
-                Object.entries(routeGroups).forEach(([route, items]) => {
-                    if (items.length < 2) return;
-
-                    // Nearest neighbor path finding
-                    let remaining = [...items];
-                    const sortedGeo = [remaining.shift()];
-                    
-                    while (remaining.length > 0) {
-                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
-                        let nearestIdx = 0;
-                        let minDist = Infinity;
-                        
-                        remaining.forEach((item, idx) => {
-                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                nearestIdx = idx;
-                            }
-                        });
-                        
-                        totalMeters += minDist;
-                        sortedGeo.push(remaining[nearestIdx]);
-                        remaining.splice(nearestIdx, 1);
+            if (filtered.length > 1) {
+                if (isLiveMode) {
+                    // Chronological connect-the-dots for live tracing
+                    const latlngs = filtered.map(d => [d.lat, d.lng]);
+                    for(let i=0; i<latlngs.length-1; i++) {
+                        totalMeters += L.latLng(latlngs[i]).distanceTo(L.latLng(latlngs[i+1]));
                     }
 
-                    const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
                     L.polyline(latlngs, {
-                        color: '#002169', 
-                        weight: 2,
-                        opacity: 0.6,
-                        dashArray: '5, 5'
+                        color: '#3b82f6', // Live track lines in bold blue
+                        weight: 3,
+                        opacity: 0.8,
+                        dashArray: '8, 8'
                     }).addTo(mapPolylineLayer);
-                });
+
+                } else if (routeFilter && filtered.length < 500) {
+                    // Nearest Neighbor connect-the-dots for ideal master route mapping
+                    const routeGroups = {};
+                    filtered.forEach(item => {
+                        const rName = item.route || 'Unassigned';
+                        if (!routeGroups[rName]) routeGroups[rName] = [];
+                        routeGroups[rName].push(item);
+                    });
+
+                    Object.entries(routeGroups).forEach(([route, items]) => {
+                        if (items.length < 2) return;
+
+                        let remaining = [...items];
+                        const sortedGeo = [remaining.shift()];
+                        
+                        while (remaining.length > 0) {
+                            const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                            let nearestIdx = 0;
+                            let minDist = Infinity;
+                            
+                            remaining.forEach((item, idx) => {
+                                const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                                if (dist < minDist) {
+                                    minDist = dist;
+                                    nearestIdx = idx;
+                                }
+                            });
+                            
+                            totalMeters += minDist;
+                            sortedGeo.push(remaining[nearestIdx]);
+                            remaining.splice(nearestIdx, 1);
+                        }
+
+                        const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
+                        L.polyline(latlngs, {
+                            color: '#002169', 
+                            weight: 2,
+                            opacity: 0.6,
+                            dashArray: '5, 5'
+                        }).addTo(mapPolylineLayer);
+                    });
+                }
             }
 
             const distDisplay = document.getElementById('mapDistanceDisplay');
             if (distDisplay) {
-                if (totalMeters > 0 && routeFilter) {
-                    distDisplay.textContent = 'Route: ' + (totalMeters / 1000).toFixed(1) + ' km';
+                if (totalMeters > 0 && (routeFilter || isLiveMode)) {
+                    distDisplay.textContent = (isLiveMode ? 'Distance: ' : 'Route: ') + (totalMeters / 1000).toFixed(1) + ' km';
                     distDisplay.classList.remove('hidden');
                 } else {
                     distDisplay.classList.add('hidden');
@@ -3589,7 +3592,7 @@
             }
 
             try {
-                // Auto-zoom perfectly
+                // Auto zoom map to tightly fit all currently shown points smoothly
                 const bounds = mapMarkerLayer.getBounds();
                 if (bounds.isValid()) {
                     mapInstance.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
