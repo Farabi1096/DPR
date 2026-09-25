@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কোলগেট স্মাইল কর্ণার - লাইভ অ্যাপ</title>
+    <title>কোলগেট স্মাইল কর্ণার - কমপ্লিট অ্যাপ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,6 +13,8 @@
             font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
             background: linear-gradient(180deg, #ffe6e6 0%, #f9fafb 25%);
             background-attachment: fixed;
+            margin: 0;
+            padding: 0;
         }
         
         .loader {
@@ -91,57 +93,30 @@
 
     <!-- ================= ROLE SELECTION SCREEN ================= -->
     <div id="roleSelectionContainer" class="flex flex-col h-screen w-full items-center justify-center p-6 text-center bg-white z-[100] fixed inset-0">
-        
         <div class="mb-8 relative w-full max-w-[280px] mx-auto flex flex-col items-center">
-            <!-- Red Pencil Art 1: Vertical Tube -->
+            <!-- Decorative SVG Arts -->
             <div class="absolute -top-2 -left-10 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(-12deg);">
                 <svg viewBox="0 0 40 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-20">
-                    <path d="M12 5 L28 5 L28 15 L12 15 Z" />
-                    <line x1="12" y1="10" x2="28" y2="10" />
-                    <path d="M12 15 L28 15 L32 90 L8 90 Z" />
-                    <rect x="5" y="90" width="30" height="6" />
-                    <line x1="10" y1="90" x2="10" y2="96" />
-                    <line x1="15" y1="90" x2="15" y2="96" />
-                    <line x1="20" y1="90" x2="20" y2="96" />
-                    <line x1="25" y1="90" x2="25" y2="96" />
-                    <line x1="30" y1="90" x2="30" y2="96" />
-                    <rect x="15" y="30" width="10" height="45" rx="2" />
+                    <path d="M12 5 L28 5 L28 15 L12 15 Z" /><line x1="12" y1="10" x2="28" y2="10" />
+                    <path d="M12 15 L28 15 L32 90 L8 90 Z" /><rect x="5" y="90" width="30" height="6" />
+                    <line x1="10" y1="90" x2="10" y2="96" /><line x1="15" y1="90" x2="15" y2="96" />
+                    <line x1="20" y1="90" x2="20" y2="96" /><line x1="25" y1="90" x2="25" y2="96" />
+                    <line x1="30" y1="90" x2="30" y2="96" /><rect x="15" y="30" width="10" height="45" rx="2" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 2: Squeezing Tube -->
             <div class="absolute top-12 -right-12 sm:-right-20 text-red-400 animate-sparkle sparkle-delay-1 opacity-60 z-0" style="transform: rotate(-30deg);">
                 <svg viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-20 h-10">
-                    <rect x="85" y="10" width="6" height="30" />
-                    <line x1="88" y1="10" x2="88" y2="40" />
-                    <path d="M85 10 L35 15 L35 35 L85 40 Z" />
-                    <path d="M75 16 L45 19 L45 31 L75 34 Z" />
-                    <rect x="25" y="18" width="10" height="14" />
-                    <line x1="30" y1="18" x2="30" y2="32" />
+                    <rect x="85" y="10" width="6" height="30" /><line x1="88" y1="10" x2="88" y2="40" />
+                    <path d="M85 10 L35 15 L35 35 L85 40 Z" /><path d="M75 16 L45 19 L45 31 L75 34 Z" />
+                    <rect x="25" y="18" width="10" height="14" /><line x1="30" y1="18" x2="30" y2="32" />
                     <path d="M25 25 C 10 15, 15 40, 2 30" stroke-width="3" />
                 </svg>
             </div>
-            <!-- Red Pencil Art 3: Tooth -->
             <div class="absolute -top-10 right-0 sm:-top-12 sm:right-4 text-red-400 animate-sparkle sparkle-delay-2 opacity-60 z-0" style="transform: rotate(15deg);">
                 <svg viewBox="0 0 50 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-12">
                     <path d="M10 25 Q 10 15 25 15 Q 40 15 40 25 C 40 40 35 55 30 55 C 25 55 25 45 25 45 C 25 45 25 55 20 55 C 15 55 10 40 10 25 Z" />
-                    <path d="M15 15 Q 25 5 35 15" />
-                    <line x1="18" y1="12" x2="22" y2="8" />
-                    <line x1="24" y1="13" x2="28" y2="9" />
-                    <line x1="30" y1="14" x2="34" y2="10" />
-                </svg>
-            </div>
-            <!-- Red Pencil Art 4: Toothbrush -->
-            <div class="absolute top-24 -left-6 sm:top-28 sm:-left-16 text-red-400 animate-sparkle opacity-60 z-0" style="transform: rotate(10deg);">
-                <svg viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-8">
-                    <rect x="30" y="25" width="85" height="6" rx="3" />
-                    <path d="M35 25 L10 25 L10 31 L35 31" />
-                    <path d="M10 25 C 5 25, 5 31, 10 31" />
-                    <rect x="12" y="8" width="20" height="17" />
-                    <line x1="16" y1="8" x2="16" y2="25" />
-                    <line x1="20" y1="8" x2="20" y2="25" />
-                    <line x1="24" y1="8" x2="24" y2="25" />
-                    <line x1="28" y1="8" x2="28" y2="25" />
-                    <path d="M8 8 C 12 -2, 28 -2, 32 8" stroke-width="3" />
+                    <path d="M15 15 Q 25 5 35 15" /><line x1="18" y1="12" x2="22" y2="8" />
+                    <line x1="24" y1="13" x2="28" y2="9" /><line x1="30" y1="14" x2="34" y2="10" />
                 </svg>
             </div>
 
@@ -534,35 +509,19 @@
                     </div>
 
                     <div class="bg-gray-50 border border-gray-100 p-2 rounded-xl shadow-sm mb-3">
-                        <div class="grid grid-cols-3 gap-2">
-                            <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
-                            <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
-                            <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Cards -->
-                <div class="bg-gradient-to-br from-red-50 to-white border border-red-100 p-2.5 rounded-xl shadow-sm mb-2.5 relative">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-gray-800 font-bold text-[12px] flex items-center"><i data-lucide="activity" class="h-3.5 w-3.5 mr-1 text-colgate"></i> আজকের পারফরম্যান্স</h3>
-                        <p id="currentDateDisplay" class="text-colgate text-[10px] font-semibold"></p>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="play-circle" class="h-4 w-4 text-green-500 mb-0.5"></i>
-                            <span id="statStartTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শুরু</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="stop-circle" class="h-4 w-4 text-orange-500 mb-0.5"></i>
-                            <span id="statEndTime" class="text-[12px] font-bold text-gray-800">--:--</span>
-                            <span class="text-gray-400 text-[9px] font-medium">শেষ</span>
-                        </div>
-                        <div class="bg-white p-1.5 rounded-lg border border-gray-100 flex flex-col items-center">
-                            <i data-lucide="hourglass" class="h-4 w-4 text-purple-500 mb-0.5"></i>
-                            <span id="statTotalTime" class="text-[12px] font-bold text-gray-800">0ঘ 0মি</span>
-                            <span class="text-gray-400 text-[9px] font-medium">মোট সময়</span>
+                        <div class="grid grid-cols-3 gap-2 relative">
+                            <div class="relative w-full">
+                                <select id="myDayTownSelect" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 pl-2 pr-6 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Town (টাউন)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayTownSelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayTown"></i>
+                            </div>
+                            <div class="relative w-full">
+                                <select id="myDayVisitDaySelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Day (বার)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayVisitDaySelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayDay"></i>
+                            </div>
+                            <div class="relative w-full">
+                                <select id="myDayRouteSelect" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 pl-2 pr-6 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled><option value="" disabled selected>Route (রুট)</option></select>
+                                <i data-lucide="x" onclick="clearMyDaySelect('myDayRouteSelect')" class="w-3 h-3 absolute right-2 top-2.5 text-gray-400 hover:text-red-500 cursor-pointer hidden" id="clearMyDayRoute"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -636,12 +595,17 @@
 
                     <!-- ONE PAGER SUMMARY CONTAINER -->
                     <div id="onePagerContainer" class="animate-fade-in pb-1">
-                        <!-- Filters for One Pager (Town, Day, Cluster) -->
+                        <!-- Filters for One Pager (Town, Date, Day, Cluster) -->
                         <div class="bg-gray-50 border border-gray-100 p-2.5 rounded-xl shadow-sm mb-3">
-                            <div class="grid grid-cols-3 gap-2">
+                            <div class="grid grid-cols-2 gap-2 mb-2">
                                 <select id="onePagerTown" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                     <option value="">Town (টাউন)</option>
                                 </select>
+                                <div class="relative w-full">
+                                    <input type="date" id="onePagerDate" class="w-full rounded-lg border border-gray-200 bg-white text-[11px] py-2 px-2 font-bold text-gray-700 outline-none focus:border-colgate transition-colors" title="Select Date to Auto-fill Day">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
                                 <select id="onePagerDay" class="w-full rounded-lg border border-gray-200 bg-gray-100 text-[11px] py-2 px-2 font-bold text-gray-500 outline-none focus:border-colgate transition-colors disabled:opacity-50" disabled>
                                     <option value="">Day (বার)</option>
                                 </select>
@@ -938,6 +902,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
         // Security logic
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -1308,9 +1273,32 @@
                 select.classList.remove('hidden');
             }
 
-            const merchs = [...new Set(pjpData.map(i => i.merchandiser))].filter(Boolean).sort();
+            // Enhanced Merchandiser Grouping by Type & Territory (A-Z sorted)
+            const merchMap = new Map();
+            pjpData.forEach(p => {
+                if (p.merchandiser) {
+                    merchMap.set(p.merchandiser, {
+                        type: p.outletType || 'SMT',
+                        territory: p.territory || 'Unknown'
+                    });
+                }
+            });
+
+            const sortedMerchs = Array.from(merchMap.keys()).sort();
+            let dccHtml = '', robHtml = '', smtHtml = '';
+
+            sortedMerchs.forEach(m => {
+                const info = merchMap.get(m);
+                const opt = `<option value="${m}">${m} • ${info.territory}</option>`;
+                if (info.type.toUpperCase() === 'DCC') dccHtml += opt;
+                else if (info.type.toUpperCase() === 'ROB') robHtml += opt;
+                else smtHtml += opt;
+            });
+
             select.innerHTML = '<option value="" disabled selected>আপনার নাম খুঁজুন...</option>' + 
-                               merchs.map(m => `<option value="${m}">${m}</option>`).join('');
+                               (dccHtml ? `<optgroup label="DCC Team">${dccHtml}</optgroup>` : '') +
+                               (robHtml ? `<optgroup label="ROB Team">${robHtml}</optgroup>` : '') +
+                               (smtHtml ? `<optgroup label="Other Teams (SMT)">${smtHtml}</optgroup>` : '');
         });
 
         document.getElementById('modalMerchSelect')?.addEventListener('change', (e) => {
@@ -1406,11 +1394,6 @@
                 pjpData = pjpRows.map((row, idx) => {
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     
-                    // Add mock logic for demonstration to generate valid coordinates
-                    // around Bangladesh if original sheet misses lat/lng in exact columns
-                    const randomLatOff = (Math.sin(idx) * 0.08); 
-                    const randomLngOff = (Math.cos(idx) * 0.08);
-
                     return {
                         region: getVal(0),        // A
                         zone: getVal(1),          // B
@@ -1427,8 +1410,7 @@
                         status: getVal(12),       // M (Outlet Status - Regular/Display)
                         outletType: getVal(13),   // N (Unit - DCC/ROB/SMT)
                         clusterName: getVal(14) || getVal(9),
-                        lat: getVal(15) ? parseFloat(getVal(15)) : 23.8103 + randomLatOff,
-                        lng: getVal(16) ? parseFloat(getVal(16)) : 90.4125 + randomLngOff
+                        // Note: Using robust mapping below for Map view so we skip raw lat/lng here
                     };
                 }).filter(i => i.townName && !["TOWN NAME", "DB NAME", "TOWN"].includes(i.townName.toUpperCase()));
 
@@ -1752,6 +1734,14 @@
         // ==========================================
         // MY DAY LOGIC
         // ==========================================
+        window.clearMyDaySelect = (selectId) => {
+            const selectEl = document.getElementById(selectId);
+            if(selectEl) {
+                selectEl.value = "";
+                selectEl.dispatchEvent(new Event('change'));
+            }
+        };
+
         const myDayTypeRadios = document.getElementsByName('myday_outlet_type');
         for (let r of myDayTypeRadios) {
             r.addEventListener('change', () => {
@@ -1772,14 +1762,24 @@
                 
                 document.getElementById('myDayPjpContainer').classList.add('hidden');
                 document.getElementById('myDayPjpList').innerHTML = '';
+                
+                document.getElementById('clearMyDayTown').classList.add('hidden');
+                document.getElementById('clearMyDayDay').classList.add('hidden');
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
+
+                calculateMyDayStats();
             });
         }
 
         document.getElementById('myDayTownSelect')?.addEventListener('change', (e) => {
             const town = e.target.value;
+            document.getElementById('clearMyDayTown').classList.toggle('hidden', !town);
+            
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
+            let filteredPjp = getFilteredPJP();
+            if(town) filteredPjp = filteredPjp.filter(i => i.townName === town);
+            
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1793,6 +1793,8 @@
                 daySelect.disabled = days.length === 0;
                 daySelect.classList.remove('bg-gray-100', 'text-gray-500');
                 daySelect.classList.add('bg-white', 'text-gray-700');
+                daySelect.value = "";
+                document.getElementById('clearMyDayDay').classList.add('hidden');
             }
             
             const routeSelect = document.getElementById('myDayRouteSelect');
@@ -1801,20 +1803,25 @@
                 routeSelect.disabled = true;
                 routeSelect.classList.add('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.remove('bg-white', 'text-gray-700');
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
-            const container = document.getElementById('myDayPjpContainer');
-            if (container) container.classList.add('hidden');
-            const list = document.getElementById('myDayPjpList');
-            if (list) list.innerHTML = '';
+            document.getElementById('myDayPjpContainer').classList.add('hidden');
+            document.getElementById('myDayPjpList').innerHTML = '';
+            
+            calculateMyDayStats();
         });
 
-        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', () => {
+        document.getElementById('myDayVisitDaySelect')?.addEventListener('change', (e) => {
             const town = document.getElementById('myDayTownSelect').value;
-            const day = document.getElementById('myDayVisitDaySelect').value;
+            const day = e.target.value;
+            document.getElementById('clearMyDayDay').classList.toggle('hidden', !day);
+
             const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
             
-            let filteredPjp = getFilteredPJP().filter(i => i.townName === town && i.visitDay === day);
+            let filteredPjp = getFilteredPJP().filter(i => i.townName === town);
+            if(day) filteredPjp = filteredPjp.filter(i => i.visitDay === day);
+            
             if (selectedType && selectedType !== 'ALL') {
                 filteredPjp = filteredPjp.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
             }
@@ -1828,18 +1835,63 @@
                 routeSelect.disabled = routes.length === 0;
                 routeSelect.classList.remove('bg-gray-100', 'text-gray-500');
                 routeSelect.classList.add('bg-white', 'text-gray-700');
+                routeSelect.value = "";
+                document.getElementById('clearMyDayRoute').classList.add('hidden');
             }
             
-            const container = document.getElementById('myDayPjpContainer');
-            if (container) container.classList.add('hidden');
-            const list = document.getElementById('myDayPjpList');
-            if (list) list.innerHTML = '';
+            document.getElementById('myDayPjpContainer').classList.add('hidden');
+            document.getElementById('myDayPjpList').innerHTML = '';
+            
+            calculateMyDayStats();
         });
 
-        document.getElementById('myDayRouteSelect')?.addEventListener('change', renderMyDayPJP);
+        document.getElementById('myDayRouteSelect')?.addEventListener('change', (e) => {
+            document.getElementById('clearMyDayRoute').classList.toggle('hidden', !e.target.value);
+            renderMyDayPJP();
+        });
+
+        function calculateMyDayStats() {
+            window.updateTimeUI();
+            
+            const town = document.getElementById('myDayTownSelect')?.value;
+            const day = document.getElementById('myDayVisitDaySelect')?.value;
+            const route = document.getElementById('myDayRouteSelect')?.value;
+            const selectedType = document.querySelector('input[name="myday_outlet_type"]:checked')?.value;
+
+            let outlets = getFilteredPJP();
+            if (town) outlets = outlets.filter(i => i.townName === town);
+            if (day) outlets = outlets.filter(i => i.visitDay === day);
+            if (route) outlets = outlets.filter(i => i.routeName === route);
+            
+            if (selectedType && selectedType !== 'ALL') {
+                outlets = outlets.filter(i => i.outletType && i.outletType.toUpperCase() === selectedType.toUpperCase());
+            }
+
+            const session = JSON.parse(localStorage.getItem('colgate_merch_session')) || {};
+            const todayStr = new Date().toDateString();
+            const localSubmitted = (session.date === todayStr && Array.isArray(session.submittedCodes)) ? session.submittedCodes : [];
+
+            let completedCount = 0;
+            outlets.forEach(out => {
+                const outCode = (out.code || "").toUpperCase().trim();
+                const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
+                if ((reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode)) {
+                    completedCount++;
+                }
+            });
+
+            const totalCountEl = document.getElementById('pjpTotalCount');
+            if (totalCountEl) totalCountEl.textContent = outlets.length;
+            
+            const uploadedCountEl = document.getElementById('pjpUploadedCount');
+            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
+            
+            const remainingCountEl = document.getElementById('pjpRemainingCount');
+            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
+        }
 
         function renderMyDayPJP() {
-            window.updateTimeUI();
+            calculateMyDayStats();
             
             const town = document.getElementById('myDayTownSelect')?.value;
             const day = document.getElementById('myDayVisitDaySelect')?.value;
@@ -1864,7 +1916,7 @@
             const routeLabel = document.getElementById('myDaySelectedRouteLabel');
             if (routeLabel) routeLabel.textContent = route;
 
-            let html = '', completedCount = 0, displayCount = 0, regularCount = 0;
+            let html = '', displayCount = 0, regularCount = 0;
             
             if (outlets.length === 0) {
                 html = `<div class="text-center py-4 text-gray-500 text-[12px] font-bold">এই টাইপের কোনো আউটলেট পাওয়া যায়নি।</div>`;
@@ -1873,8 +1925,6 @@
                     const outCode = (out.code || "").toUpperCase().trim();
                     const reportInfo = reportData.find(r => r.code && r.code.toUpperCase().trim() === outCode);
                     const isCompleted = (reportInfo && (reportInfo.imageUpload === 'Y' || reportInfo.imageUpload === 'Yes')) || localSubmitted.includes(outCode);
-                    
-                    if (isCompleted) completedCount++;
                     
                     const statusStr = (out.status || "").toLowerCase();
                     if (statusStr.includes('regular')) regularCount++; else displayCount++;
@@ -1909,15 +1959,6 @@
 
             const pjpList = document.getElementById('myDayPjpList');
             if (pjpList) pjpList.innerHTML = html;
-            
-            const totalCountEl = document.getElementById('pjpTotalCount');
-            if (totalCountEl) totalCountEl.textContent = outlets.length;
-            
-            const uploadedCountEl = document.getElementById('pjpUploadedCount');
-            if (uploadedCountEl) uploadedCountEl.textContent = completedCount;
-            
-            const remainingCountEl = document.getElementById('pjpRemainingCount');
-            if (remainingCountEl) remainingCountEl.textContent = outlets.length - completedCount;
             
             const displayCountEl = document.getElementById('myDayDisplayCount');
             if (displayCountEl) displayCountEl.textContent = displayCount;
@@ -2037,6 +2078,24 @@
             }
         }
 
+        document.getElementById('onePagerDate')?.addEventListener('change', (e) => {
+            const dateVal = e.target.value;
+            if (dateVal) {
+                const dayIndex = new Date(dateVal).getDay();
+                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const mappedDay = daysOfWeek[dayIndex];
+                
+                const daySel = document.getElementById('onePagerDay');
+                if (daySel && Array.from(daySel.options).some(opt => opt.value === mappedDay)) {
+                    daySel.value = mappedDay;
+                    daySel.dispatchEvent(new Event('change'));
+                } else if (daySel) {
+                    daySel.value = "";
+                    daySel.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+
         document.getElementById('onePagerTown')?.addEventListener('change', (e) => {
             const town = e.target.value;
             let filtered = getFilteredPJP().filter(i => i.townName === town);
@@ -2107,6 +2166,7 @@
 
             const savedMerch = localStorage.getItem('colgate_app_merch_name');
             const town = document.getElementById('onePagerTown')?.value;
+            const dateVal = document.getElementById('onePagerDate')?.value;
             const dayVal = document.getElementById('onePagerDay')?.value;
             const cluster = document.getElementById('onePagerCluster')?.value;
             const selectedType = document.querySelector('input[name="report_outlet_type"]:checked')?.value;
@@ -2116,6 +2176,7 @@
             }
             
             const detailsStr = [];
+            if (dateVal) detailsStr.push(`Date: ${new Date(dateVal).toLocaleDateString('en-GB')}`);
             if (dayVal) detailsStr.push(`Day: ${dayVal}`);
             if (town) detailsStr.push(`Town: ${town}`);
             if (cluster) detailsStr.push(`Cluster: ${cluster}`);
@@ -2173,7 +2234,7 @@
             const displayPct = calcPct(displayVisited, displayCount);
             const regularPct = calcPct(regularVisited, regularCount);
             
-            let dateStr = new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
+            let dateStr = dateVal ? new Date(dateVal).toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' }) : new Date().toLocaleDateString('bn-BD', { day:'numeric', month:'long', year:'numeric' });
             
             const times = getMerchTimes();
             let startTimeStr = times.startStr;
@@ -2636,7 +2697,6 @@
             const v = document.getElementById('cameraFeed'), c = document.getElementById('processCanvas'), ctx = c.getContext('2d');
             if (!v) return;
             
-            // Image Compression during capture (Max 1080px width to save data)
             const MAX_CAM_W = 1080;
             let drawWidth = v.videoWidth;
             let drawHeight = v.videoHeight;
@@ -2657,7 +2717,6 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             applyWatermark(ctx, c.width, c.height);
-            // Compress to 60% quality JPEG
             capturedImageData = c.toDataURL('image/jpeg', 0.6);
             document.getElementById('capturedImagePreview').src = capturedImageData;
             document.getElementById('previewContainer').classList.remove('hidden');
@@ -2671,9 +2730,6 @@
             document.getElementById('cameraTriggerContainer').classList.remove('hidden'); 
         });
 
-        // ==========================================
-        // GALLERY UPLOAD LOGIC
-        // ==========================================
         document.getElementById('manualUploadBtn')?.addEventListener('click', () => {
             initLocationFetch();
             document.getElementById('manualFileInput').click();
@@ -2690,7 +2746,6 @@
                     const c = document.getElementById('processCanvas');
                     const ctx = c.getContext('2d');
                     
-                    // Fixed max width/height to avoid memory issues and speed up upload
                     const MAX_WIDTH = 1080;
                     const MAX_HEIGHT = 1080;
                     let width = img.width;
@@ -2712,9 +2767,6 @@
                     c.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Watermark is NOT applied for manual gallery uploads
-                    
-                    // Compression
                     capturedImageData = c.toDataURL('image/jpeg', 0.6);
                     document.getElementById('capturedImagePreview').src = capturedImageData;
                     document.getElementById('previewContainer').classList.remove('hidden');
@@ -2794,7 +2846,6 @@
             e.preventDefault(); 
             if(!capturedImageData) return window.showAlert("দয়া করে আউটলেটের ছবি তুলুন!");
 
-            // The main submit function
             const executeSubmit = async () => {
                 const btn = document.getElementById('submitBtn'), loader = document.getElementById('btnLoader'), text = document.getElementById('btnText');
                 btn.disabled = true; loader.classList.remove('hidden'); 
@@ -2823,10 +2874,8 @@
                     }
                 }
 
-                // 1. Prepare Image Data for Script 1 (Main App)
                 data.shop_image = { data: capturedImageData, name: `pjp_${Date.now()}.jpg` };
                 
-                // 2. Prepare Location Data for Script 2 (Location Updater)
                 const locationData = {
                     shop_code: data.shop_code,
                     latitude: globalLatitude,
@@ -2834,14 +2883,12 @@
                 };
 
                 try {
-                    // STEP 1: Send Image and basic form data to your main script
                     await fetch(SCRIPT_URL, { 
                         method: 'POST', 
                         body: JSON.stringify(data), 
                         mode: 'no-cors'
                     });
 
-                    // STEP 2: Instantly send Location data to your new Location Script
                     text.textContent = "লোকেশন সিঙ্ক হচ্ছে...";
                     await fetch(LOCATION_SCRIPT_URL, {
                         method: 'POST',
@@ -2849,7 +2896,6 @@
                         mode: 'no-cors'
                     });
                     
-                    // Mark as submitted locally
                     const todayStr = new Date().toDateString();
                     let s = JSON.parse(localStorage.getItem('colgate_merch_session')) || { date: todayStr, submittedCodes: [] };
                     if (s.date !== todayStr) s = { date: todayStr, submittedCodes: [] };
@@ -2860,7 +2906,6 @@
                     }
                     localStorage.setItem('colgate_merch_session', JSON.stringify(s));
                     
-                    // Show success screen
                     document.getElementById('customForm').classList.add('hidden'); 
                     document.getElementById('successMessage').classList.remove('hidden');
                     
@@ -2877,11 +2922,10 @@
                 btn.disabled = false; loader.classList.add('hidden'); text.textContent = "জমা দিন (Submit)";
             };
 
-            // Force GPS check before submitting
             if (!isLocationAcquired || globalLatitude.includes("Not Found") || globalLatitude.includes("Denied")) {
                 window.showConfirm("GPS লোকেশন এখনো পাওয়া যায়নি। আপনি কি লোকেশন ছাড়াই ফর্মটি জমা দিতে চান?", async (confirmed) => {
                     if (confirmed) {
-                        await getGPSLocation(); // Try one last time quickly
+                        await getGPSLocation(); 
                         executeSubmit();
                     }
                 });
@@ -2972,9 +3016,8 @@
             globalLatitude = "Not Found";
             globalLongitude = "Not Found";
             
-            initLocationFetch(); // Restart fetching for the next form
+            initLocationFetch(); 
 
-            // Reset Output Type Radios
             const radios1 = document.getElementsByName('outlet_type');
             for (let r of radios1) r.checked = false;
         };
@@ -3096,7 +3139,7 @@
 
         document.getElementById('maintenanceToggle')?.addEventListener('change', (e) => {
             localStorage.setItem('app_maintenance', e.target.checked);
-            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে بدی না।");
+            if (e.target.checked) window.showAlert("মেইনটেন্যান্স মোড চালু হয়েছে। ইউজাররা এখন আর অ্যাপে লগইন করতে পারবে না।");
         });
 
         document.getElementById('btnAdminNotice')?.addEventListener('click', () => {
@@ -3342,22 +3385,33 @@
                 
                 const validLocations = [];
                 
-                // Assuming format: Col F(5) = Code, Col R(17) = Lat, Col S(18) = Lng
-                for (let i = 1; i < imgRows.length; i++) {
+                // Read from bottom to top (Newest First)
+                for (let i = imgRows.length - 1; i >= 1; i--) {
                     const row = imgRows[i];
                     if (!row || !row.c) continue;
                     
                     const getVal = (idx) => row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : "";
                     
-                    const shopCode = getVal(5).toUpperCase(); 
-                    const latStr = getVal(17); 
-                    const lngStr = getVal(18); 
+                    const shopCode = getVal(5).toUpperCase().replace(/\s+/g, ''); 
+                    if (!shopCode) continue;
 
-                    const lat = parseFloat(latStr);
-                    const lng = parseFloat(lngStr);
+                    let lat = NaN;
+                    let lng = NaN;
 
-                    // Validate coordinates ensuring they fall mostly within valid boundaries
-                    if (shopCode && !isNaN(lat) && !isNaN(lng) && lat > 20 && lat < 29 && lng > 86 && lng < 95) {
+                    // Robust coordinate detector (checks columns J to Z)
+                    for (let col = 9; col <= 25; col++) {
+                        const cellVal = getVal(col);
+                        if (cellVal) {
+                            const parsed = parseFloat(cellVal);
+                            if (!isNaN(parsed)) {
+                                if (parsed > 20.0 && parsed < 29.0 && isNaN(lat)) lat = parsed;
+                                else if (parsed > 86.0 && parsed < 95.0 && isNaN(lng)) lng = parsed;
+                            }
+                        }
+                    }
+
+                    // Validate coordinates ensuring they fall mostly within Bangladesh boundaries
+                    if (shopCode && !isNaN(lat) && !isNaN(lng)) {
                         
                         // Link with detailed info from PJP memory
                         const pjpMatch = pjpData.find(p => p.code.toUpperCase() === shopCode);
@@ -3376,7 +3430,12 @@
                 
                 // Deduplicate (take latest location for same shop code)
                 const uniqueLocationsMap = new Map();
-                validLocations.forEach(loc => uniqueLocationsMap.set(loc.code, loc));
+                validLocations.forEach(loc => {
+                    // Since array was built from bottom to top, the FIRST occurrence of a code is the NEWEST
+                    if(!uniqueLocationsMap.has(loc.code)) {
+                        uniqueLocationsMap.set(loc.code, loc);
+                    }
+                });
                 mapDataRaw = Array.from(uniqueLocationsMap.values());
 
                 populateMapFilters();
@@ -3416,7 +3475,10 @@
             mapMarkerLayer.clearLayers();
             mapPolylineLayer.clearLayers();
 
-            if (filtered.length === 0) return;
+            if (filtered.length === 0) {
+                document.getElementById('mapDistanceDisplay').classList.add('hidden');
+                return;
+            }
 
             filtered.forEach(data => {
                 const marker = L.circleMarker([data.lat, data.lng], {
