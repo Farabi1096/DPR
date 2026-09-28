@@ -1044,6 +1044,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => { 
+            populateMonthDropdown();
             checkRole(); 
             getGPSLocation();
             if (localStorage.getItem('colgate_gallery_unlocked') === 'true') {
@@ -1325,7 +1326,7 @@
             });
         };
 
-        function populateMonthDropdown() {
+        function populateMonthDropdown(forceReset = false) {
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const d = new Date();
             const currentMonth = monthNames[d.getMonth()];
@@ -1333,10 +1334,16 @@
 
             const formMonth = document.getElementById('formMonth');
             if (formMonth) {
+                const currentVal = formMonth.value;
                 formMonth.innerHTML = `
-                    <option value="${currentMonth}" selected>${currentMonth}</option>
+                    <option value="${currentMonth}">${currentMonth}</option>
                     <option value="${prevMonth}">${prevMonth}</option>
                 `;
+                if (!forceReset && currentVal && (currentVal === currentMonth || currentVal === prevMonth)) {
+                    formMonth.value = currentVal;
+                } else {
+                    formMonth.value = currentMonth;
+                }
             }
         }
 
@@ -1972,7 +1979,7 @@
             if (tabForm) tabForm.click();
             const role = localStorage.getItem('colgate_app_role');
             
-            populateMonthDropdown();
+            populateMonthDropdown(true);
 
             const radios = document.getElementsByName('outlet_type');
             for (let r of radios) {
@@ -2939,7 +2946,7 @@
         window.resetForm = () => { 
             const form = document.getElementById('customForm');
             if (form) form.reset();
-            populateMonthDropdown();
+            populateMonthDropdown(true);
             form.classList.remove('hidden'); 
             document.getElementById('successMessage').classList.add('hidden'); 
             document.getElementById('previewContainer').classList.add('hidden'); 
@@ -3339,9 +3346,9 @@
             mapPolylineLayer = L.layerGroup().addTo(mapInstance);
             
             // Safely attach map event listeners 
-            document.getElementById('mapFilterMerch')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterTown')?.addEventListener('change', applyMapFilters);
-            document.getElementById('mapFilterRoute')?.addEventListener('change', applyMapFilters);
+            document.getElementById('mapFilterMerch')?.addEventListener('change', () => updateMapFilters('merch'));
+            document.getElementById('mapFilterTown')?.addEventListener('change', () => updateMapFilters('town'));
+            document.getElementById('mapFilterRoute')?.addEventListener('change', () => updateMapFilters('route'));
         }
 
         async function loadMapDataFromSheet() {
@@ -3383,8 +3390,8 @@
                     // Validate coordinates ensuring they fall mostly within Bangladesh boundaries
                     if (shopCode && !isNaN(lat) && !isNaN(lng)) {
                         
-                        // Link with detailed info from PJP memory
-                        const pjpMatch = pjpData.find(p => p.code.toUpperCase() === shopCode);
+                        // Link with detailed info from PJP memory (improved to ignore extra spaces)
+                        const pjpMatch = pjpData.find(p => (p.code || "").toUpperCase().replace(/\s+/g, '') === shopCode);
                         
                         validLocations.push({
                             code: shopCode,
@@ -3409,7 +3416,6 @@
                 mapDataRaw = Array.from(uniqueLocationsMap.values());
 
                 populateMapFilters();
-                applyMapFilters();
             } catch (err) {
                 console.error(err);
                 window.showAlert("There was a problem loading map data.");
@@ -3421,16 +3427,52 @@
 
         function populateMapFilters() {
             const merchSelect = document.getElementById('mapFilterMerch');
+            
+            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(x => x && x !== "Unknown").sort();
+            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
+            
+            updateMapFilters('init');
+        }
+
+        function updateMapFilters(source) {
+            const merchSelect = document.getElementById('mapFilterMerch');
             const townSelect = document.getElementById('mapFilterTown');
             const routeSelect = document.getElementById('mapFilterRoute');
-            
-            const merchandisers = [...new Set(mapDataRaw.map(d => d.merchandiser))].filter(Boolean).sort();
-            const towns = [...new Set(mapDataRaw.map(d => d.town))].filter(Boolean).sort();
-            const routes = [...new Set(mapDataRaw.map(d => d.route))].filter(Boolean).sort();
 
-            if (merchSelect) merchSelect.innerHTML = '<option value="">All Merchandisers</option>' + merchandisers.map(m => `<option value="${m}">${m}</option>`).join('');
-            if (townSelect) townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
-            if (routeSelect) routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+            const selectedMerch = merchSelect ? merchSelect.value : '';
+            const selectedTown = townSelect ? townSelect.value : '';
+            const selectedRoute = routeSelect ? routeSelect.value : '';
+
+            let filteredForTowns = mapDataRaw;
+            if (selectedMerch) {
+                filteredForTowns = filteredForTowns.filter(d => d.merchandiser === selectedMerch);
+            }
+
+            if (source === 'merch' || source === 'init') {
+                const towns = [...new Set(filteredForTowns.map(d => d.town))].filter(x => x && x !== "Unknown").sort();
+                if (townSelect) {
+                    townSelect.innerHTML = '<option value="">All Towns</option>' + towns.map(t => `<option value="${t}">${t}</option>`).join('');
+                    if (towns.includes(selectedTown)) townSelect.value = selectedTown;
+                    else townSelect.value = '';
+                }
+            }
+
+            const currentTown = townSelect ? townSelect.value : '';
+            let filteredForRoutes = filteredForTowns;
+            if (currentTown) {
+                filteredForRoutes = filteredForRoutes.filter(d => d.town === currentTown);
+            }
+
+            if (source === 'merch' || source === 'town' || source === 'init') {
+                const routes = [...new Set(filteredForRoutes.map(d => d.route))].filter(x => x && x !== "Unknown").sort();
+                if (routeSelect) {
+                    routeSelect.innerHTML = '<option value="">All Routes</option>' + routes.map(r => `<option value="${r}">${r}</option>`).join('');
+                    if (routes.includes(selectedRoute)) routeSelect.value = selectedRoute;
+                    else routeSelect.value = '';
+                }
+            }
+
+            applyMapFilters();
         }
 
         function applyMapFilters() {
