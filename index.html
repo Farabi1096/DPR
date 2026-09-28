@@ -3522,48 +3522,37 @@
 
             let totalMeters = 0;
 
-            // If filtered down to a reasonable number, connect the dots with a polyline.
+            // If filtered down to a reasonable number, connect the dots with a continuous polyline.
             if (filtered.length > 1 && filtered.length < 500) {
-                const routeGroups = {};
-                filtered.forEach(item => {
-                    const rName = item.route || 'Unassigned';
-                    if (!routeGroups[rName]) routeGroups[rName] = [];
-                    routeGroups[rName].push(item);
-                });
-
-                Object.entries(routeGroups).forEach(([route, items]) => {
-                    if (items.length < 2) return;
-
-                    // Simple nearest neighbor sorting to create a logical path outline
-                    let remaining = [...items];
-                    const sortedGeo = [remaining.shift()];
+                // Simple nearest neighbor sorting to create a continuous logical path outline
+                let remaining = [...filtered];
+                const sortedGeo = [remaining.shift()];
+                
+                while (remaining.length > 0) {
+                    const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                    let nearestIdx = 0;
+                    let minDist = Infinity;
                     
-                    while (remaining.length > 0) {
-                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
-                        let nearestIdx = 0;
-                        let minDist = Infinity;
-                        
-                        remaining.forEach((item, idx) => {
-                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                nearestIdx = idx;
-                            }
-                        });
-                        
-                        totalMeters += minDist;
-                        sortedGeo.push(remaining[nearestIdx]);
-                        remaining.splice(nearestIdx, 1);
-                    }
+                    remaining.forEach((item, idx) => {
+                        const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                        if (dist < minDist) {
+                            minDist = dist;
+                            nearestIdx = idx;
+                        }
+                    });
+                    
+                    totalMeters += minDist;
+                    sortedGeo.push(remaining[nearestIdx]);
+                    remaining.splice(nearestIdx, 1);
+                }
 
-                    const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
-                    L.polyline(latlngs, {
-                        color: '#002169', 
-                        weight: 2,
-                        opacity: 0.6,
-                        dashArray: '5, 5'
-                    }).addTo(mapPolylineLayer);
-                });
+                const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
+                L.polyline(latlngs, {
+                    color: '#da291c', 
+                    weight: 2.5,
+                    opacity: 0.65,
+                    dashArray: '6, 6'
+                }).addTo(mapPolylineLayer);
             }
 
             const distDisplay = document.getElementById('mapDistanceDisplay');
