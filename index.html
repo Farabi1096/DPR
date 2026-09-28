@@ -3529,49 +3529,114 @@
                 mapMarkerLayer.addLayer(marker);
             });
 
-            let totalMeters = 0;
+            let totalStraightDistance = 0;
 
-            // If filtered down to a reasonable number, connect the dots with a continuous polyline.
+            // If filtered down to a reasonable number, connect the dots.
             if (filtered.length > 1 && filtered.length < 500) {
-                // Simple nearest neighbor sorting to create a continuous logical path outline
-                let remaining = [...filtered];
-                const sortedGeo = [remaining.shift()];
-                
-                while (remaining.length > 0) {
-                    const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
-                    let nearestIdx = 0;
-                    let minDist = Infinity;
+                const routeGroups = {};
+                filtered.forEach(item => {
+                    const rName = item.route || 'Unassigned';
+                    if (!routeGroups[rName]) routeGroups[rName] = [];
+                    routeGroups[rName].push(item);
+                });
+
+                let promises = [];
+                let overallRoadDistance = 0;
+
+                Object.entries(routeGroups).forEach(([route, items]) => {
+                    if (items.length < 2) return;
+
+                    // Simple nearest neighbor sorting to create a logical path outline
+                    let remaining = [...items];
+                    const sortedGeo = [remaining.shift()];
                     
-                    remaining.forEach((item, idx) => {
-                        const dist = last.distanceTo(L.latLng(item.lat, item.lng));
-                        if (dist < minDist) {
-                            minDist = dist;
-                            nearestIdx = idx;
+                    while (remaining.length > 0) {
+                        const last = L.latLng(sortedGeo[sortedGeo.length - 1].lat, sortedGeo[sortedGeo.length - 1].lng);
+                        let nearestIdx = 0;
+                        let minDist = Infinity;
+                        
+                        remaining.forEach((item, idx) => {
+                            const dist = last.distanceTo(L.latLng(item.lat, item.lng));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                nearestIdx = idx;
+                            }
+                        });
+                        
+                        totalStraightDistance += minDist;
+                        sortedGeo.push(remaining[nearestIdx]);
+                        remaining.splice(nearestIdx, 1);
+                    }
+
+                    // FUNCTION to draw straight dotted line fallback
+                    const drawStraightFallback = () => {
+                        const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
+                        L.polyline(latlngs, {
+                            color: '#002169', 
+                            weight: 2,
+                            opacity: 0.5,
+                            dashArray: '5, 5'
+                        }).addTo(mapPolylineLayer);
+                    };
+
+                    // OSRM Public API has a 100 coordinate limit per request
+                    if (sortedGeo.length <= 70) {
+                        // OSRM requires coordinates in Longitude,Latitude format
+                        const coordinates = sortedGeo.map(d => `${d.lng},${d.lat}`).join(';');
+                        const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=simplified&geometries=geojson`;
+                        
+                        const fetchRoute = fetch(osrmUrl)
+                            .then(res => res.json())
+                            .then(data => {
+                                if(data.code === 'Ok' && data.routes && data.routes.length > 0) {
+                                    // Add real road distance
+                                    overallRoadDistance += data.routes[0].distance;
+                                    
+                                    // Draw real road polyline
+                                    L.geoJSON(data.routes[0].geometry, {
+                                        style: { color: '#002169', weight: 3, opacity: 0.8 }
+                                    }).addTo(mapPolylineLayer);
+                                } else {
+                                    drawStraightFallback();
+                                }
+                            })
+                            .catch(() => drawStraightFallback());
+                            
+                        promises.push(fetchRoute);
+                    } else {
+                        drawStraightFallback();
+                    }
+                });
+
+                const distDisplay = document.getElementById('mapDistanceDisplay');
+                if (distDisplay) {
+                    if (promises.length > 0) {
+                        // Show loading state while fetching real roads
+                        distDisplay.innerHTML = '<i data-lucide="loader-2" class="w-3 h-3 mr-1 animate-spin inline"></i> Calculating...';
+                        distDisplay.classList.remove('hidden');
+                        lucide.createIcons();
+                        
+                        Promise.all(promises).then(() => {
+                            if (overallRoadDistance > 0) {
+                                distDisplay.textContent = 'Road Distance: ' + (overallRoadDistance / 1000).toFixed(1) + ' km';
+                            } else {
+                                // Standard 1.3 urban tortuosity multiplier fallback
+                                distDisplay.textContent = 'Est. Distance: ' + ((totalStraightDistance * 1.3) / 1000).toFixed(1) + ' km';
+                            }
+                        });
+                    } else {
+                        // Fallback straight away
+                        if (totalStraightDistance > 0) {
+                            distDisplay.textContent = 'Est. Distance: ' + ((totalStraightDistance * 1.3) / 1000).toFixed(1) + ' km';
+                            distDisplay.classList.remove('hidden');
+                        } else {
+                            distDisplay.classList.add('hidden');
                         }
-                    });
-                    
-                    totalMeters += minDist;
-                    sortedGeo.push(remaining[nearestIdx]);
-                    remaining.splice(nearestIdx, 1);
+                    }
                 }
-
-                const latlngs = sortedGeo.map(d => [d.lat, d.lng]);
-                L.polyline(latlngs, {
-                    color: '#da291c', 
-                    weight: 2.5,
-                    opacity: 0.65,
-                    dashArray: '6, 6'
-                }).addTo(mapPolylineLayer);
-            }
-
-            const distDisplay = document.getElementById('mapDistanceDisplay');
-            if (distDisplay) {
-                if (totalMeters > 0) {
-                    distDisplay.textContent = 'Distance: ' + (totalMeters / 1000).toFixed(1) + ' km';
-                    distDisplay.classList.remove('hidden');
-                } else {
-                    distDisplay.classList.add('hidden');
-                }
+            } else {
+                const distDisplay = document.getElementById('mapDistanceDisplay');
+                if(distDisplay) distDisplay.classList.add('hidden');
             }
 
             try {
