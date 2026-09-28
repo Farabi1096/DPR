@@ -713,7 +713,9 @@
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
             <h2 class="text-lg font-bold text-white tracking-wide flex items-center"><i data-lucide="shield" class="w-4 h-4 mr-2 text-red-500"></i> Admin Dashboard</h2>
-            <div class="w-8"></div>
+            <button onclick="toggleDesktopMode()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm shadow-sm" title="Toggle Desktop View">
+                <i data-lucide="monitor" id="desktopToggleIcon" class="w-4 h-4"></i>
+            </button>
         </div>
 
         <div class="p-5 overflow-y-auto flex-grow space-y-4 custom-scrollbar">
@@ -746,7 +748,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div id="adminButtonsGrid" class="grid grid-cols-2 gap-3">
                 <button id="btnAdminForceSync" class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center hover:bg-blue-50 hover:border-blue-200 transition-all group">
                     <div class="bg-blue-100 p-2.5 rounded-full mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-600"></i>
@@ -879,7 +881,9 @@
             <h2 class="text-[15px] font-bold text-white tracking-wide flex items-center">
                 <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-red-500"></i> Map View
             </h2>
-            <div class="w-8"></div>
+            <button onclick="toggleDesktopMode()" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors flex items-center justify-center backdrop-blur-sm shadow-sm" title="Toggle Desktop View">
+                <i data-lucide="monitor" id="mapDesktopToggleIcon" class="w-4 h-4"></i>
+            </button>
         </div>
 
         <div class="bg-white p-3 border-b border-gray-200 shrink-0 z-40 shadow-sm flex flex-col gap-2">
@@ -3626,6 +3630,53 @@
             }
             
             document.body.removeChild(textArea);
+        };
+
+        // ==========================================
+        // DESKTOP VIEW TOGGLE
+        // ==========================================
+        let isDesktopMode = false;
+        window.toggleDesktopMode = () => {
+            isDesktopMode = !isDesktopMode;
+            
+            const dashContainer = document.getElementById('adminDashboardContainer');
+            const mapContainer = document.getElementById('adminMapContainer');
+            const statsGrid = document.getElementById('adminStatsContent');
+            const buttonsGrid = document.getElementById('adminButtonsGrid');
+            
+            const dashIcon = document.getElementById('desktopToggleIcon');
+            const mapIcon = document.getElementById('mapDesktopToggleIcon');
+            
+            if (isDesktopMode) {
+                dashContainer.classList.replace('max-w-md', 'max-w-5xl');
+                dashContainer.classList.add('w-[95%]');
+                mapContainer.classList.replace('max-w-md', 'max-w-6xl');
+                mapContainer.classList.add('w-[95%]');
+                
+                if (statsGrid) statsGrid.classList.replace('grid-cols-2', 'grid-cols-4');
+                if (buttonsGrid) buttonsGrid.classList.replace('grid-cols-2', 'grid-cols-4');
+                
+                if (dashIcon) dashIcon.setAttribute('data-lucide', 'smartphone');
+                if (mapIcon) mapIcon.setAttribute('data-lucide', 'smartphone');
+            } else {
+                dashContainer.classList.replace('max-w-5xl', 'max-w-md');
+                dashContainer.classList.remove('w-[95%]');
+                mapContainer.classList.replace('max-w-6xl', 'max-w-md');
+                mapContainer.classList.remove('w-[95%]');
+                
+                if (statsGrid) statsGrid.classList.replace('grid-cols-4', 'grid-cols-2');
+                if (buttonsGrid) buttonsGrid.classList.replace('grid-cols-4', 'grid-cols-2');
+                
+                if (dashIcon) dashIcon.setAttribute('data-lucide', 'monitor');
+                if (mapIcon) mapIcon.setAttribute('data-lucide', 'monitor');
+            }
+            
+            lucide.createIcons();
+            
+            // Force Leaflet map to redraw and resize so there are no grey blank blocks
+            if (!mapContainer.classList.contains('hidden') && mapInstance) {
+                setTimeout(() => mapInstance.invalidateSize(), 300);
+            }
         };
 
     </script>
